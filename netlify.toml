@@ -1,0 +1,3 @@
+[build]
+  command = "cd \"company level \" && npm install && npm run build"
+  publish = "company level /dist"

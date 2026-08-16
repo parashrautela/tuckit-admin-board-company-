@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd \"./company level \" && npm install && npm run build",
+  "outputDirectory": "company level /dist",
+  "framework": "vite"
+}
