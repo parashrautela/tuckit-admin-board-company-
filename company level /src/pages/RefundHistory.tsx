@@ -34,6 +34,25 @@ export const RefundHistory: React.FC = () => {
         </button>
       </div>
 
+      {/* 3 Summary KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl">
+          <div className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">Total Settled</div>
+          <div className="text-2xl font-black text-emerald-700 mt-1">₹14,850</div>
+          <div className="text-[11px] text-emerald-600 font-semibold mt-0.5">Disbursed to customer accounts</div>
+        </div>
+        <div className="bg-amber-50 border border-amber-100 p-4 rounded-2xl">
+          <div className="text-[10px] font-bold text-amber-800 uppercase tracking-wider">Yet to be settled</div>
+          <div className="text-2xl font-black text-amber-700 mt-1">₹1,220</div>
+          <div className="text-[11px] text-amber-600 font-semibold mt-0.5">Pending banking transfer</div>
+        </div>
+        <div className="bg-red-50 border border-red-100 p-4 rounded-2xl">
+          <div className="text-[10px] font-bold text-red-800 uppercase tracking-wider">Rejected Claims</div>
+          <div className="text-2xl font-black text-red-700 mt-1">6</div>
+          <div className="text-[11px] text-red-600 font-semibold mt-0.5">Disallowed by audit policy</div>
+        </div>
+      </div>
+
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
