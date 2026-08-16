@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CreditCard, Search, CheckCircle2, XCircle, AlertCircle, Eye, ArrowUpRight } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { CreditCard, Search, CheckCircle2, XCircle, AlertCircle, Eye, ArrowUpRight, Filter } from 'lucide-react';
 import { Modal } from '../components/common/Modal';
 
 interface RefundRequest {
@@ -23,8 +24,21 @@ const initialRequests: RefundRequest[] = [
 ];
 
 export const RefundRequests: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get('search') || '';
+  const statusFilter = searchParams.get('status') || 'PENDING';
+
+  const updateParam = (key: string, value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (!value || value === 'ALL') {
+      next.delete(key);
+    } else {
+      next.set(key, value);
+    }
+    setSearchParams(next);
+  };
+
   const [requests, setRequests] = useState<RefundRequest[]>(initialRequests);
-  const [selectedRequest, setSelectedRequest] = useState<RefundRequest | null>(null);
   const [actionModal, setActionModal] = useState<{ isOpen: boolean; type: 'APPROVE' | 'REJECT'; item: RefundRequest | null }>({ isOpen: false, type: 'APPROVE', item: null });
   const [adminNote, setAdminNote] = useState('');
   const [toastMessage, setToastMessage] = useState('');
@@ -38,7 +52,15 @@ export const RefundRequests: React.FC = () => {
     setTimeout(() => setToastMessage(''), 4000);
   };
 
-  const pendingRequests = requests.filter(r => r.status === 'PENDING');
+  const filteredRequests = requests.filter(r => {
+    if (statusFilter !== 'ALL' && r.status !== statusFilter) return false;
+    if (search && !r.customerName.toLowerCase().includes(search.toLowerCase()) && !r.phone.includes(search) && !r.bookingId.toLowerCase().includes(search.toLowerCase()) && !r.terminalCode.toLowerCase().includes(search.toLowerCase())) {
+      return false;
+    }
+    return true;
+  });
+
+  const pendingCount = requests.filter(r => r.status === 'PENDING').length;
 
   return (
     <div className="space-y-6">
@@ -49,11 +71,34 @@ export const RefundRequests: React.FC = () => {
               <CreditCard className="h-5 w-5 text-primary" /> Refund Requests Queue
             </h1>
             <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-black rounded-full">
-              {pendingRequests.length} PENDING
+              {pendingCount} PENDING
             </span>
           </div>
           <p className="text-xs text-zinc-500 mt-1">Review, approve, or decline customer refund claims and transaction reversals</p>
         </div>
+      </div>
+
+      {/* Search & Status Filter Bar */}
+      <div className="flex flex-col sm:flex-row items-center gap-3">
+        <div className="relative flex-1 w-full">
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
+          <input
+            value={search}
+            onChange={e => updateParam('search', e.target.value)}
+            placeholder="Search by customer name, phone, booking ID, or terminal..."
+            className="w-full pl-9 pr-3 h-10 bg-white border border-zinc-200 rounded-lg text-xs font-medium outline-none focus:border-primary"
+          />
+        </div>
+        <select
+          value={statusFilter}
+          onChange={e => updateParam('status', e.target.value)}
+          className="h-10 px-3 bg-white border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 outline-none focus:border-primary"
+        >
+          <option value="PENDING">Status: Pending ({pendingCount})</option>
+          <option value="APPROVED">Status: Approved</option>
+          <option value="REJECTED">Status: Rejected</option>
+          <option value="ALL">All Statuses</option>
+        </select>
       </div>
 
       {toastMessage && (
@@ -63,7 +108,7 @@ export const RefundRequests: React.FC = () => {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs overflow-hidden">
+      <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs overflow-hidden">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left text-xs">
             <thead>
@@ -79,14 +124,14 @@ export const RefundRequests: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100">
-              {pendingRequests.length === 0 ? (
+              {filteredRequests.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="py-8 text-center text-zinc-400 font-medium">
-                    No pending refund requests in queue!
+                    No refund requests matching current filter!
                   </td>
                 </tr>
               ) : (
-                pendingRequests.map(r => (
+                filteredRequests.map(r => (
                   <tr key={r.id} className="hover:bg-zinc-50 transition-colors">
                     <td className="py-3 px-4 font-mono font-bold text-zinc-900">{r.id}</td>
                     <td className="py-3 px-4 font-mono font-semibold text-primary">{r.bookingId}</td>
@@ -101,22 +146,30 @@ export const RefundRequests: React.FC = () => {
                     </td>
                     <td className="py-3 px-4 text-zinc-400 font-mono text-[11px]">{r.requestedAt}</td>
                     <td className="py-3 px-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setActionModal({ isOpen: true, type: 'APPROVE', item: r })}
-                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1"
-                        >
-                          <CheckCircle2 className="h-3 w-3" /> Approve
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setActionModal({ isOpen: true, type: 'REJECT', item: r })}
-                          className="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1"
-                        >
-                          <XCircle className="h-3 w-3" /> Reject
-                        </button>
-                      </div>
+                      {r.status === 'PENDING' ? (
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setActionModal({ isOpen: true, type: 'APPROVE', item: r })}
+                            className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1"
+                          >
+                            <CheckCircle2 className="h-3 w-3" /> Approve
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setActionModal({ isOpen: true, type: 'REJECT', item: r })}
+                            className="px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1"
+                          >
+                            <XCircle className="h-3 w-3" /> Reject
+                          </button>
+                        </div>
+                      ) : (
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                          r.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'
+                        }`}>
+                          {r.status}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))
@@ -126,44 +179,55 @@ export const RefundRequests: React.FC = () => {
         </div>
       </div>
 
-      {/* Action Confirmation Modal */}
-      <Modal
-        isOpen={actionModal.isOpen}
-        onClose={() => setActionModal({ isOpen: false, type: 'APPROVE', item: null })}
-        title={actionModal.type === 'APPROVE' ? 'Approve Refund Request' : 'Decline Refund Request'}
-        maxWidth="md"
-      >
-        {actionModal.item && (
-          <div className="space-y-4">
-            <div className="bg-zinc-50 p-3.5 rounded-xl border border-zinc-200 text-xs space-y-1.5">
-              <div className="flex justify-between"><span className="text-zinc-500">Refund ID:</span><span className="font-mono font-bold text-zinc-900">{actionModal.item.id}</span></div>
-              <div className="flex justify-between"><span className="text-zinc-500">Customer:</span><span className="font-bold text-zinc-900">{actionModal.item.customerName}</span></div>
-              <div className="flex justify-between"><span className="text-zinc-500">Refund Amount:</span><span className="font-black text-primary text-sm">₹{actionModal.item.amount}</span></div>
-              <div className="flex justify-between"><span className="text-zinc-500">Gateway Ref:</span><span className="font-mono text-zinc-600">{actionModal.item.paymentGatewayRef}</span></div>
+      {/* Action Dialog */}
+      {actionModal.isOpen && actionModal.item && (
+        <Modal
+          isOpen={actionModal.isOpen}
+          onClose={() => setActionModal({ isOpen: false, type: 'APPROVE', item: null })}
+          title={`${actionModal.type === 'APPROVE' ? 'Approve' : 'Reject'} Refund ${actionModal.item.id}`}
+          subtitle={`Customer: ${actionModal.item.customerName} • Booking ${actionModal.item.bookingId}`}
+        >
+          <div className="space-y-4 text-xs">
+            <div className="p-3.5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-1">
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Claim Amount:</span>
+                <span className="font-bold text-zinc-900 text-sm">₹{actionModal.item.amount}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Reported Issue:</span>
+                <span className="font-semibold text-zinc-800">{actionModal.item.reason}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Gateway Ref:</span>
+                <span className="font-mono text-zinc-600">{actionModal.item.paymentGatewayRef}</span>
+              </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-700 mb-1">Admin Audit Note</label>
+              <label className="block text-[11px] font-bold text-zinc-700 uppercase tracking-wider mb-1">
+                Audit Note / Reason
+              </label>
               <textarea
                 value={adminNote}
                 onChange={e => setAdminNote(e.target.value)}
-                placeholder={actionModal.type === 'APPROVE' ? 'e.g. Verified sensor anomaly on terminal door 4' : 'e.g. Customer checkout was normal, luggage retrieved'}
-                className="w-full p-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs outline-none focus:border-primary h-20"
+                placeholder="State verification note for financial ledger..."
+                rows={2}
+                className="w-full p-2.5 bg-white border border-zinc-200 rounded-lg text-xs outline-none focus:border-primary"
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-2">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-zinc-100">
               <button
                 type="button"
                 onClick={() => setActionModal({ isOpen: false, type: 'APPROVE', item: null })}
-                className="px-3.5 py-2 border border-zinc-200 text-zinc-700 text-xs font-bold rounded-xl hover:bg-zinc-50"
+                className="px-3 py-1.5 text-zinc-600 hover:bg-zinc-100 rounded-lg font-semibold"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={() => handleAction(actionModal.type === 'APPROVE' ? 'APPROVED' : 'REJECTED')}
-                className={`px-4 py-2 text-white text-xs font-bold rounded-xl shadow-sm ${
+                className={`px-3.5 py-1.5 text-white font-bold rounded-lg shadow-sm ${
                   actionModal.type === 'APPROVE' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'
                 }`}
               >
@@ -171,8 +235,8 @@ export const RefundRequests: React.FC = () => {
               </button>
             </div>
           </div>
-        )}
-      </Modal>
+        </Modal>
+      )}
     </div>
   );
 };

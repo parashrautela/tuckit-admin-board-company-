@@ -90,6 +90,31 @@ The console utilizes a **persistent vertical left sidebar rail** (256px wide, co
 
 ## Chronological Changelog & Trajectory History
 
+### [2026-08-17] — P2: Data Integrity, Metrics Honesty & URL-Synced Filter State
+- **Previous State:**
+  - Hardcoded static trends (`+14% vs last week`, `+24.8% vs last month`, `↓ -71%`, `+14% QoQ`, `+28% QoQ`) existed on Dashboard, Reports, and DeviceStatus KPI cards.
+  - Filter state on Dashboard and multi-filter pages was local `useState` only, losing all filter configurations upon reload or navigation.
+  - Quick date presets on Dashboard only fired a toast without setting date ranges or filtering data.
+  - No ability to save or bookmark custom filter configurations.
+- **Changes Made:**
+  - Eliminated all fabricated trend percentages and directional arrows across `Dashboard.tsx`, `Reports.tsx`, and `DeviceStatus.tsx`. Replaced with genuine computed counts and honest metadata.
+  - Verified and audited all action modals (`ForceUnlockModal`, `TerminalRebootModal`, `BlacklistUserModal`, `SmsUnlockModal`, `DestructiveActionModal`) to guarantee reason/justification fields start strictly empty with placeholder-only text.
+  - Synchronized all 8 Dashboard filters, date range, active preset, and pagination to URL query parameters via `useSearchParams`.
+  - Implemented working quick date range presets (`Today`, `Yesterday`, `Last 7 Days`, `Last 30 Days`, `This Month`, `This Year`) with real date calculation and active pill highlighting.
+  - Built persistent **Saved Views** manager with `localStorage` backing, 5 built-in views, custom view naming, and one-click application.
+  - Added URL search parameter synchronization across multi-filter pages: `Reports.tsx`, `RefundRequests.tsx`, `AuditLogs.tsx`, and `SystemAlerts.tsx`.
+- **Files Modified / Created:**
+  - `company level/src/pages/Dashboard.tsx`
+  - `company level/src/pages/Reports.tsx`
+  - `company level/src/pages/DeviceStatus.tsx`
+  - `company level/src/pages/RefundRequests.tsx`
+  - `company level/src/pages/AuditLogs.tsx`
+  - `company level/src/pages/SystemAlerts.tsx`
+  - `company level/src/components/control-center/ForceUnlockModal.tsx`
+- **Verification:** `npm run build` passed with 0 errors (built in 811ms).
+
+---
+
 ### [2026-08-17] — P1: Navigation IA & Design System Overhaul
 - **Commit:** `83b4949`
 - **Previous State:**

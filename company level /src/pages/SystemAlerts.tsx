@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useRealtime } from '../context/RealtimeContext';
 import { StatusBadge } from '../components/common/StatusBadge';
 import {
@@ -38,9 +39,21 @@ const initialIncidents: TelemetryIncident[] = [
 
 export const SystemAlerts: React.FC = () => {
   const { terminals, showToast } = useRealtime();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get('search') || '';
+  const severityFilter = searchParams.get('severity') || 'ALL';
+
+  const updateParam = (key: string, value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (!value || value === 'ALL') {
+      next.delete(key);
+    } else {
+      next.set(key, value);
+    }
+    setSearchParams(next);
+  };
+
   const [incidents, setIncidents] = useState<TelemetryIncident[]>(initialIncidents);
-  const [severityFilter, setSeverityFilter] = useState('ALL');
-  const [search, setSearch] = useState('');
 
   const filtered = useMemo(() => {
     return incidents.filter(i => {
@@ -58,197 +71,140 @@ export const SystemAlerts: React.FC = () => {
   }, [incidents, severityFilter, search]);
 
   const activeCount = incidents.filter(i => i.status === 'ACTIVE').length;
-  const criticalCount = incidents.filter(i => i.severity === 'CRITICAL' && i.status === 'ACTIVE').length;
 
-  const handleAcknowledge = (id: string) => {
-    setIncidents(prev => prev.map(i => (i.id === id ? { ...i, status: 'ACKNOWLEDGED' } : i)));
-    showToast('Incident acknowledged by operator', 'info');
-  };
-
-  const handleResolve = (id: string) => {
-    setIncidents(prev => prev.map(i => (i.id === id ? { ...i, status: 'RESOLVED' } : i)));
-    showToast('Incident marked as resolved', 'success');
-  };
-
-  const handleReboot = (code: string) => {
-    showToast(`Remote reboot pulse dispatched to terminal ${code}`, 'success');
+  const handleStatusChange = (id: string, newStatus: TelemetryIncident['status']) => {
+    setIncidents(prev =>
+      prev.map(i => (i.id === id ? { ...i, status: newStatus } : i))
+    );
+    showToast(`Alert ${id} updated to ${newStatus}`, 'success');
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-red-600 rounded-xl text-white shadow-sm">
-            <Bell className="h-6 w-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-black text-zinc-900 tracking-tight">Real-time System Alerts & Remote Diagnostics</h1>
-              <span className="px-2 py-0.5 bg-red-100 text-red-800 text-[10px] font-black rounded-full uppercase">
-                CLUSTER TELEMETRY
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-black text-zinc-900 flex items-center gap-2">
+              <Bell className="h-5 w-5 text-primary" /> Live Hardware Telemetry & Alerts
+            </h1>
+            {activeCount > 0 && (
+              <span className="px-2.5 py-0.5 bg-red-600 text-white text-[11px] font-black rounded-full animate-pulse">
+                {activeCount} CRITICAL ALARMS
               </span>
-            </div>
-            <p className="text-xs text-zinc-500 mt-0.5">
-              Live hardware sensor alarms, network dropouts, power interruptions, and remote diagnostic logs
-            </p>
+            )}
           </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => showToast('Telemetry alarms synced across 238 terminals', 'info')}
-          className="flex items-center gap-1.5 px-4 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-all shadow-sm shrink-0"
-        >
-          <Zap className="h-3.5 w-3.5 text-amber-400" /> Acknowledge All Alarms
-        </button>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs">
-          <div className="text-[10px] font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-            <AlertCircle className="h-3.5 w-3.5 text-red-600" /> Critical Alarms
-          </div>
-          <div className="text-2xl font-black text-red-600 mt-1">{criticalCount}</div>
-          <div className="text-[11px] text-red-600 font-semibold mt-0.5">Immediate intervention</div>
-        </div>
-
-        <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs">
-          <div className="text-[10px] font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-500" /> Active Warnings
-          </div>
-          <div className="text-2xl font-black text-zinc-900 mt-1">{activeCount}</div>
-          <div className="text-[11px] text-zinc-500 font-semibold mt-0.5">Hardware & temperature</div>
-        </div>
-
-        <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs">
-          <div className="text-[10px] font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" /> Resolved Today
-          </div>
-          <div className="text-2xl font-black text-emerald-600 mt-1">28</div>
-          <div className="text-[11px] text-emerald-600 font-semibold mt-0.5">Automated recovery</div>
-        </div>
-
-        <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs">
-          <div className="text-[10px] font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Layers className="h-3.5 w-3.5 text-sky-500" /> Monitored Nodes
-          </div>
-          <div className="text-2xl font-black text-zinc-900 mt-1">{terminals.length}</div>
-          <div className="text-[11px] text-zinc-500 font-semibold mt-0.5">Nationwide network</div>
+          <p className="text-xs text-zinc-500 mt-1">
+            Real-time IoT heartbeat monitor, socket disconnects, solenoid latencies, and thermal sensor alarms
+          </p>
         </div>
       </div>
 
-      {/* Filter Bar */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs p-4 flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[240px]">
+      {/* Filter Row */}
+      <div className="flex flex-col sm:flex-row items-center gap-3">
+        <div className="relative flex-1 w-full">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
           <input
+            type="text"
             value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search alerts by terminal code, site, or incident title..."
-            className="w-full pl-10 pr-4 h-9 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-medium outline-none focus:bg-white focus:border-primary"
+            onChange={e => updateParam('search', e.target.value)}
+            placeholder="Search by terminal code, alert title, or site name..."
+            className="w-full pl-10 pr-4 h-10 bg-white border border-zinc-200 rounded-lg text-xs font-medium outline-none focus:border-primary"
           />
         </div>
 
         <select
           value={severityFilter}
-          onChange={e => setSeverityFilter(e.target.value)}
-          className="h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-800"
+          onChange={e => updateParam('severity', e.target.value)}
+          className="h-10 px-3 bg-white border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 outline-none focus:border-primary"
         >
           <option value="ALL">All Severities</option>
           <option value="CRITICAL">Critical Alarms</option>
           <option value="WARNING">Warnings</option>
-          <option value="INFO">Informational</option>
+          <option value="INFO">Information</option>
         </select>
       </div>
 
-      {/* Alarms Feed */}
-      <div className="grid grid-cols-1 gap-3">
-        {filtered.map(item => (
+      {/* Alerts Grid / List */}
+      <div className="space-y-3">
+        {filtered.map(inc => (
           <div
-            key={item.id}
-            className={`bg-white rounded-2xl border p-5 shadow-2xs hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 ${
-              item.severity === 'CRITICAL'
-                ? 'border-l-4 border-l-red-600 border-zinc-200'
-                : item.severity === 'WARNING'
-                ? 'border-l-4 border-l-amber-500 border-zinc-200'
-                : 'border-l-4 border-l-sky-500 border-zinc-200'
+            key={inc.id}
+            className={`p-4 rounded-xl border bg-white shadow-2xs transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+              inc.severity === 'CRITICAL'
+                ? 'border-red-200 hover:border-red-300'
+                : inc.severity === 'WARNING'
+                ? 'border-amber-200 hover:border-amber-300'
+                : 'border-zinc-200 hover:border-zinc-300'
             }`}
           >
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3.5 min-w-0">
               <div
-                className={`p-3 rounded-2xl shrink-0 mt-0.5 ${
-                  item.severity === 'CRITICAL'
+                className={`p-2.5 rounded-lg shrink-0 ${
+                  inc.severity === 'CRITICAL'
                     ? 'bg-red-50 text-red-600'
-                    : item.severity === 'WARNING'
+                    : inc.severity === 'WARNING'
                     ? 'bg-amber-50 text-amber-600'
-                    : 'bg-sky-50 text-sky-600'
+                    : 'bg-blue-50 text-blue-600'
                 }`}
               >
-                {item.severity === 'CRITICAL' ? (
-                  <WifiOff className="h-6 w-6" />
-                ) : item.severity === 'WARNING' ? (
-                  <AlertTriangle className="h-6 w-6" />
+                {inc.severity === 'CRITICAL' ? (
+                  <AlertCircle className="h-5 w-5" />
+                ) : inc.severity === 'WARNING' ? (
+                  <AlertTriangle className="h-5 w-5" />
                 ) : (
-                  <Info className="h-6 w-6" />
+                  <Info className="h-5 w-5" />
                 )}
               </div>
 
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black font-mono text-zinc-900">{item.terminalCode}</span>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-mono font-bold text-xs text-zinc-900">{inc.terminalCode}</span>
+                  <span className="text-zinc-400">•</span>
+                  <span className="text-xs font-bold text-zinc-800">{inc.title}</span>
                   <span
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase ${
-                      item.severity === 'CRITICAL'
-                        ? 'bg-red-100 text-red-800'
-                        : item.severity === 'WARNING'
-                        ? 'bg-amber-100 text-amber-800'
-                        : 'bg-sky-100 text-sky-800'
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                      inc.severity === 'CRITICAL'
+                        ? 'bg-red-100 text-red-700'
+                        : inc.severity === 'WARNING'
+                        ? 'bg-amber-100 text-amber-700'
+                        : 'bg-blue-100 text-blue-700'
                     }`}
                   >
-                    {item.severity}
+                    {inc.severity}
                   </span>
-                  <span className="text-[11px] text-zinc-400 font-mono">• {item.timestamp}</span>
                 </div>
-
-                <h3 className="text-sm font-bold text-zinc-900 mt-1">{item.title}</h3>
-                <p className="text-xs text-zinc-600 mt-0.5 leading-relaxed max-w-2xl">{item.message}</p>
-                <p className="text-[11px] text-zinc-400 font-medium mt-1">{item.siteName}</p>
+                <p className="text-xs text-zinc-600 mt-1 leading-relaxed">{inc.message}</p>
+                <div className="flex items-center gap-3 text-[11px] text-zinc-400 mt-1.5 font-mono">
+                  <span>{inc.siteName}</span>
+                  <span>•</span>
+                  <span>{inc.timestamp}</span>
+                </div>
               </div>
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center gap-2 shrink-0 self-start md:self-center">
-              <button
-                type="button"
-                onClick={() => handleReboot(item.terminalCode)}
-                className="flex items-center gap-1 px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-xs font-bold rounded-xl transition-colors"
-              >
-                <RotateCcw className="h-3.5 w-3.5" /> Reboot
-              </button>
-
-              {item.status === 'ACTIVE' && (
+            <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+              {inc.status === 'ACTIVE' && (
                 <button
                   type="button"
-                  onClick={() => handleAcknowledge(item.id)}
-                  className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold rounded-xl transition-colors border border-amber-200"
+                  onClick={() => handleStatusChange(inc.id, 'ACKNOWLEDGED')}
+                  className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold rounded-lg transition-colors"
                 >
                   Acknowledge
                 </button>
               )}
-
-              {item.status !== 'RESOLVED' ? (
+              {inc.status !== 'RESOLVED' && (
                 <button
                   type="button"
-                  onClick={() => handleResolve(item.id)}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors shadow-sm"
+                  onClick={() => handleStatusChange(inc.id, 'RESOLVED')}
+                  className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold rounded-lg transition-colors flex items-center gap-1"
                 >
                   <Check className="h-3.5 w-3.5" /> Resolve
                 </button>
-              ) : (
-                <span className="px-3 py-1 bg-zinc-100 text-zinc-500 text-xs font-bold rounded-xl">
-                  Resolved
+              )}
+              {inc.status === 'RESOLVED' && (
+                <span className="px-3 py-1 bg-zinc-100 text-zinc-600 text-xs font-semibold rounded-lg flex items-center gap-1 font-mono">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" /> RESOLVED
                 </span>
               )}
             </div>

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useRealtime } from '../context/RealtimeContext';
 import { Modal } from '../components/common/Modal';
 import {
@@ -59,11 +60,27 @@ const ALL_EXPORT_COLUMNS = [
 
 export const Reports: React.FC = () => {
   const { terminals, bookings, showToast } = useRealtime();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Header Filters
-  const [selectedState, setSelectedState] = useState<string>('ALL');
-  const [startDate, setStartDate] = useState('2024-08-01');
-  const [endDate, setEndDate] = useState('2024-08-16');
+  // Header Filters (URL-synced)
+  const selectedState = searchParams.get('state') || 'ALL';
+  const startDate = searchParams.get('startDate') || '2024-08-01';
+  const endDate = searchParams.get('endDate') || '2024-08-16';
+
+  const updateParam = (key: string, value: string) => {
+    const next = new URLSearchParams(searchParams);
+    if (!value || value === 'ALL') {
+      next.delete(key);
+    } else {
+      next.set(key, value);
+    }
+    setSearchParams(next);
+  };
+
+  const setSelectedState = (val: string) => updateParam('state', val);
+  const setStartDate = (val: string) => updateParam('startDate', val);
+  const setEndDate = (val: string) => updateParam('endDate', val);
+
   const [lastRefreshed, setLastRefreshed] = useState(new Date().toLocaleTimeString());
   const [isRefreshing, setIsRefreshing] = useState(false);
 

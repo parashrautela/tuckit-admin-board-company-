@@ -10,6 +10,8 @@ interface ForceUnlockModalProps {
   defaultLockerName?: string;
   terminalCode?: string;
   lockName?: string;
+  initialCode?: string;
+  initialLock?: string;
 }
 
 export const ForceUnlockModal: React.FC<ForceUnlockModalProps> = ({
@@ -17,17 +19,21 @@ export const ForceUnlockModal: React.FC<ForceUnlockModalProps> = ({
   onClose,
   defaultTerminalCode = 'HKBKCBELB',
   defaultLockerName = 'LKR-A01',
-  terminalCode: initialCode,
-  lockName: initialLock,
+  terminalCode: propTerminalCode,
+  lockName: propLockName,
+  initialCode,
+  initialLock,
 }) => {
+  const effectiveCode = initialCode || propTerminalCode || defaultTerminalCode;
+  const effectiveLock = initialLock || propLockName || defaultLockerName;
   const { terminals, forceUnlockLocker } = useRealtime();
-  const [terminalCode, setTerminalCode] = useState(initialCode || defaultTerminalCode);
-  const [lockerName, setLockerName] = useState(initialLock || defaultLockerName);
+  const [terminalCode, setTerminalCode] = useState(effectiveCode);
+  const [lockerName, setLockerName] = useState(effectiveLock);
 
   useEffect(() => {
-    if (initialCode) setTerminalCode(initialCode);
-    if (initialLock) setLockerName(initialLock);
-  }, [initialCode, initialLock, isOpen]);
+    if (effectiveCode) setTerminalCode(effectiveCode);
+    if (effectiveLock) setLockerName(effectiveLock);
+  }, [effectiveCode, effectiveLock, isOpen]);
 
   const terminalOptions: SelectOption[] = useMemo(() => {
     return terminals.map(t => ({
