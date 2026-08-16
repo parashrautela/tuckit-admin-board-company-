@@ -145,10 +145,10 @@ export const Dashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Top Banner KPI Summary */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs">
+        <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-2xs">
           <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">Total Bookings</div>
           <div className="text-2xl font-black text-zinc-900 mt-1">{bookings.length}</div>
-          <div className="text-[11px] text-emerald-600 font-semibold mt-0.5">↑ +14% vs last week</div>
+          <div className="text-[11px] text-zinc-500 font-medium mt-0.5">All fleet records</div>
         </div>
 
         <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs">

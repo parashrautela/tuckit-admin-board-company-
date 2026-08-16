@@ -287,12 +287,12 @@ export const Reports: React.FC = () => {
       {/* 5 Executive KPI Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {/* Net Revenue */}
-        <div className="bg-white p-4 rounded-2xl border border-zinc-200 shadow-2xs hover:shadow-md transition-all">
+        <div className="bg-white p-4 rounded-xl border border-zinc-200 shadow-2xs hover:shadow-md transition-all">
           <div className="flex items-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-wider">
             <IndianRupee className="h-3.5 w-3.5 text-primary" /> Net Revenue
           </div>
           <div className="text-2xl font-black text-zinc-900 mt-2">₹{netRevenue.toLocaleString()}</div>
-          <div className="text-[11px] text-emerald-600 font-semibold mt-1">↑ +24.8% vs last month</div>
+          <div className="text-[11px] text-zinc-500 font-semibold mt-1">Realized revenue</div>
           <div className="text-[10px] text-zinc-400 mt-0.5">Post-refund realized revenue</div>
         </div>
 
@@ -405,12 +405,12 @@ export const Reports: React.FC = () => {
             <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100 text-center">
               <div className="text-xs text-zinc-400 font-bold uppercase">Mobile App</div>
               <div className="text-lg font-black text-emerald-600 mt-1">19.2%</div>
-              <div className="text-[10px] text-emerald-600 font-semibold mt-0.5">↑ +14% QoQ</div>
+              <div className="text-[10px] text-zinc-500 font-semibold mt-0.5">iOS & Android App</div>
             </div>
             <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100 text-center">
               <div className="text-xs text-zinc-400 font-bold uppercase">WhatsApp Bot</div>
               <div className="text-lg font-black text-green-600 mt-1">12.4%</div>
-              <div className="text-[10px] text-green-600 font-semibold mt-0.5">↑ +28% QoQ</div>
+              <div className="text-[10px] text-zinc-500 font-semibold mt-0.5">Automated Booking</div>
             </div>
           </div>
 

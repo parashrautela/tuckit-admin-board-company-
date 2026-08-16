@@ -117,9 +117,9 @@ export const DeviceStatus: React.FC = () => {
           </div>
           <div className="text-3xl font-black text-zinc-900 mt-2">{totalTerminals}</div>
           <div className="text-[11px] text-zinc-500 font-semibold mt-1">ALL CONFIGURED</div>
-          <div className="text-[11px] text-red-500 font-bold flex items-center gap-1 mt-0.5">
-            <TrendingDown className="h-3 w-3" />
-            ↓ -71% VS LAST MONTH
+          <div className="text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
+            <Activity className="h-3 w-3" />
+            {onlineDevices} ONLINE NODES
           </div>
           <div className="absolute -bottom-3 -right-3 h-16 w-16 bg-zinc-100 rounded-full opacity-50" />
         </div>
