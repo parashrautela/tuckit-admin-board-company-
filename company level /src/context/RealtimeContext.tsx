@@ -74,6 +74,7 @@ interface RealtimeContextType {
   totalAlertsCount: number;
 
   // Actions
+  addAuditLog: (action: string, resource: string, resourceId: string, details?: string, status?: 'SUCCESS' | 'WARNING' | 'FAILED') => void;
   showToast: (message: string, type?: 'success' | 'error' | 'info' | 'warning') => void;
   toasts: ToastMessage[];
   removeToast: (id: string) => void;
@@ -193,7 +194,7 @@ export const RealtimeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const pendingStaffCreditsCount = useMemo(() => staffCreditRequests.filter(s => s.status === 'PENDING').length, [staffCreditRequests]);
   const totalAlertsCount = useMemo(() => alerts.filter(a => a.status === 'UNRESOLVED').length, [alerts]);
 
-  const addAuditLog = (action: string, resource: string, resourceId: string, details: string, status: 'SUCCESS' | 'WARNING' | 'FAILED' = 'SUCCESS') => {
+  const addAuditLog = (action: string, resource: string, resourceId: string, details: string = '', status: 'SUCCESS' | 'WARNING' | 'FAILED' = 'SUCCESS') => {
     const newLog: AuditLog = {
       id: `aud_${Date.now()}`,
       timestamp: new Date().toLocaleString([], { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
@@ -388,6 +389,7 @@ export const RealtimeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         pendingRefundsCount,
         pendingStaffCreditsCount,
         totalAlertsCount,
+        addAuditLog,
         showToast,
         toasts,
         removeToast,

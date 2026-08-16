@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
-  const { bookings, terminals, showToast } = useRealtime();
+  const { bookings, terminals, showToast, addAuditLog } = useRealtime();
 
   // Filters
   const [mobileFilter, setMobileFilter] = useState('');
@@ -38,7 +38,13 @@ export const Dashboard: React.FC = () => {
   const [startDate, setStartDate] = useState('Aug 01, 2026');
   const [endDate, setEndDate] = useState('Aug 16, 2026');
   const [showAdvanced, setShowAdvanced] = useState(true);
-  const [showPasscodes, setShowPasscodes] = useState(false);
+  
+  // Single source of truth for PII reveal state (Passcodes & DOB)
+  const [showSensitiveData, setShowSensitiveData] = useState(false);
+
+  // Export Modal State
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [exportIncludeSensitive, setExportIncludeSensitive] = useState(false);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,6 +81,17 @@ export const Dashboard: React.FC = () => {
     showToast('Filters cleared', 'info');
   };
 
+  const handleToggleSensitiveData = () => {
+    const next = !showSensitiveData;
+    setShowSensitiveData(next);
+    if (next) {
+      addAuditLog('PII_REVEAL', 'BOOKING_DATA', 'FLEET_VIEW', 'Operator unmasked sensitive PII (Passcodes & DOB) in table/session', 'WARNING');
+      showToast('Sensitive fields (Passcodes & DOB) unmasked — Access logged to audit trail', 'warning');
+    } else {
+      showToast('Sensitive fields masked', 'info');
+    }
+  };
+
   const filteredBookings = useMemo(() => {
     return bookings.filter(b => {
       if (mobileFilter && !b.mobileNumber.includes(mobileFilter) && !b.customerName.toLowerCase().includes(mobileFilter.toLowerCase())) {
@@ -94,16 +111,25 @@ export const Dashboard: React.FC = () => {
   const totalPages = Math.max(1, Math.ceil(filteredBookings.length / itemsPerPage));
   const paginatedBookings = filteredBookings.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  const handleExportExcel = () => {
+  const handleExecuteExport = () => {
     const csvContent =
       'data:text/csv;charset=utf-8,' +
       [
         'SL,TERMINAL CODE,INVOICE NUMBER,CUSTOMER NAME,MOBILE,OPEN DATE TIME,STATUS,PAYMENT,DOB,LOCK,PASSCODE,DURATION,AMOUNT',
-        ...filteredBookings.map(
-          b =>
-            `${b.serialNumber},"${b.terminalCode}","${b.invoiceNumber}","${b.customerName}","${b.mobileNumber}","${b.openDateTime}","${b.bookingStatus}","${b.paymentMethod}","${b.dateOfBirth || ''}","${b.lockName}","${b.passcode}","${b.duration}",${b.amount}`
-        ),
+        ...filteredBookings.map(b => {
+          const dobVal = b.dateOfBirth ? (exportIncludeSensitive ? b.dateOfBirth : '••••-••-••') : '';
+          const passVal = exportIncludeSensitive ? b.passcode : '••••';
+          return `${b.serialNumber},"${b.terminalCode}","${b.invoiceNumber}","${b.customerName}","${b.mobileNumber}","${b.openDateTime}","${b.bookingStatus}","${b.paymentMethod}","${dobVal}","${b.lockName}","${passVal}","${b.duration}",${b.amount}`;
+        }),
       ].join('\n');
+
+    if (exportIncludeSensitive) {
+      addAuditLog('PII_EXPORT_UNMASKED', 'EXPORT_CSV', `${filteredBookings.length} records`, 'Exported bookings dataset with unmasked DOB and Passcodes', 'WARNING');
+      showToast(`Exported ${filteredBookings.length} records with unmasked PII — Event logged`, 'warning');
+    } else {
+      addAuditLog('BOOKINGS_EXPORT', 'EXPORT_CSV', `${filteredBookings.length} records`, 'Exported bookings dataset with masked PII');
+      showToast(`Exported ${filteredBookings.length} records (PII masked)`, 'success');
+    }
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
@@ -112,7 +138,7 @@ export const Dashboard: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showToast(`Exported ${filteredBookings.length} booking records to CSV/Excel`, 'success');
+    setShowExportModal(false);
   };
 
   return (
@@ -358,28 +384,32 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* Main Bookings Data Table */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs overflow-hidden">
+      <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs overflow-hidden">
         {/* Table Header Bar */}
         <div className="p-4 sm:px-6 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-base font-bold text-zinc-900">Booking History</h3>
+            <h3 className="text-base font-bold text-zinc-900 tracking-tight">Booking History</h3>
             <p className="text-xs text-zinc-500">Manage and track all locker reservations</p>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => setShowPasscodes(!showPasscodes)}
-              className="flex items-center gap-1 px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-semibold rounded-lg transition-colors"
+              onClick={handleToggleSensitiveData}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md border transition-colors ${
+                showSensitiveData
+                  ? 'bg-amber-50 border-amber-300 text-amber-900'
+                  : 'bg-zinc-100 border-zinc-200 hover:bg-zinc-200 text-zinc-700'
+              }`}
             >
-              {showPasscodes ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
-              <span>{showPasscodes ? 'Mask Passcodes' : 'Show Passcodes'}</span>
+              {showSensitiveData ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+              <span>{showSensitiveData ? 'Mask Sensitive Fields' : 'Reveal Sensitive Fields'}</span>
             </button>
 
             <button
               type="button"
               onClick={() => showToast('Refreshing booking table from AWS DynamoDB...', 'info')}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-bold rounded-lg transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-semibold rounded-md transition-colors"
             >
               <RotateCw className="h-3.5 w-3.5 text-zinc-500" />
               <span>Refresh</span>
@@ -387,11 +417,14 @@ export const Dashboard: React.FC = () => {
 
             <button
               type="button"
-              onClick={handleExportExcel}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-2xs transition-colors"
+              onClick={() => {
+                setExportIncludeSensitive(false);
+                setShowExportModal(true);
+              }}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-zinc-900 hover:bg-black text-white text-xs font-semibold rounded-md shadow-2xs transition-colors"
             >
               <FileSpreadsheet className="h-3.5 w-3.5" />
-              <span>Excel</span>
+              <span>Export CSV</span>
             </button>
           </div>
         </div>
@@ -440,10 +473,12 @@ export const Dashboard: React.FC = () => {
                     <td className="py-3 px-3 whitespace-nowrap">
                       <StatusBadge status={b.paymentMethod} />
                     </td>
-                    <td className="py-3 px-3 text-zinc-500 font-mono whitespace-nowrap">{b.dateOfBirth || '—'}</td>
+                    <td className="py-3 px-3 text-zinc-500 font-mono whitespace-nowrap">
+                      {b.dateOfBirth ? (showSensitiveData ? b.dateOfBirth : '••••-••-••') : '—'}
+                    </td>
                     <td className="py-3 px-3 font-mono font-bold text-zinc-800 whitespace-nowrap">{b.lockName}</td>
                     <td className="py-3 px-3 font-mono font-bold text-primary whitespace-nowrap">
-                      {showPasscodes ? b.passcode : '••••'}
+                      {showSensitiveData ? b.passcode : '••••'}
                     </td>
                     <td className="py-3 px-3 text-zinc-700 whitespace-nowrap font-medium">{b.duration}</td>
                     <td className="py-3 px-3 text-right whitespace-nowrap">
@@ -453,7 +488,7 @@ export const Dashboard: React.FC = () => {
                           setSelectedBooking(b);
                           setShowDetailsModal(true);
                         }}
-                        className="px-2.5 py-1 text-[11px] font-bold text-zinc-700 bg-zinc-100 hover:bg-primary hover:text-white rounded-md transition-colors"
+                        className="px-2.5 py-1 text-[11px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-primary hover:text-white rounded-md transition-colors"
                       >
                         Inspect
                       </button>
@@ -478,7 +513,7 @@ export const Dashboard: React.FC = () => {
               type="button"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              className="p-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
+              className="p-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -489,7 +524,7 @@ export const Dashboard: React.FC = () => {
               type="button"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              className="p-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
+              className="p-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -521,8 +556,26 @@ export const Dashboard: React.FC = () => {
                 <span className="font-mono font-bold text-zinc-900">{selectedBooking.terminalCode} / {selectedBooking.lockName}</span>
               </div>
               <div>
-                <span className="text-zinc-400 block text-[10px] uppercase font-bold">4-Digit Passcode</span>
-                <span className="font-mono font-black text-primary text-base">{selectedBooking.passcode}</span>
+                <span className="text-zinc-400 block text-[10px] uppercase font-bold">Date of Birth (PII)</span>
+                <span className="font-mono font-bold text-zinc-900">
+                  {selectedBooking.dateOfBirth ? (showSensitiveData ? selectedBooking.dateOfBirth : '••••-••-••') : '—'}
+                </span>
+              </div>
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-zinc-400 block text-[10px] uppercase font-bold">4-Digit Passcode</span>
+                  <button
+                    type="button"
+                    onClick={handleToggleSensitiveData}
+                    className="text-[10px] text-primary font-bold hover:underline flex items-center gap-1"
+                  >
+                    {showSensitiveData ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                    {showSensitiveData ? 'Mask' : 'Reveal'}
+                  </button>
+                </div>
+                <span className="font-mono font-black text-primary text-base">
+                  {showSensitiveData ? selectedBooking.passcode : '••••'}
+                </span>
               </div>
               <div>
                 <span className="text-zinc-400 block text-[10px] uppercase font-bold">Status</span>
@@ -561,6 +614,73 @@ export const Dashboard: React.FC = () => {
           </div>
         </Modal>
       )}
+
+      {/* Dedicated Export Options Modal (Deliberate PII reveal control) */}
+      <Modal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        title="Export Bookings Dataset"
+        subtitle={`Export ${filteredBookings.length} filtered reservation records to CSV/Excel`}
+        maxWidth="md"
+      >
+        <div className="space-y-4">
+          <div className="p-3.5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-2">
+            <div className="text-xs font-bold text-zinc-800 uppercase tracking-wider">
+              Export Configuration
+            </div>
+            <div className="text-xs text-zinc-600">
+              Generating an itemized record of current filtered bookings ({filteredBookings.length} rows).
+            </div>
+          </div>
+
+          {/* Sensitive PII Opt-In Checkbox */}
+          <div className="p-3.5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-3">
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={exportIncludeSensitive}
+                onChange={e => setExportIncludeSensitive(e.target.checked)}
+                className="mt-0.5 rounded border-zinc-300 text-primary focus:ring-primary h-4 w-4"
+              />
+              <div>
+                <div className="text-xs font-bold text-zinc-900">
+                  Include unmasked sensitive fields (DOB & Passcodes)
+                </div>
+                <div className="text-[11px] text-zinc-500 mt-0.5 leading-relaxed">
+                  By default, sensitive locker passcodes and customer dates of birth are masked (<code className="font-mono text-zinc-700">••••</code>). Checking this exports plaintext values.
+                </div>
+              </div>
+            </label>
+
+            {exportIncludeSensitive && (
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 text-xs flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                <span>
+                  <strong>Security Audit Notice:</strong> Unmasking sensitive PII in exported files is logged to the system audit trail with your operator username, IP address, and timestamp.
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-zinc-100">
+            <button
+              type="button"
+              onClick={() => setShowExportModal(false)}
+              className="px-4 py-2 text-xs font-semibold text-zinc-600 hover:bg-zinc-100 rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleExecuteExport}
+              className="flex items-center gap-1.5 px-4 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-bold rounded-lg shadow-sm transition-all"
+            >
+              <FileSpreadsheet className="h-3.5 w-3.5 text-primary" />
+              <span>Download CSV</span>
+            </button>
+          </div>
+        </div>
+      </Modal>
 
       {/* Force Unlock Modal trigger from row */}
       {forceUnlockBooking && (
