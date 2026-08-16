@@ -1,5 +1,8 @@
 {
   "buildCommand": "cd \"./company level \" && npm install && npm run build",
   "outputDirectory": "company level /dist",
-  "framework": "vite"
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
