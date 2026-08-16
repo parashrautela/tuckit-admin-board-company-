@@ -128,8 +128,8 @@ export const RemoteAssistanceModal: React.FC<RemoteAssistanceModalProps> = ({
               onChange={e => setSelectedCode(e.target.value)}
               className="w-full h-9 px-3 bg-white border border-zinc-200 rounded-xl text-xs font-mono font-bold text-zinc-800 outline-none focus:border-primary"
             >
-              {terminals.slice(0, 30).map(t => (
-                <option key={t.id} value={t.code}>{t.code} — {t.siteName}</option>
+              {terminals.map(t => (
+                <option key={t.id} value={t.code}>{t.code} — {t.siteName} ({t.city})</option>
               ))}
             </select>
           </div>

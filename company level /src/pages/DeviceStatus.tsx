@@ -22,6 +22,8 @@ import {
   Signal,
   TrendingDown,
   AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 export const DeviceStatus: React.FC = () => {
@@ -48,6 +50,10 @@ export const DeviceStatus: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [networkFilter, setNetworkFilter] = useState('ALL');
 
+  // Pagination for fleet scale
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = viewMode === 'grid' ? 24 : 20;
+
   const [printQrTerminal, setPrintQrTerminal] = useState<Terminal | null>(null);
   const [captureTerminal, setCaptureTerminal] = useState<Terminal | null>(null);
 
@@ -58,10 +64,10 @@ export const DeviceStatus: React.FC = () => {
         if (
           !t.code.toLowerCase().includes(q) &&
           !t.siteName.toLowerCase().includes(q) &&
-          !t.city.toLowerCase().includes(q) &&
-          !t.state.toLowerCase().includes(q)
-        )
+          !t.city.toLowerCase().includes(q)
+        ) {
           return false;
+        }
       }
       if (stateFilter !== 'ALL' && t.state !== stateFilter) return false;
       if (cityFilter !== 'ALL' && t.city !== cityFilter) return false;
@@ -72,6 +78,9 @@ export const DeviceStatus: React.FC = () => {
       return true;
     });
   }, [terminals, searchQuery, stateFilter, cityFilter, siteTypeFilter, lockerTypeFilter, statusFilter, networkFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredTerminals.length / itemsPerPage));
+  const paginatedTerminals = filteredTerminals.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const uniqueStates = useMemo(() => [...new Set(terminals.map(t => t.state))].sort(), [terminals]);
   const uniqueCities = useMemo(() => [...new Set(terminals.map(t => t.city))].sort(), [terminals]);
@@ -367,80 +376,112 @@ export const DeviceStatus: React.FC = () => {
 
       {/* Terminal Cards Grid View */}
       {viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filteredTerminals.slice(0, 40).map(t => (
-            <div
-              key={t.id}
-              className="bg-white rounded-2xl border border-zinc-200 p-4 shadow-2xs hover:shadow-md transition-all group"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <MonitorCheck className="h-4 w-4 text-zinc-400 group-hover:text-primary transition-colors" />
-                  <span className="text-xs font-black font-mono text-zinc-900">{t.code}</span>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {paginatedTerminals.map(t => (
+              <div
+                key={t.id}
+                className="bg-white rounded-xl border border-zinc-200 p-4 shadow-2xs hover:shadow-md transition-all group"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <MonitorCheck className="h-4 w-4 text-zinc-400 group-hover:text-primary transition-colors" />
+                    <span className="text-xs font-mono font-bold text-zinc-900">{t.code}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <StatusBadge status={t.connectivityStatus} pulse={t.connectivityStatus === 'ONLINE'} />
+                    <StatusBadge status={t.lifecycleStatus} />
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <StatusBadge status={t.connectivityStatus} pulse={t.connectivityStatus === 'ONLINE'} />
-                  <StatusBadge status={t.lifecycleStatus} />
-                </div>
-              </div>
 
-              <div className="mt-2.5 text-xs font-semibold text-zinc-700 truncate">{t.siteName}</div>
+                <div className="mt-2.5 text-xs font-semibold text-zinc-700 truncate">{t.siteName}</div>
 
-              <div className="mt-3 space-y-1.5 text-[11px]">
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 font-medium">Firmware</span>
-                  <span className="text-zinc-800 font-bold font-mono">{t.firmwareVersion}</span>
+                <div className="mt-3 space-y-1.5 text-[11px]">
+                  <div className="flex justify-between">
+                    <span className="text-zinc-400 font-medium">Firmware</span>
+                    <span className="text-zinc-800 font-bold font-mono">{t.firmwareVersion}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-400 font-medium">Device Type</span>
+                    <span className="text-zinc-800 font-bold">{t.deviceType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-400 font-medium">Location Pin</span>
+                    <span className="text-zinc-800 font-bold font-mono">{t.locationPin}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-400 font-medium">Heartbeat</span>
+                    <span
+                      className={`font-bold font-mono ${
+                        t.heartbeatSecondsAgo < 15
+                          ? 'text-emerald-600'
+                          : t.heartbeatSecondsAgo < 60
+                          ? 'text-amber-600'
+                          : 'text-red-600'
+                      }`}
+                    >
+                      {t.heartbeatSecondsAgo < 60
+                        ? `${t.heartbeatSecondsAgo}s ago`
+                        : `${Math.floor(t.heartbeatSecondsAgo / 60)}m ago`}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 font-medium">Device Type</span>
-                  <span className="text-zinc-800 font-bold">{t.deviceType}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 font-medium">Location Pin</span>
-                  <span className="text-zinc-800 font-bold font-mono">{t.locationPin}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400 font-medium">Heartbeat</span>
-                  <span
-                    className={`font-bold font-mono ${
-                      t.heartbeatSecondsAgo < 15
-                        ? 'text-emerald-600'
-                        : t.heartbeatSecondsAgo < 60
-                        ? 'text-amber-600'
-                        : 'text-red-600'
-                    }`}
+
+                <div className="mt-3 pt-3 border-t border-zinc-100 flex items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPrintQrTerminal(t)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-zinc-100 hover:bg-primary hover:text-white text-zinc-700 text-[11px] font-bold rounded-lg transition-colors"
                   >
-                    {t.heartbeatSecondsAgo < 60
-                      ? `${t.heartbeatSecondsAgo}s ago`
-                      : `${Math.floor(t.heartbeatSecondsAgo / 60)}m ago`}
-                  </span>
+                    <Printer className="h-3 w-3" />
+                    Print QR
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCaptureTerminal(t)}
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-zinc-100 hover:bg-zinc-900 hover:text-white text-zinc-700 text-[11px] font-bold rounded-lg transition-colors"
+                  >
+                    <Camera className="h-3 w-3" />
+                    Capture
+                  </button>
                 </div>
               </div>
+            ))}
+          </div>
 
-              <div className="mt-3 pt-3 border-t border-zinc-100 flex items-center justify-between gap-2">
-                <button
-                  type="button"
-                  onClick={() => setPrintQrTerminal(t)}
-                  className="flex items-center gap-1 px-2.5 py-1.5 bg-zinc-100 hover:bg-primary hover:text-white text-zinc-700 text-[11px] font-bold rounded-lg transition-colors"
-                >
-                  <Printer className="h-3 w-3" />
-                  Print QR
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCaptureTerminal(t)}
-                  className="flex items-center gap-1 px-2.5 py-1.5 bg-zinc-100 hover:bg-zinc-900 hover:text-white text-zinc-700 text-[11px] font-bold rounded-lg transition-colors"
-                >
-                  <Camera className="h-3 w-3" />
-                  Capture
-                </button>
-              </div>
+          {/* Grid View Pagination */}
+          <div className="p-4 bg-white rounded-xl border border-zinc-200 flex items-center justify-between text-xs text-zinc-500">
+            <div>
+              Showing <strong>{filteredTerminals.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</strong> to{' '}
+              <strong>{Math.min(filteredTerminals.length, currentPage * itemsPerPage)}</strong> of{' '}
+              <strong>{filteredTerminals.length}</strong> kiosks
             </div>
-          ))}
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                className="p-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <span className="px-2 font-mono font-bold text-zinc-700">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                type="button"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                className="p-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
         /* Terminal List View */
-        <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs overflow-hidden">
+        <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs overflow-hidden">
           <div className="overflow-x-auto custom-scrollbar">
             <table className="w-full text-left text-xs">
               <thead>
@@ -458,7 +499,7 @@ export const DeviceStatus: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100">
-                {filteredTerminals.slice(0, 50).map(t => (
+                {paginatedTerminals.map(t => (
                   <tr key={t.id} className="hover:bg-zinc-50 transition-colors">
                     <td className="py-2.5 px-3 font-mono font-bold text-zinc-900">{t.code}</td>
                     <td className="py-2.5 px-3 text-zinc-700 font-medium max-w-[200px] truncate">{t.siteName}</td>
@@ -507,6 +548,36 @@ export const DeviceStatus: React.FC = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* List View Pagination */}
+          <div className="p-4 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+            <div>
+              Showing <strong>{filteredTerminals.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</strong> to{' '}
+              <strong>{Math.min(filteredTerminals.length, currentPage * itemsPerPage)}</strong> of{' '}
+              <strong>{filteredTerminals.length}</strong> kiosks
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                className="p-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <span className="px-2 font-mono font-bold text-zinc-700">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                type="button"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                className="p-1.5 rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-50 disabled:opacity-40"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
       )}

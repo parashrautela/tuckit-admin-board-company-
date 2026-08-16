@@ -371,10 +371,10 @@ export const Dashboard: React.FC = () => {
                 onChange={e => setTerminalFilter(e.target.value)}
                 className="w-full h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 focus:bg-white focus:border-primary outline-none"
               >
-                <option value="ALL">All Terminals</option>
-                {terminals.slice(0, 30).map(t => (
-                  <option key={t.code} value={t.code}>
-                    {t.code} ({t.siteName.slice(0, 20)}...)
+                <option value="ALL">All Terminals ({terminals.length})</option>
+                {terminals.map(t => (
+                  <option key={t.id} value={t.code}>
+                    {t.code} — {t.siteName} ({t.city})
                   </option>
                 ))}
               </select>

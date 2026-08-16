@@ -614,8 +614,8 @@ export const Reports: React.FC = () => {
                 onChange={e => setTwTerminalId(e.target.value)}
                 className="w-full h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-mono font-bold text-zinc-800 outline-none focus:border-primary"
               >
-                <option value="">Select Terminal</option>
-                {twAvailableTerminals.slice(0, 50).map(t => (
+                <option value="">Select Terminal ({twAvailableTerminals.length} Available)</option>
+                {twAvailableTerminals.map(t => (
                   <option key={t.id} value={t.code}>
                     {t.code} — {t.siteName}
                   </option>
