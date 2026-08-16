@@ -14,6 +14,7 @@ import {
   Activity,
   Server,
   ShieldAlert,
+  Monitor,
 } from 'lucide-react';
 import { ForceUnlockModal } from './ForceUnlockModal';
 import { SmsUnlockModal } from './SmsUnlockModal';
@@ -23,6 +24,7 @@ import { CreateSiteModal } from '../modals/CreateSiteModal';
 import { InstallTerminalModal } from '../modals/InstallTerminalModal';
 import { BatchConsoleModal } from '../modals/BatchConsoleModal';
 import { FileTransferModal } from '../modals/FileTransferModal';
+import { RemoteAssistanceModal } from './RemoteAssistanceModal';
 
 interface ControlCenterDrawerProps {
   isOpen: boolean;
@@ -41,6 +43,7 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
   const [showInstallTerminal, setShowInstallTerminal] = useState(false);
   const [showBatchConsole, setShowBatchConsole] = useState(false);
   const [showFileTransfer, setShowFileTransfer] = useState(false);
+  const [showRemoteAssistance, setShowRemoteAssistance] = useState(false);
 
   return (
     <>
@@ -204,6 +207,24 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
 
               <button
                 type="button"
+                onClick={() => setShowRemoteAssistance(true)}
+                className="flex items-start gap-3 p-3.5 bg-white hover:bg-amber-50/50 border border-zinc-200 hover:border-amber-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
+              >
+                <div className="p-2.5 bg-amber-100 text-amber-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
+                  <Monitor className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-zinc-900 group-hover:text-amber-700 transition-colors">
+                    Remote Assistance
+                  </div>
+                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                    Live screen stream & touch mirror
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
                 onClick={() => setShowBatchConsole(true)}
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-zinc-100 border border-zinc-200 hover:border-zinc-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
@@ -221,17 +242,17 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
               <button
                 type="button"
                 onClick={() => setShowFileTransfer(true)}
-                className="flex items-start gap-3 p-3.5 bg-white hover:bg-indigo-50/50 border border-zinc-200 hover:border-indigo-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
+                className="flex items-start gap-3 p-3.5 bg-white hover:bg-indigo-50/50 border border-zinc-200 hover:border-indigo-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group sm:col-span-2"
               >
                 <div className="p-2.5 bg-indigo-100 text-indigo-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
                   <UploadCloud className="h-5 w-5" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-zinc-900 group-hover:text-indigo-700 transition-colors">
-                    File Transfer (S3)
+                    Update Software / File Transfer (S3 Pipeline)
                   </div>
                   <div className="text-[11px] text-zinc-500 mt-0.5">
-                    Push builds & patches to terminal kiosks
+                    Deploy builds & patches across nationwide kiosk clusters
                   </div>
                 </div>
               </button>
@@ -249,6 +270,7 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
       <InstallTerminalModal isOpen={showInstallTerminal} onClose={() => setShowInstallTerminal(false)} />
       <BatchConsoleModal isOpen={showBatchConsole} onClose={() => setShowBatchConsole(false)} />
       <FileTransferModal isOpen={showFileTransfer} onClose={() => setShowFileTransfer(false)} />
+      <RemoteAssistanceModal isOpen={showRemoteAssistance} onClose={() => setShowRemoteAssistance(false)} />
     </>
   );
 };

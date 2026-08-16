@@ -2,8 +2,8 @@ export interface AdminSession {
   id: string;
   username: string;
   name: string;
-  email: string;
-  role: 'SUPERADMIN' | 'OPERATIONS' | 'FIELD_STAFF' | 'PESIT_MANAGER';
+  email?: string | null;
+  role: 'SUPERADMIN' | 'OPERATIONS' | 'FIELD_STAFF' | 'PESIT_MANAGER' | string;
   roleName: string;
   permissions: string[];
   avatarUrl?: string;
@@ -11,25 +11,38 @@ export interface AdminSession {
 
 export interface Booking {
   id: string;
-  serialNumber: number;
+  serialNumber?: number;
   terminalCode: string;
+  terminalSiteName?: string;
   invoiceNumber: string;
   customerName: string;
   mobileNumber: string;
   openDateTime: string;
-  bookingStatus: 'ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'PENDING' | 'OVERDUE';
-  paymentMethod: 'UPI' | 'ONLINE' | 'PAY LATER' | 'CASH' | 'CARD' | 'WALLET';
+  bookingStatus: 'ACTIVE' | 'PAID_ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'CANCEL_WITHOUT_TXN' | 'CANCEL_WITH_TXN' | 'PENDING' | 'OVERDUE' | 'WARNING' | 'DONE';
+  paymentMethod: 'UPI' | 'ONLINE' | 'PAY LATER' | 'CASH' | 'CARD' | 'WALLET' | 'BANK' | 'UPI + Cash' | 'Credit Pay' | 'Manual Rev.' | string;
   dateOfBirth?: string;
   lockName: string;
   passcode: string;
   duration: string;
-  bookingType: 'BAGGAGE' | 'MOBILE';
-  bookingSource: 'Web' | 'Touchscreen' | 'Mobile App' | 'WhatsApp';
-  siteType: 'Mall' | 'Metro' | 'Railway' | 'Temple' | 'Airport' | 'Campus' | 'Commercial';
+  bookingType: 'BAGGAGE' | 'MOBILE' | 'HYBRID';
+  bookingSource: 'Web' | 'Touchscreen' | 'Mobile App' | 'WhatsApp' | 'Offline Payment / QR' | string;
+  siteType: string;
   state: string;
   city: string;
   amount: number;
   extraCharges?: number;
+  totalPaid?: number;
+  status?: string;
+  source?: string;
+  lockerType?: string;
+  lockerSize?: string;
+  lockerDoorNumber?: string;
+  checkinTime?: string;
+  durationHours?: number;
+  expectedCheckoutTime?: string;
+  actualCheckoutTime?: string;
+  transactionRef?: string;
+  invoiceUrl?: string;
 }
 
 export interface Terminal {
@@ -38,21 +51,22 @@ export interface Terminal {
   siteName: string;
   state: string;
   city: string;
-  siteType: 'Mall' | 'Metro' | 'Railway' | 'Temple' | 'Airport' | 'Campus' | 'Commercial';
-  lockerType: 'BAGGAGE' | 'MOBILE' | 'HYBRID';
-  lifecycleStatus: 'ACTIVE' | 'INACTIVE';
-  connectivityStatus: 'ONLINE' | 'OFFLINE';
-  networkType: 'LAN' | 'SIM' | 'WiFi' | 'WS';
+  siteType: string;
+  lockerType: 'BAGGAGE' | 'MOBILE' | 'HYBRID' | string;
+  lifecycleStatus: 'ACTIVE' | 'INACTIVE' | string;
+  connectivityStatus: 'ONLINE' | 'OFFLINE' | string;
+  networkType: 'LAN' | 'SIM' | 'WiFi' | 'WS' | string;
   firmwareVersion: string;
-  deviceType: 'LEGACY' | 'BEST VIEW' | 'NEXTGEN';
+  deviceType: string;
   locationPin: string;
-  lastHeartbeatAt: string;
+  lastHeartbeatAt?: string;
   heartbeatSecondsAgo: number;
   totalLockers: number;
   availableLockers: number;
   occupiedLockers: number;
   ipAddress?: string;
   tailscaleIp?: string;
+  wsConnected?: boolean;
 }
 
 export interface StateCoverage {
@@ -69,11 +83,14 @@ export interface LockerItem {
   siteName: string;
   state: string;
   lockName: string;
-  size: 'SMALL' | 'MEDIUM' | 'LARGE' | 'XL' | '2 PHONE' | '4 PHONE' | '8 PHONE';
-  status: 'AVAILABLE' | 'OCCUPIED' | 'MAINTENANCE' | 'BLOCKED' | 'FAULTY';
+  size: 'SMALL' | 'MEDIUM' | 'LARGE' | 'XL' | '2 PHONE' | '4 PHONE' | '8 PHONE' | string;
+  status: 'AVAILABLE' | 'OCCUPIED' | 'MAINTENANCE' | 'BLOCKED' | 'FAULTY' | string;
   currentBookingId?: string;
+  customerName?: string;
   customerMobile?: string;
   assignedTime?: string;
+  duration?: string;
+  amount?: number;
   passcode?: string;
   remarks?: string;
 }
@@ -141,12 +158,12 @@ export interface StaffProfile {
   id: string;
   name: string;
   mobile: string;
-  role: 'CASH_COLLECTOR' | 'FIELD_ENGINEER' | 'SUPERVISOR';
+  role: 'CASH_COLLECTOR' | 'FIELD_ENGINEER' | 'SUPERVISOR' | string;
   branch: string;
   creditLimit: number;
   cashCollected: number;
   pendingSettlement: number;
-  status: 'AVAILABLE' | 'ON_LEAVE' | 'INACTIVE';
+  status: 'AVAILABLE' | 'ON_LEAVE' | 'INACTIVE' | string;
   bankAccount: string;
   ifscCode: string;
 }
@@ -192,7 +209,7 @@ export interface AdminUser {
   username: string;
   name: string;
   email: string;
-  role: 'SUPERADMIN' | 'OPERATIONS' | 'FIELD_STAFF' | 'PESIT_MANAGER';
+  role: 'SUPERADMIN' | 'OPERATIONS' | 'FIELD_STAFF' | 'PESIT_MANAGER' | string;
   roleName: string;
   status: 'ACTIVE' | 'INACTIVE';
   lastLogin: string;
@@ -221,7 +238,7 @@ export interface AuditLog {
 
 export interface AlertItem {
   id: string;
-  severity: 'HIGH' | 'MEDIUM' | 'LOW';
+  severity: 'HIGH' | 'MEDIUM' | 'LOW' | string;
   title: string;
   description: string;
   terminalCode?: string;

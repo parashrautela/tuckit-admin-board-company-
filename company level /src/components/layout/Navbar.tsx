@@ -98,11 +98,11 @@ export const Navbar: React.FC = () => {
 
   // Nav categories matching exact Tuckit Admin spec
   const mainNavItems: NavItemConfig[] = [
-    { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/reports', label: 'Report Analysis', icon: BarChart3 },
-    { path: '/device-status', label: 'Terminal Management', icon: MonitorCheck },
+    { path: '/dashboard', label: 'Dashboard & Main View', icon: LayoutDashboard },
+    { path: '/reports', label: 'Reports & Analysis', icon: BarChart3 },
+    { path: '/device-status', label: 'Device / Terminal Status', icon: MonitorCheck },
     { path: '/locker-status', label: 'Locker Status', icon: Grid },
-    { path: '/future-first', label: 'Future First', icon: Building2 },
+    { path: '/future-first', label: 'Future First Locker Management', icon: Building2 },
   ];
 
   const pesitItems = [

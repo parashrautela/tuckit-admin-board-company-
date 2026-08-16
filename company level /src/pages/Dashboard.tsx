@@ -187,6 +187,22 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Quick Date Range Preset Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
+          {['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'This Month', 'This Year'].map(preset => (
+            <button
+              key={preset}
+              type="button"
+              onClick={() => {
+                showToast(`Filter set to: ${preset}`, 'info');
+              }}
+              className="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-orange-50 hover:text-primary hover:border-orange-200 transition-colors whitespace-nowrap"
+            >
+              {preset}
+            </button>
+          ))}
+        </div>
+
         {/* Filter Row 1 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           <div>
@@ -219,6 +235,7 @@ export const Dashboard: React.FC = () => {
               <option value="Web">Web Portal</option>
               <option value="Mobile App">Mobile App</option>
               <option value="WhatsApp">WhatsApp Bot</option>
+              <option value="Offline Payment / QR">Offline Payment / QR</option>
             </select>
           </div>
 

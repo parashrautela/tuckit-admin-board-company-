@@ -8,6 +8,8 @@ interface ForceUnlockModalProps {
   onClose: () => void;
   defaultTerminalCode?: string;
   defaultLockerName?: string;
+  terminalCode?: string;
+  lockName?: string;
 }
 
 export const ForceUnlockModal: React.FC<ForceUnlockModalProps> = ({
@@ -15,10 +17,12 @@ export const ForceUnlockModal: React.FC<ForceUnlockModalProps> = ({
   onClose,
   defaultTerminalCode = 'TCK-KA-001',
   defaultLockerName = 'LKR-A01',
+  terminalCode: initialCode,
+  lockName: initialLock,
 }) => {
   const { terminals, forceUnlockLocker } = useRealtime();
-  const [terminalCode, setTerminalCode] = useState(defaultTerminalCode);
-  const [lockerName, setLockerName] = useState(defaultLockerName);
+  const [terminalCode, setTerminalCode] = useState(initialCode || defaultTerminalCode);
+  const [lockerName, setLockerName] = useState(initialLock || defaultLockerName);
   const [reason, setReason] = useState('Customer physical retrieval emergency (verified ID)');
   const [confirmed, setConfirmed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
