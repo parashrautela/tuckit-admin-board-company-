@@ -1,12 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    /* Tuckit orange accent */
     --primary: 24.6 95% 53.1%;
     --primary-foreground: 0 0% 100%;
-    --background: 0 0% 100%;
+
+    /* Neutral surface scale (zinc-based, not Intercom cream) */
+    --canvas: #F9FAFB;
+    --surface-1: #FFFFFF;
+    --surface-2: #F4F4F5;
+    --ink: #18181B;
+    --ink-muted: #71717A;
+    --ink-subtle: #A1A1AA;
+    --hairline: #E4E4E7;
+    --hairline-soft: #F4F4F5;
+
+    /* Semantic tokens */
+    --background: 0 0% 98%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -22,48 +38,135 @@
     --input: 240 5.9% 90%;
     --ring: 24.6 95% 53.1%;
     --radius: 0.5rem;
+
+    /* Sidebar */
+    --sidebar-width: 256px;
+    --sidebar-collapsed-width: 64px;
+    --topbar-height: 48px;
   }
 }
 
-/* Custom Utilities for enterprise UI */
+/* ────────────────────────────────────────────────────────
+   Typography Utilities — DESIGN.md type scale via Inter
+   ──────────────────────────────────────────────────────── */
 @layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  .text-type-headline {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.20;
+    letter-spacing: -0.5px;
+  }
+
+  .text-type-card-title {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+  }
+
+  .text-type-subhead {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.40;
+    letter-spacing: -0.2px;
+  }
+
+  .text-type-body-lg {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.50;
+    letter-spacing: -0.1px;
+  }
+
+  .text-type-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.50;
+    letter-spacing: 0;
+  }
+
+  .text-type-body-sm {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.50;
+    letter-spacing: 0;
+  }
+
+  .text-type-caption {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.40;
+    letter-spacing: 0;
+  }
+
+  .text-type-button {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.20;
+    letter-spacing: 0;
+  }
+
+  .text-type-eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.30;
+    letter-spacing: 0;
+  }
+
+  /* Scrollbar utilities */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--hairline-soft);
     border-radius: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--hairline);
     border-radius: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: var(--ink-subtle);
   }
 }
 
+/* ────────────────────────────────────────────────────────
+   Global Base Styles
+   ──────────────────────────────────────────────────────── */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: #18181b;
-  background-color: #f8fafc;
+  color: var(--ink);
+  background-color: var(--canvas);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Modern smooth transitions */
-button, input, select, a {
+/* Smooth transitions on interactive elements */
+button, input, select, textarea, a {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Focus ring — orange accent, not blue browser default */
+*:focus-visible {
+  outline: 2px solid #F97316;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection highlight */
+::selection {
+  background-color: #FED7AA;
+  color: #18181B;
 }

@@ -43,20 +43,21 @@ export const Drawer: React.FC<DrawerProps> = ({
   return (
     <div className="fixed inset-0 z-[100] flex justify-end">
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-300"
+        className="fixed inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity animate-in fade-in duration-300"
         onClick={onClose}
       />
+      {/* DESIGN.md: hairline border, surface-1 bg, minimal shadow */}
       <div
-        className={`relative w-full ${widthClass} bg-white h-full shadow-2xl border-l border-zinc-200 z-10 flex flex-col animate-in slide-in-from-right duration-300`}
+        className={`relative w-full ${widthClass} bg-white h-full shadow-card border-l border-hairline z-10 flex flex-col animate-in slide-in-from-right duration-300`}
       >
-        <div className="flex items-center justify-between px-6 py-5 border-b border-zinc-100 bg-zinc-50/80">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-hairline-soft">
           <div>
-            <h3 className="text-base font-bold text-zinc-900 tracking-tight">{title}</h3>
-            {subtitle && <p className="text-xs text-zinc-500 mt-0.5">{subtitle}</p>}
+            <h3 className="text-card-title text-ink">{title}</h3>
+            {subtitle && <p className="text-body-sm text-ink-muted mt-0.5">{subtitle}</p>}
           </div>
           <button
             onClick={onClose}
-            className="text-zinc-400 hover:text-zinc-700 hover:bg-zinc-200/60 p-2 rounded-xl transition-colors"
+            className="text-ink-subtle hover:text-ink hover:bg-zinc-100 p-2 rounded-md transition-colors"
           >
             <X className="h-5 w-5" />
           </button>

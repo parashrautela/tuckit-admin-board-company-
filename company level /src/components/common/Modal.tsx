@@ -46,20 +46,22 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
       />
+      {/* DESIGN.md: rounded-xl (16px), hairline border, minimal shadow */}
       <div
-        className={`relative w-full ${maxWidthClass} bg-white rounded-2xl shadow-2xl border border-zinc-200 overflow-hidden z-10 animate-in zoom-in-95 duration-200`}
+        className={`relative w-full ${maxWidthClass} bg-white rounded-xl border border-hairline shadow-card overflow-hidden z-10 animate-in zoom-in-95 duration-200`}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100 bg-zinc-50/50">
+        {/* Header: card-title size (22px/500/-0.3px) */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-hairline-soft">
           <div>
-            <h3 className="text-base font-bold text-zinc-900">{title}</h3>
-            {subtitle && <p className="text-xs text-zinc-500 mt-0.5">{subtitle}</p>}
+            <h3 className="text-card-title text-ink">{title}</h3>
+            {subtitle && <p className="text-body-sm text-ink-muted mt-0.5">{subtitle}</p>}
           </div>
           <button
             onClick={onClose}
-            className="text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 p-1.5 rounded-lg transition-colors"
+            className="text-ink-subtle hover:text-ink hover:bg-zinc-100 p-1.5 rounded-md transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
