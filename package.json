@@ -1,0 +1,10 @@
+{
+  "name": "tuckit-admin-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd \"./company level \" && npm run dev",
+    "build": "cd \"./company level \" && npm run build",
+    "preview": "cd \"./company level \" && npm run preview"
+  }
+}
