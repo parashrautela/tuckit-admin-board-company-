@@ -9,69 +9,89 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#F97316", // Tuckit orange — single accent
-          hover: "#EA580C",
-          light: "#FFF7ED",
-          dark: "#C2410C",
+          DEFAULT: '#FF7000',
+          50: '#FFF3E8',
+          100: '#FFE4CC',
+          200: '#FFC898',
+          300: '#FFA85C',
+          400: '#FF8A2E',
+          500: '#FF7000',
+          600: '#E85D00',
+          700: '#C24A00',
+          800: '#9C3A00',
+          900: '#7A2E00',
+          950: '#4A1B00',
+          hover: '#E85D00',
+          light: '#FFF3E8',
+          dark: '#C24A00',
+        },
+        neutral: {
+          0: '#FFFFFF',
+          50: '#FAF9F7',
+          100: '#F3F1EE',
+          200: '#E7E3DE',
+          300: '#D3CDC5',
+          400: '#A8A19A',
+          500: '#7C766F',
+          600: '#5C5852',
+          700: '#423F3B',
+          800: '#2B2926',
+          900: '#1A1917',
+          950: '#0D0C0B',
+        },
+        success: {
+          50: '#EFFAF3',
+          100: '#B7EAC7',
+          500: '#16A34A',
+          700: '#0F7A37',
+        },
+        warning: {
+          50: '#FEF9EC',
+          100: '#F5DE9C',
+          500: '#EAB308',
+          700: '#946200',
+        },
+        error: {
+          50: '#FDF0F0',
+          100: '#F3B9B9',
+          500: '#DC2626',
+          700: '#A01818',
+        },
+        info: {
+          50: '#EEF4FE',
+          100: '#B9D0F5',
+          500: '#2563EB',
+          700: '#1D4ED8',
         },
         brand: {
-          orange: "#F97316",
-          dark: "#111827",
-          card: "#FFFFFF",
-          muted: "#6B7280",
-          border: "#E5E7EB",
-          bg: "#F9FAFB",
+          orange: '#FF7000',
+          dark: '#1A1917',
+          card: '#FFFFFF',
+          muted: '#7C766F',
+          border: '#E7E3DE',
+          bg: '#FAF9F7',
         },
-        // DESIGN.md-aligned semantic surface scale (zinc-neutral, not Intercom cream)
         surface: {
-          canvas: "#F9FAFB",    // Page background — zinc-50
-          '1': "#FFFFFF",       // Floating cards — pure white
-          '2': "#F4F4F5",       // Alt-row / subtle tint — zinc-100
+          canvas: '#FAF9F7',
+          '1': '#FFFFFF',
+          '2': '#F3F1EE',
         },
         ink: {
-          DEFAULT: "#18181B",   // Primary text — zinc-900
-          muted: "#71717A",     // Secondary text — zinc-500
-          subtle: "#A1A1AA",    // Tertiary text — zinc-400
-          tertiary: "#D4D4D8",  // Disabled / footnotes — zinc-300
+          DEFAULT: '#2B2926',
+          muted: '#7C766F',
+          subtle: '#A8A19A',
+          tertiary: '#D3CDC5',
         },
         hairline: {
-          DEFAULT: "#E4E4E7",   // Card borders — zinc-200
-          soft: "#F4F4F5",      // Soft dividers — zinc-100
+          DEFAULT: '#E7E3DE',
+          soft: '#F3F1EE',
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'monospace'],
       },
-      fontSize: {
-        // DESIGN.md type scale with paired line-height and letter-spacing
-        'display-xl': ['72px', { lineHeight: '1.05', letterSpacing: '-2.0px', fontWeight: '500' }],
-        'display-lg': ['56px', { lineHeight: '1.10', letterSpacing: '-1.4px', fontWeight: '500' }],
-        'display-md': ['40px', { lineHeight: '1.15', letterSpacing: '-0.8px', fontWeight: '500' }],
-        'headline':   ['28px', { lineHeight: '1.20', letterSpacing: '-0.5px', fontWeight: '500' }],
-        'card-title': ['22px', { lineHeight: '1.25', letterSpacing: '-0.3px', fontWeight: '500' }],
-        'subhead':    ['20px', { lineHeight: '1.40', letterSpacing: '-0.2px', fontWeight: '400' }],
-        'body-lg':    ['18px', { lineHeight: '1.50', letterSpacing: '-0.1px', fontWeight: '400' }],
-        'body':       ['16px', { lineHeight: '1.50', letterSpacing: '0px', fontWeight: '400' }],
-        'body-sm':    ['14px', { lineHeight: '1.50', letterSpacing: '0px', fontWeight: '400' }],
-        'caption':    ['12px', { lineHeight: '1.40', letterSpacing: '0px', fontWeight: '400' }],
-        'button':     ['15px', { lineHeight: '1.20', letterSpacing: '0px', fontWeight: '500' }],
-        'eyebrow':    ['14px', { lineHeight: '1.30', letterSpacing: '0px', fontWeight: '500' }],
-        'mono-sm':    ['13px', { lineHeight: '1.50', letterSpacing: '0px', fontWeight: '400' }],
-      },
-      spacing: {
-        // DESIGN.md spacing tokens (8px base unit)
-        'xxs': '4px',
-        'xs-space': '8px',
-        'sm-space': '12px',
-        'md-space': '16px',
-        'lg-space': '24px',
-        'xl-space': '32px',
-        'xxl': '48px',
-        'section': '96px',
-      },
       borderRadius: {
-        // DESIGN.md radius scale
         'xs': '4px',
         'sm': '6px',
         'md': '8px',
@@ -82,7 +102,6 @@ export default {
         'full': '9999px',
       },
       boxShadow: {
-        // Minimal shadows per DESIGN.md restraint
         'xs': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
         '2xs': '0 1px 1px 0 rgb(0 0 0 / 0.02)',
         'card': '0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04)',
@@ -91,28 +110,6 @@ export default {
       width: {
         'sidebar': '256px',
         'sidebar-collapsed': '64px',
-      },
-      keyframes: {
-        'badge-glow': {
-          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-          '50%': { opacity: '0.85', transform: 'scale(1.08)' },
-        },
-        'pulse-subtle': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.5' },
-        },
-        'sidebar-expand': {
-          '0%': { width: '64px' },
-          '100%': { width: '256px' },
-        },
-        'sidebar-collapse': {
-          '0%': { width: '256px' },
-          '100%': { width: '64px' },
-        },
-      },
-      animation: {
-        'badge-glow': 'badge-glow 2s ease-in-out infinite',
-        'pulse-subtle': 'pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },

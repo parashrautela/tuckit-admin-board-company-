@@ -1,15 +1,23 @@
 import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 interface StatusBadgeProps {
   status: string;
   size?: 'sm' | 'md';
   pulse?: boolean;
+  className?: string;
 }
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'sm', pulse = false }) => {
-  const norm = status.toUpperCase();
+export const StatusBadge: React.FC<StatusBadgeProps> = ({
+  status,
+  size = 'sm',
+  pulse = false,
+  className,
+}) => {
+  const norm = status ? status.toUpperCase() : '';
 
-  const getStyle = () => {
+  const getVariant = (): 'success' | 'destructive' | 'warning' | 'info' | 'primary' | 'secondary' | 'outline' => {
     switch (norm) {
       case 'ONLINE':
       case 'ACTIVE':
@@ -17,53 +25,64 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'sm', p
       case 'APPROVED':
       case 'SETTLED':
       case 'SUCCESS':
-        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      case 'STORED':
+      case 'PICKED UP':
+        return 'success';
       case 'OFFLINE':
       case 'BLOCKED':
       case 'FAILED':
       case 'REJECTED':
       case 'FAULTY':
       case 'HIGH':
-        return 'bg-red-50 text-red-700 border-red-200';
+      case 'DELAYED':
       case 'OVERDUE':
+      case 'ISSUE':
+        return 'destructive';
       case 'WARNING':
       case 'MAINTENANCE':
       case 'PENDING':
       case 'MEDIUM':
-        return 'bg-amber-50 text-amber-700 border-amber-200';
+        return 'warning';
       case 'COMPLETED':
       case 'RESOLVED':
       case 'ACKNOWLEDGED':
-        return 'bg-blue-50 text-blue-700 border-blue-200';
+        return 'info';
+      case 'NEW':
+      case 'PROMOTIONAL':
+      case 'PAY LATER':
+        return 'primary';
       case 'ONLINE PAYMENT':
       case 'NETBANKING':
-        return 'bg-sky-50 text-sky-700 border-sky-200';
-      case 'PAY LATER':
-        return 'bg-orange-50 text-orange-700 border-orange-200';
+      case 'UPI':
+        return 'secondary';
       default:
-        return 'bg-zinc-50 text-zinc-600 border-zinc-200';
+        return 'outline';
     }
   };
 
-  // DESIGN.md: tags use rounded-sm (6px), font-medium (500), no mono
-  const pad = size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs';
+  const variant = getVariant();
 
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 font-medium rounded-sm border tracking-wide uppercase ${pad} ${getStyle()}`}
+    <Badge
+      variant={variant}
+      size={size === 'sm' ? 'default' : 'lg'}
+      className={cn('uppercase tracking-wider font-semibold', className)}
     >
       {pulse && (
         <span
-          className={`h-1.5 w-1.5 rounded-full ${
-            norm === 'ONLINE' || norm === 'ACTIVE'
-              ? 'bg-emerald-500 animate-pulse'
-              : norm === 'OFFLINE'
-              ? 'bg-red-500'
-              : 'bg-amber-500'
-          }`}
+          className={cn(
+            'size-1.5 rounded-full shrink-0',
+            variant === 'success' && 'bg-success-500 animate-pulse',
+            variant === 'destructive' && 'bg-error-500',
+            variant === 'warning' && 'bg-warning-500 animate-pulse',
+            variant === 'info' && 'bg-info-500',
+            variant === 'primary' && 'bg-primary-500 animate-pulse',
+            variant === 'secondary' && 'bg-neutral-500',
+            variant === 'outline' && 'bg-neutral-400'
+          )}
         />
       )}
-      {status}
-    </span>
+      <span>{status}</span>
+    </Badge>
   );
 };
