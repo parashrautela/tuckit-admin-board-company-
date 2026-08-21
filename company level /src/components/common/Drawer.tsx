@@ -33,11 +33,11 @@ export const Drawer: React.FC<DrawerProps> = ({
 
   return (
     <Sheet open={isOpen} onOpenChange={open => !open && onClose()}>
-      <SheetContent className={cn("p-0 flex flex-col gap-0 border-l border-zinc-200 shadow-xl", widthClass)}>
-        <SheetHeader className="px-6 py-4 border-b border-zinc-100 bg-white">
-          <SheetTitle className="text-base font-bold tracking-tight text-zinc-900">{title}</SheetTitle>
+      <SheetContent className={cn("p-0 flex flex-col gap-0 border-l border-neutral-200 shadow-xl", widthClass)}>
+        <SheetHeader className="px-6 py-4 border-b border-neutral-100 bg-white">
+          <SheetTitle className="text-lg font-semibold tracking-tight text-neutral-900">{title}</SheetTitle>
           {subtitle && (
-            <SheetDescription className="text-xs text-zinc-500 mt-0.5">
+            <SheetDescription className="text-sm text-neutral-500 mt-0.5">
               {subtitle}
             </SheetDescription>
           )}

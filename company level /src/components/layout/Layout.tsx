@@ -75,7 +75,7 @@ export const Layout: React.FC = () => {
   const groupLabel = pathGroups[currentPath];
 
   return (
-    <div className="min-h-screen bg-neutral-50 font-sans text-neutral-800 flex flex-col antialiased">
+    <div className="min-h-screen bg-neutral-50 font-sans text-neutral-900 flex flex-col antialiased">
       {/* Desktop Sidebar */}
       <Sidebar />
 
@@ -85,7 +85,7 @@ export const Layout: React.FC = () => {
       {/* Main Content Shell */}
       <div className="lg:ml-64 flex flex-col min-h-screen transition-all duration-200 flex-1">
         {/* Top Header */}
-        <header className="sticky top-0 z-30 bg-neutral-0/95 backdrop-blur-sm border-b border-neutral-200 h-14 flex items-center justify-between px-4 sm:px-6 shrink-0">
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-neutral-200 h-14 flex items-center justify-between px-4 sm:px-6 shrink-0">
           {/* Left: Mobile Menu Toggle + Breadcrumbs */}
           <div className="flex items-center gap-3 min-w-0">
             <Button
@@ -114,7 +114,7 @@ export const Layout: React.FC = () => {
                 </>
               )}
               <ChevronRight className="size-3 text-neutral-400 shrink-0" />
-              <span className="text-neutral-800 font-semibold truncate">{pageLabel}</span>
+              <span className="text-neutral-900 font-semibold truncate">{pageLabel}</span>
             </nav>
           </div>
 
@@ -123,7 +123,7 @@ export const Layout: React.FC = () => {
             {/* Search Pill */}
             <div
               onClick={() => navigate('/dashboard')}
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-100 border border-neutral-200 text-neutral-400 text-xs w-48 lg:w-60 cursor-pointer hover:bg-neutral-200/50 transition-colors"
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-neutral-100 border border-neutral-200 text-neutral-400 text-xs w-48 lg:w-60 cursor-pointer hover:bg-neutral-200/60 transition-colors"
             >
               <Search className="size-3.5 shrink-0 text-neutral-400" />
               <span className="truncate">Search terminal or user...</span>
@@ -163,7 +163,7 @@ export const Layout: React.FC = () => {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-neutral-200 bg-neutral-0 py-3.5 px-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 gap-2 font-mono shrink-0">
+        <footer className="border-t border-neutral-200 bg-white py-3.5 px-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 gap-2 font-mono shrink-0">
           <div className="flex items-center gap-2">
             <span className="size-1.5 rounded-full bg-success-500" />
             <span>TUCKIT FLEET CONTROL • v2.4.0</span>

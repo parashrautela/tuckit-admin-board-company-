@@ -93,8 +93,8 @@ export const AuditLogs: React.FC = () => {
           </p>
         </div>
 
-        <Button variant="default" size="sm">
-          <Download className="size-3.5" />
+        <Button variant="outline" size="sm" className="bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 shadow-xs">
+          <Download className="size-3.5 text-neutral-600" />
           <span>Export Audit Log</span>
         </Button>
       </div>

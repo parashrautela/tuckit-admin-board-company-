@@ -36,11 +36,11 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
-      <DialogContent className={cn(maxWidthClass, "p-0 overflow-hidden gap-0 border-zinc-200 shadow-lg")}>
-        <DialogHeader className="px-6 py-4 border-b border-zinc-100 bg-white">
-          <DialogTitle className="text-base font-bold tracking-tight text-zinc-900">{title}</DialogTitle>
+      <DialogContent className={cn(maxWidthClass, "p-0 overflow-hidden gap-0 border-neutral-200 shadow-lg rounded-lg")}>
+        <DialogHeader className="px-6 py-4 border-b border-neutral-100 bg-white">
+          <DialogTitle className="text-lg font-semibold tracking-tight text-neutral-900">{title}</DialogTitle>
           {subtitle && (
-            <DialogDescription className="text-xs text-zinc-500 mt-0.5">
+            <DialogDescription className="text-sm text-neutral-500 mt-0.5">
               {subtitle}
             </DialogDescription>
           )}

@@ -37,17 +37,17 @@ export const ToastContainer: React.FC = () => {
           <div
             key={toast.id}
             className={cn(
-              "pointer-events-auto flex items-start gap-2.5 p-3 rounded-lg border shadow-md transition-all animate-in slide-in-from-bottom-2 duration-200 text-xs",
+              "pointer-events-auto flex items-start gap-3 p-4 rounded-lg border shadow-lg transition-all animate-in slide-in-from-bottom-2 duration-200 text-sm",
               borderClass
             )}
           >
             <Icon className={cn("size-4 shrink-0 mt-0.5", iconColor)} />
-            <div className="flex-1 font-medium leading-relaxed text-neutral-800">{toast.message}</div>
+            <div className="flex-1 font-medium leading-tight text-neutral-900">{toast.message}</div>
             <button
               onClick={() => removeToast(toast.id)}
               className="text-neutral-400 hover:text-neutral-700 p-0.5 rounded transition-colors"
             >
-              <X className="size-3.5" />
+              <X className="size-4" />
             </button>
           </div>
         );

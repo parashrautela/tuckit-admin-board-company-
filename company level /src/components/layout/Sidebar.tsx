@@ -215,11 +215,11 @@ export const Sidebar: React.FC = () => {
 
             {/* Org Switcher Popover */}
             {isOrgMenuOpen && (
-              <div className="absolute top-full left-0 mt-1 w-60 bg-neutral-0 border border-neutral-200 rounded-xl shadow-lg p-1 z-50 animate-in fade-in slide-in-from-top-1 text-xs">
+              <div className="absolute top-full left-0 mt-1 w-60 bg-white border border-neutral-200 rounded-md shadow-md p-1 z-50 animate-in fade-in slide-in-from-top-1 text-xs">
                 <div className="px-2.5 py-1.5 text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
                   Select Workspace
                 </div>
-                <div className="flex items-center justify-between px-2.5 py-2 rounded-lg bg-primary-50 border border-primary-100 font-medium text-neutral-800 cursor-pointer">
+                <div className="flex items-center justify-between px-2.5 py-2 rounded-sm bg-primary-50 border border-primary-100 font-medium text-neutral-800 cursor-pointer">
                   <div className="flex items-center gap-2">
                     <div className="size-5 rounded bg-primary-500 text-white flex items-center justify-center text-[10px] font-bold">
                       T
@@ -228,7 +228,7 @@ export const Sidebar: React.FC = () => {
                   </div>
                   <Check className="size-3.5 text-primary-500" />
                 </div>
-                <div className="flex items-center gap-2 px-2.5 py-2 rounded-lg hover:bg-neutral-50 text-neutral-600 cursor-pointer transition-colors mt-0.5">
+                <div className="flex items-center gap-2 px-2.5 py-2 rounded-sm hover:bg-neutral-50 text-neutral-600 cursor-pointer transition-colors mt-0.5">
                   <div className="size-5 rounded bg-neutral-200 text-neutral-700 flex items-center justify-center text-[10px] font-bold">
                     S
                   </div>
@@ -404,7 +404,7 @@ export const Sidebar: React.FC = () => {
 
             {/* Profile Popover */}
             {isUserMenuOpen && (
-              <div className="absolute bottom-full left-0 mb-1 w-56 bg-neutral-0 border border-neutral-200 rounded-xl shadow-lg p-1 z-50 animate-in fade-in slide-in-from-bottom-1 text-xs">
+              <div className="absolute bottom-full left-0 mb-1 w-56 bg-white border border-neutral-200 rounded-md shadow-md p-1 z-50 animate-in fade-in slide-in-from-bottom-1 text-xs">
                 <div className="px-3 py-2 border-b border-neutral-100">
                   <div className="font-semibold text-neutral-800">{session?.name || 'Parash Rautela'}</div>
                   <div className="text-[11px] text-neutral-500">{session?.username ? `${session.username}@tuckit.in` : 'parash@tuckit.in'}</div>
@@ -417,7 +417,7 @@ export const Sidebar: React.FC = () => {
                       setIsUserMenuOpen(false);
                       navigate('/profile');
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-neutral-100 rounded-md text-neutral-700 text-left transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-neutral-100 rounded-sm text-neutral-700 text-left transition-colors"
                   >
                     <User className="size-3.5 text-neutral-500" />
                     <span>Account Profile</span>
@@ -428,7 +428,7 @@ export const Sidebar: React.FC = () => {
                       setIsUserMenuOpen(false);
                       setIsBlacklistModalOpen(true);
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-error-50 rounded-md text-error-700 text-left transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-error-50 rounded-sm text-error-700 text-left transition-colors"
                   >
                     <ShieldAlert className="size-3.5 text-error-500" />
                     <span>Blacklist Customer</span>
@@ -439,7 +439,7 @@ export const Sidebar: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-error-50 text-error-700 rounded-md text-left transition-colors font-medium"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-error-50 text-error-700 rounded-sm text-left transition-colors font-medium"
                   >
                     <LogOut className="size-3.5 text-error-500" />
                     <span>Log out</span>

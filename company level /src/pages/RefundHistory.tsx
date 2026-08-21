@@ -29,8 +29,8 @@ export const RefundHistory: React.FC = () => {
           </h1>
           <p className="text-xs text-zinc-500 mt-1">Audit log of all resolved, settled, and rejected transaction refunds</p>
         </div>
-        <button className="flex items-center gap-1.5 px-3.5 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-bold rounded-lg transition-colors">
-          <Download className="h-3.5 w-3.5" /> Export History CSV
+        <button className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-800 text-xs font-semibold rounded-md shadow-xs transition-colors">
+          <Download className="h-3.5 w-3.5 text-neutral-600" /> Export History CSV
         </button>
       </div>
 

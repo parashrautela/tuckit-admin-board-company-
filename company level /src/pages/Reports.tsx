@@ -145,24 +145,70 @@ export const Reports: React.FC = () => {
 
   // Source share data
   const sourceStats = useMemo(() => {
+    const channelMeta: Record<string, { color: string; fill: string; bg: string; text: string; icon: any }> = {
+      'Touchscreen': { color: '#FF7000', fill: '#FF7000', bg: 'bg-primary-500', text: 'text-primary-700', icon: Monitor },
+      'Mobile App': { color: '#2563EB', fill: '#2563EB', bg: 'bg-info-500', text: 'text-info-700', icon: Smartphone },
+      'Web': { color: '#16A34A', fill: '#16A34A', bg: 'bg-success-500', text: 'text-success-700', icon: Globe },
+      'WhatsApp': { color: '#8B5CF6', fill: '#8B5CF6', bg: 'bg-purple-500', text: 'text-purple-700', icon: MessageSquare },
+      'Offline Payment / QR': { color: '#F59E0B', fill: '#F59E0B', bg: 'bg-warning-500', text: 'text-warning-700', icon: QrCode },
+    };
+
     const counts: Record<string, number> = {
       'Touchscreen': 0,
-      'Web': 0,
       'Mobile App': 0,
+      'Web': 0,
       'WhatsApp': 0,
       'Offline Payment / QR': 0,
     };
+
     filteredBookings.forEach(b => {
       const src = b.bookingSource || 'Touchscreen';
-      counts[src] = (counts[src] || 0) + 1;
+      if (counts[src] !== undefined) {
+        counts[src] += 1;
+      } else {
+        counts['Touchscreen'] += 1;
+      }
     });
+
     const total = filteredBookings.length || 1;
-    return Object.entries(counts).map(([name, count]) => ({
-      name,
-      count,
-      pct: Math.round((count / total) * 100),
-    }));
+    return Object.entries(counts).map(([name, count]) => {
+      const meta = channelMeta[name] || channelMeta['Touchscreen'];
+      return {
+        name,
+        count,
+        pct: Math.round((count / total) * 100),
+        color: meta.color,
+        fill: meta.fill,
+        bg: meta.bg,
+        text: meta.text,
+        icon: meta.icon,
+      };
+    });
   }, [filteredBookings]);
+
+  // Donut chart calculations
+  const donutData = useMemo(() => {
+    const total = sourceStats.reduce((sum, s) => sum + s.count, 0) || 1;
+    const radius = 38;
+    const circumference = 2 * Math.PI * radius;
+    let accumulatedPercent = 0;
+
+    return {
+      total,
+      circumference,
+      slices: sourceStats.map(s => {
+        const percent = s.count / total;
+        const strokeDasharray = `${percent * circumference} ${circumference}`;
+        const strokeDashoffset = -(accumulatedPercent * circumference);
+        accumulatedPercent += percent;
+        return {
+          ...s,
+          strokeDasharray,
+          strokeDashoffset,
+        };
+      }),
+    };
+  }, [sourceStats]);
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -360,74 +406,189 @@ export const Reports: React.FC = () => {
 
       {/* ── Booking Channel Share & Adoption Trends ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Source Share */}
+        {/* Source Share with Graphs */}
         <Card>
-          <CardHeader className="p-4 pb-2 border-b border-zinc-100 flex flex-row items-center justify-between">
+          <CardHeader className="p-4 pb-3 border-b border-neutral-100 flex flex-row items-center justify-between">
             <div className="flex items-center gap-2">
-              <BarChart3 className="size-4 text-zinc-700" />
-              <CardTitle className="text-sm font-semibold text-zinc-900">Booking Channel Distribution</CardTitle>
+              <BarChart3 className="size-4 text-primary-500" />
+              <CardTitle className="text-sm font-semibold text-neutral-900">Booking Channel Distribution</CardTitle>
             </div>
-            <Badge variant="outline" size="sm" className="text-zinc-500 font-normal">Current Period</Badge>
+            <Badge variant="outline" size="sm" className="text-neutral-500 font-normal">
+              {filteredBookings.length} Total Bookings
+            </Badge>
           </CardHeader>
 
-          <CardContent className="p-4 pt-3 flex flex-col gap-3">
-            {sourceStats.map(s => (
-              <div key={s.name} className="flex flex-col gap-1">
-                <div className="flex items-center justify-between text-xs font-medium">
-                  <span className="text-zinc-700 flex items-center gap-2">
-                    {s.name === 'Touchscreen' && <Monitor className="size-3.5 text-zinc-400" />}
-                    {s.name === 'Web' && <Globe className="size-3.5 text-zinc-400" />}
-                    {s.name === 'Mobile App' && <Smartphone className="size-3.5 text-zinc-400" />}
-                    {s.name === 'WhatsApp' && <MessageSquare className="size-3.5 text-zinc-400" />}
-                    {s.name === 'Offline Payment / QR' && <QrCode className="size-3.5 text-zinc-400" />}
-                    {s.name}
-                  </span>
-                  <span className="font-mono text-zinc-900 font-semibold">
-                    {s.count} ({s.pct}%)
-                  </span>
-                </div>
-                <div className="h-1.5 bg-zinc-100 rounded-full overflow-hidden">
+          <CardContent className="p-5 flex flex-col gap-5">
+            {/* Multi-Segment Proportion Bar Graph */}
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center justify-between text-xs text-neutral-500">
+                <span className="font-medium text-neutral-700">Channel Share Breakdown</span>
+                <span className="font-mono text-[11px] font-semibold text-neutral-900">100% Total Volume</span>
+              </div>
+              <div className="h-3 w-full bg-neutral-100 rounded-full overflow-hidden flex p-0.5 gap-0.5">
+                {donutData.slices.map(s => s.pct > 0 && (
                   <div
-                    className="h-full rounded-full bg-zinc-900 transition-all duration-500"
+                    key={s.name}
+                    className={`h-full rounded-xs transition-all duration-500 ${s.bg}`}
                     style={{ width: `${s.pct}%` }}
+                    title={`${s.name}: ${s.count} bookings (${s.pct}%)`}
                   />
+                ))}
+              </div>
+            </div>
+
+            {/* Donut Chart & Legend Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
+              {/* Donut SVG Graph */}
+              <div className="sm:col-span-5 flex flex-col items-center justify-center relative py-2">
+                <div className="relative size-36 flex items-center justify-center">
+                  <svg className="size-full -rotate-90" viewBox="0 0 100 100">
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="38"
+                      className="text-neutral-100"
+                      strokeWidth="12"
+                      stroke="currentColor"
+                      fill="transparent"
+                    />
+                    {donutData.slices.map(s => s.pct > 0 && (
+                      <circle
+                        key={s.name}
+                        cx="50"
+                        cy="50"
+                        r="38"
+                        stroke={s.color}
+                        strokeWidth="12"
+                        strokeDasharray={s.strokeDasharray}
+                        strokeDashoffset={s.strokeDashoffset}
+                        strokeLinecap="round"
+                        fill="transparent"
+                        className="transition-all duration-700 hover:opacity-85"
+                      />
+                    ))}
+                  </svg>
+                  {/* Center Metric */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none">
+                    <span className="text-xl font-bold font-mono tracking-tight text-neutral-900 leading-none">
+                      {filteredBookings.length}
+                    </span>
+                    <span className="text-[10px] uppercase font-semibold text-neutral-400 mt-0.5 tracking-wider">
+                      Bookings
+                    </span>
+                  </div>
                 </div>
               </div>
-            ))}
+
+              {/* Interactive Channel Breakdown List */}
+              <div className="sm:col-span-7 flex flex-col gap-2.5">
+                {sourceStats.map(s => {
+                  const Icon = s.icon;
+                  return (
+                    <div
+                      key={s.name}
+                      className="group flex flex-col gap-1 p-2 rounded-md hover:bg-neutral-50 border border-transparent hover:border-neutral-200 transition-colors"
+                    >
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span
+                            className="size-2.5 rounded-full shrink-0"
+                            style={{ backgroundColor: s.color }}
+                          />
+                          <Icon className="size-3.5 text-neutral-400 group-hover:text-neutral-700 transition-colors shrink-0" />
+                          <span className="font-medium text-neutral-800 truncate">{s.name}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span className="font-mono text-neutral-900 font-semibold text-xs">{s.count}</span>
+                          <span
+                            className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold"
+                            style={{ backgroundColor: `${s.color}18`, color: s.color }}
+                          >
+                            {s.pct}%
+                          </span>
+                        </div>
+                      </div>
+                      {/* Micro Progress Bar */}
+                      <div className="h-1 bg-neutral-100 rounded-full overflow-hidden w-full">
+                        <div
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${s.pct}%`, backgroundColor: s.color }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Adoption Trends */}
+        {/* Adoption Trends & Insights Graph Card */}
         <Card>
-          <CardHeader className="p-4 pb-2 border-b border-zinc-100 flex flex-row items-center justify-between">
+          <CardHeader className="p-4 pb-3 border-b border-neutral-100 flex flex-row items-center justify-between">
             <div className="flex items-center gap-2">
-              <TrendingUp className="size-4 text-zinc-700" />
-              <CardTitle className="text-sm font-semibold text-zinc-900">Channel Growth & Insight</CardTitle>
+              <TrendingUp className="size-4 text-primary-500" />
+              <CardTitle className="text-sm font-semibold text-neutral-900">Channel Growth & Insight</CardTitle>
             </div>
-            <Badge variant="outline" size="sm" className="text-zinc-500 font-normal">6-Month Trend</Badge>
+            <Badge variant="outline" size="sm" className="text-neutral-500 font-normal">6-Month Trend</Badge>
           </CardHeader>
 
-          <CardContent className="p-4 pt-3 flex flex-col gap-3">
+          <CardContent className="p-5 flex flex-col gap-4">
+            {/* Visual KPI Mini Tiles */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-200/80 text-center">
-                <div className="text-[10px] text-zinc-500 font-semibold uppercase">Touchscreen</div>
-                <div className="text-lg font-bold text-zinc-900 mt-1">68.4%</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Primary Kiosk UI</div>
+              <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-primary-500" />
+                <div className="text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Touchscreen</div>
+                <div className="text-xl font-bold font-mono text-neutral-900 mt-1">68.4%</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5">Primary Kiosk UI</div>
               </div>
-              <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-200/80 text-center">
-                <div className="text-[10px] text-zinc-500 font-semibold uppercase">Mobile App</div>
-                <div className="text-lg font-bold text-zinc-900 mt-1">19.2%</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">iOS & Android</div>
+              <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-info-500" />
+                <div className="text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Mobile App</div>
+                <div className="text-xl font-bold font-mono text-neutral-900 mt-1">19.2%</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5">iOS & Android</div>
               </div>
-              <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-200/80 text-center">
-                <div className="text-[10px] text-zinc-500 font-semibold uppercase">WhatsApp Bot</div>
-                <div className="text-lg font-bold text-zinc-900 mt-1">12.4%</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Auto Check-in</div>
+              <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-purple-500" />
+                <div className="text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">WhatsApp Bot</div>
+                <div className="text-xl font-bold font-mono text-neutral-900 mt-1">12.4%</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5">Auto Check-in</div>
               </div>
             </div>
 
-            <p className="text-xs text-zinc-600 leading-relaxed bg-zinc-50 p-3 rounded-lg border border-zinc-200/80">
-              <strong className="text-zinc-900 font-semibold">Executive Insight:</strong> App and WhatsApp adoption rates grew by 32% across Tier-1 airports and metro stations in Q3, reducing kiosk touch latency by 45 seconds per check-in.
+            {/* Micro Multi-Month Channel Progression Comparison Bar */}
+            <div className="p-3.5 bg-neutral-50 rounded-lg border border-neutral-200 flex flex-col gap-2">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-neutral-800">Monthly Digital Adoption Trend</span>
+                <span className="text-[11px] font-mono text-success-700 font-semibold">+32% MoM</span>
+              </div>
+              <div className="space-y-1.5 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="w-12 text-[10px] font-mono text-neutral-500">Kiosk</span>
+                  <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-primary-500 rounded-full" style={{ width: '68%' }} />
+                  </div>
+                  <span className="w-8 text-right font-mono text-[10px] text-neutral-700">68%</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-12 text-[10px] font-mono text-neutral-500">App</span>
+                  <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-info-500 rounded-full" style={{ width: '19%' }} />
+                  </div>
+                  <span className="w-8 text-right font-mono text-[10px] text-neutral-700">19%</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-12 text-[10px] font-mono text-neutral-500">WhatsApp</span>
+                  <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-purple-500 rounded-full" style={{ width: '13%' }} />
+                  </div>
+                  <span className="w-8 text-right font-mono text-[10px] text-neutral-700">13%</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs text-neutral-600 leading-relaxed bg-white p-3 rounded-lg border border-neutral-200">
+              <strong className="text-neutral-900 font-semibold">Executive Insight:</strong> App and WhatsApp adoption rates grew by 32% across Tier-1 airports and metro stations in Q3, reducing kiosk touch latency by 45 seconds per check-in.
             </p>
           </CardContent>
         </Card>
@@ -435,27 +596,27 @@ export const Reports: React.FC = () => {
 
       {/* ── Export Control Center Section ── */}
       <div className="flex items-center gap-2 pt-2">
-        <ArrowDownToLine className="size-4 text-zinc-700" />
+        <ArrowDownToLine className="size-4 text-neutral-700" />
         <div>
-          <h2 className="text-sm font-semibold text-zinc-900">Export Control Center</h2>
-          <p className="text-xs text-zinc-500">
+          <h2 className="text-sm font-semibold text-neutral-900">Export Control Center</h2>
+          <p className="text-xs text-neutral-500">
             Generate itemized XLSX/CSV records for regional compliance, daily cash closing, and tax reporting.
           </p>
         </div>
       </div>
 
-      {/* 4 Dedicated Export Cards (Consistent, Clean Neutral Cards) */}
+      {/* 4 Dedicated Export Cards (Consistent, Clean Neutral Cards with Simple White Buttons) */}
       <div className="grid grid-cols-1 gap-3.5">
         {/* Card 1: Daily Transaction Report */}
         <Card>
           <CardContent className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-3.5">
-              <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-lg shrink-0 mt-0.5">
-                <FileSpreadsheet className="size-5" />
+              <div className="p-2.5 bg-neutral-100 text-neutral-700 rounded-lg shrink-0 mt-0.5">
+                <FileSpreadsheet className="size-5 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-zinc-900">Daily Transaction Itemized Report</h3>
-                <p className="text-xs text-zinc-500 mt-0.5 max-w-xl">
+                <h3 className="text-sm font-semibold text-neutral-900">Daily Transaction Itemized Report</h3>
+                <p className="text-xs text-neutral-500 mt-0.5 max-w-xl">
                   Full itemized record of all successful payments, extensions, and refunds for a single day.
                 </p>
                 <div className="flex items-center gap-2 mt-2">
@@ -463,20 +624,20 @@ export const Reports: React.FC = () => {
                     type="date"
                     value={dailyDate}
                     onChange={e => setDailyDate(e.target.value)}
-                    className="h-8 px-2.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-mono font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                    className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-mono font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   />
-                  <span className="text-[11px] text-zinc-400">Selected Date</span>
+                  <span className="text-[11px] text-neutral-400">Selected Date</span>
                 </div>
               </div>
             </div>
 
             <Button
-              variant="default"
+              variant="outline"
               size="sm"
               onClick={() => openExportModal('daily', 'Daily Transaction Report')}
-              className="bg-zinc-900 hover:bg-zinc-800 text-white shrink-0 self-start md:self-center font-medium"
+              className="bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-800 shrink-0 self-start md:self-center font-medium shadow-xs"
             >
-              <Download className="size-3.5 mr-1.5" />
+              <Download className="size-3.5 mr-1.5 text-neutral-600" />
               <span>Configure & Export</span>
             </Button>
           </CardContent>
@@ -486,19 +647,19 @@ export const Reports: React.FC = () => {
         <Card>
           <CardContent className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-3.5">
-              <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-lg shrink-0 mt-0.5">
-                <Calendar className="size-5" />
+              <div className="p-2.5 bg-neutral-100 text-neutral-700 rounded-lg shrink-0 mt-0.5">
+                <Calendar className="size-5 text-primary-500" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-zinc-900">Monthly Financial & State Tax Summary</h3>
-                <p className="text-xs text-zinc-500 mt-0.5 max-w-xl">
+                <h3 className="text-sm font-semibold text-neutral-900">Monthly Financial & State Tax Summary</h3>
+                <p className="text-xs text-neutral-500 mt-0.5 max-w-xl">
                   Consolidated transaction logs grouped by state. Essential for monthly accounts and tax auditing.
                 </p>
                 <div className="flex items-center gap-2 mt-2">
                   <select
                     value={monthlyMonth}
                     onChange={e => setMonthlyMonth(e.target.value)}
-                    className="h-8 px-2.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                    className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   >
                     <option value="01">January</option>
                     <option value="02">February</option>
@@ -516,7 +677,7 @@ export const Reports: React.FC = () => {
                   <select
                     value={monthlyYear}
                     onChange={e => setMonthlyYear(e.target.value)}
-                    className="h-8 px-2.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                    className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   >
                     <option value="2026">2026</option>
                     <option value="2025">2025</option>
@@ -527,12 +688,12 @@ export const Reports: React.FC = () => {
             </div>
 
             <Button
-              variant="default"
+              variant="outline"
               size="sm"
               onClick={() => openExportModal('monthly', 'Monthly Financial Summary')}
-              className="bg-zinc-900 hover:bg-zinc-800 text-white shrink-0 self-start md:self-center font-medium"
+              className="bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-800 shrink-0 self-start md:self-center font-medium shadow-xs"
             >
-              <Download className="size-3.5 mr-1.5" />
+              <Download className="size-3.5 mr-1.5 text-neutral-600" />
               <span>Configure & Export</span>
             </Button>
           </CardContent>
@@ -542,12 +703,12 @@ export const Reports: React.FC = () => {
         <Card>
           <CardContent className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-3.5">
-              <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-lg shrink-0 mt-0.5">
-                <RotateCcw className="size-5" />
+              <div className="p-2.5 bg-neutral-100 text-neutral-700 rounded-lg shrink-0 mt-0.5">
+                <RotateCcw className="size-5 text-error-500" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-zinc-900">Cancellation & Refund Audit Log</h3>
-                <p className="text-xs text-zinc-500 mt-0.5 max-w-xl">
+                <h3 className="text-sm font-semibold text-neutral-900">Cancellation & Refund Audit Log</h3>
+                <p className="text-xs text-neutral-500 mt-0.5 max-w-xl">
                   Security-focused summary of manually and automatically cancelled bookings for the selected date.
                 </p>
                 <div className="flex items-center gap-2 mt-2">
@@ -555,19 +716,19 @@ export const Reports: React.FC = () => {
                     type="date"
                     value={cancellationDate}
                     onChange={e => setCancellationDate(e.target.value)}
-                    className="h-8 px-2.5 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-mono font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                    className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-mono font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   />
                 </div>
               </div>
             </div>
 
             <Button
-              variant="default"
+              variant="outline"
               size="sm"
               onClick={() => openExportModal('cancellation', 'Cancellation Audit Log')}
-              className="bg-zinc-900 hover:bg-zinc-800 text-white shrink-0 self-start md:self-center font-medium"
+              className="bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-800 shrink-0 self-start md:self-center font-medium shadow-xs"
             >
-              <Download className="size-3.5 mr-1.5" />
+              <Download className="size-3.5 mr-1.5 text-neutral-600" />
               <span>Configure & Export</span>
             </Button>
           </CardContent>
@@ -684,12 +845,12 @@ export const Reports: React.FC = () => {
 
               <div className="flex items-end">
                 <Button
-                  variant="default"
+                  variant="outline"
                   onClick={handleTerminalReportDownload}
                   disabled={isDownloadingTw}
-                  className="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-medium"
+                  className="w-full bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-800 font-medium shadow-xs"
                 >
-                  <Download className="size-3.5 mr-1.5" />
+                  <Download className="size-3.5 mr-1.5 text-neutral-600" />
                   <span>{isDownloadingTw ? 'Downloading...' : 'Download Report'}</span>
                 </Button>
               </div>

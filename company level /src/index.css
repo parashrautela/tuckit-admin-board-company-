@@ -63,34 +63,34 @@
     --bg-surface: var(--color-neutral-0);
     --bg-sidebar: var(--color-neutral-100);
     --border-default: var(--color-neutral-200);
-    --text-primary: var(--color-neutral-800);
+    --text-primary: var(--color-neutral-900);
     --text-secondary: var(--color-neutral-500);
     --text-on-primary: #FFFFFF;
     --focus-ring: var(--color-primary-500);
 
-    /* Shadcn compatibility tokens */
-    --background: 40 14% 97%;
-    --foreground: 36 6% 16%;
-    --card: 0 0% 100%;
-    --card-foreground: 36 6% 16%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 36 6% 16%;
-    --primary: 26.4 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 36 14% 94%;
-    --secondary-foreground: 36 6% 16%;
-    --muted: 36 14% 94%;
-    --muted-foreground: 34 5% 46%;
-    --accent: 36 14% 94%;
-    --accent-foreground: 36 6% 16%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 34 14% 88%;
-    --input: 34 14% 80%;
-    --ring: 26.4 100% 50%;
+    /* Shadcn Design Tokens (HSL and Hex Mapped to Tuckit System) */
+    --background: 40 14% 97%;          /* #FAF9F7 (neutral-50) */
+    --foreground: 36 6% 10%;          /* #1A1917 (neutral-900) */
+    --card: 0 0% 100%;                /* #FFFFFF (neutral-0) */
+    --card-foreground: 36 6% 10%;     /* #1A1917 (neutral-900) */
+    --popover: 0 0% 100%;             /* #FFFFFF (neutral-0) */
+    --popover-foreground: 36 6% 10%;  /* #1A1917 (neutral-900) */
+    --primary: 26.4 100% 50%;         /* #FF7000 (primary-500) */
+    --primary-foreground: 0 0% 100%;  /* #FFFFFF */
+    --secondary: 36 14% 94%;          /* #F3F1EE (neutral-100) */
+    --secondary-foreground: 36 6% 16%;/* #2B2926 (neutral-800) */
+    --muted: 36 14% 94%;              /* #F3F1EE (neutral-100) */
+    --muted-foreground: 34 5% 46%;    /* #7C766F (neutral-500) */
+    --accent: 36 14% 94%;             /* #F3F1EE (neutral-100) */
+    --accent-foreground: 36 6% 10%;   /* #1A1917 (neutral-900) */
+    --destructive: 0 72% 51%;         /* #DC2626 (error-500) */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+    --border: 34 14% 88%;             /* #E7E3DE (neutral-200) */
+    --input: 34 14% 88%;              /* #E7E3DE (neutral-200) */
+    --ring: 26.4 100% 50%;            /* #FF7000 (primary-500) */
     --radius: 0.5rem;
 
-    /* Sidebar */
+    /* Layout dimensions */
     --sidebar-width: 256px;
     --sidebar-collapsed-width: 64px;
     --topbar-height: 48px;
@@ -103,12 +103,28 @@
     --border-default: var(--color-neutral-800);
     --text-primary: var(--color-neutral-50);
     --text-secondary: var(--color-neutral-400);
+
+    --background: 36 6% 4%;           /* #0D0C0B (neutral-950) */
+    --foreground: 40 14% 97%;         /* #FAF9F7 (neutral-50) */
+    --card: 36 6% 10%;                /* #1A1917 (neutral-900) */
+    --card-foreground: 40 14% 97%;
+    --popover: 36 6% 10%;
+    --popover-foreground: 40 14% 97%;
+    --secondary: 36 6% 16%;           /* #2B2926 (neutral-800) */
+    --secondary-foreground: 40 14% 97%;
+    --muted: 36 6% 16%;
+    --muted-foreground: 34 7% 64%;    /* #A8A19A (neutral-400) */
+    --accent: 36 6% 16%;
+    --accent-foreground: 40 14% 97%;
+    --border: 36 6% 16%;              /* #2B2926 (neutral-800) */
+    --input: 36 6% 16%;
   }
 
   body {
     background-color: var(--bg-app);
     color: var(--text-primary);
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }
 

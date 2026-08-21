@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
 import { useRealtime } from '../../context/RealtimeContext';
 import { Terminal } from '../../types';
-import { MapPin, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Plus } from 'lucide-react';
 
 interface CreateSiteModalProps {
   isOpen: boolean;
@@ -32,29 +34,28 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
       subtitle="Register new geographical facility and allocate hardware terminal code"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">
+        <div className="space-y-1.5">
+          <label className="block text-xs font-medium text-neutral-700">
             Site / Facility Name
           </label>
-          <input
+          <Input
             type="text"
             value={siteName}
             onChange={e => setSiteName(e.target.value)}
             placeholder="e.g. Nexus Grand Central Level 2"
-            className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 focus:bg-white focus:border-primary outline-none"
             required
           />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-medium text-neutral-700">
               State
             </label>
             <select
               value={state}
               onChange={e => setState(e.target.value)}
-              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 focus:bg-white focus:border-primary outline-none"
+              className="flex h-9 w-full rounded-md border border-neutral-200 bg-white px-3 py-1 text-sm shadow-xs text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
             >
               <option value="Karnataka">Karnataka</option>
               <option value="Maharashtra">Maharashtra</option>
@@ -68,29 +69,28 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
               <option value="Goa">Goa</option>
             </select>
           </div>
-          <div>
-            <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-medium text-neutral-700">
               City
             </label>
-            <input
+            <Input
               type="text"
               value={city}
               onChange={e => setCity(e.target.value)}
               placeholder="e.g. Bangalore"
-              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 focus:bg-white focus:border-primary outline-none"
               required
             />
           </div>
         </div>
 
-        <div>
-          <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">
+        <div className="space-y-1.5">
+          <label className="block text-xs font-medium text-neutral-700">
             Venue / Site Category
           </label>
           <select
             value={siteType}
             onChange={e => setSiteType(e.target.value as Terminal['siteType'])}
-            className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 focus:bg-white focus:border-primary outline-none"
+            className="flex h-9 w-full rounded-md border border-neutral-200 bg-white px-3 py-1 text-sm shadow-xs text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
           >
             <option value="Mall">Mall & Shopping Center</option>
             <option value="Metro">Metro Station</option>
@@ -102,8 +102,8 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
           </select>
         </div>
 
-        <div>
-          <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">
+        <div className="space-y-1.5">
+          <label className="block text-xs font-medium text-neutral-700">
             Address & Physical Landmark
           </label>
           <textarea
@@ -111,25 +111,26 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
             onChange={e => setAddress(e.target.value)}
             placeholder="Ground Floor, Near North Entry Gate..."
             rows={2}
-            className="w-full p-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs text-zinc-800 focus:bg-white focus:border-primary outline-none"
+            className="flex w-full rounded-md border border-neutral-200 bg-white p-3 text-sm shadow-xs text-neutral-900 placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
           />
         </div>
 
-        <div className="flex items-center justify-end gap-2 pt-3 border-t border-zinc-100">
-          <button
+        <div className="flex items-center justify-end gap-2 pt-3 border-t border-neutral-100">
+          <Button
             type="button"
+            variant="outline"
+            size="sm"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-100 rounded-lg transition-colors"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="flex items-center gap-1.5 px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg shadow-sm transition-all"
+            size="sm"
           >
-            <Plus className="h-3.5 w-3.5" />
+            <Plus className="h-4 w-4" />
             <span>Create & Register Terminal</span>
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

@@ -1,20 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRealtime } from '../context/RealtimeContext';
-import { StatusBadge } from '../components/common/StatusBadge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import {
   Bell,
   AlertTriangle,
   AlertCircle,
   Info,
   CheckCircle2,
-  ShieldAlert,
-  WifiOff,
-  RotateCcw,
   Search,
-  Filter,
-  Layers,
-  Zap,
   Check,
 } from 'lucide-react';
 
@@ -38,7 +34,7 @@ const initialIncidents: TelemetryIncident[] = [
 ];
 
 export const SystemAlerts: React.FC = () => {
-  const { terminals, showToast } = useRealtime();
+  const { showToast } = useRealtime();
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') || '';
   const severityFilter = searchParams.get('severity') || 'ALL';
@@ -85,16 +81,16 @@ export const SystemAlerts: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-black text-zinc-900 flex items-center gap-2">
-              <Bell className="h-5 w-5 text-primary" /> Live Hardware Telemetry & Alerts
+            <h1 className="text-xl font-bold text-neutral-900 flex items-center gap-2">
+              <Bell className="h-5 w-5 text-primary-500" /> Live Hardware Telemetry & Alerts
             </h1>
             {activeCount > 0 && (
-              <span className="px-2.5 py-0.5 bg-red-600 text-white text-[11px] font-black rounded-full animate-pulse">
+              <Badge variant="destructive" className="animate-pulse">
                 {activeCount} CRITICAL ALARMS
-              </span>
+              </Badge>
             )}
           </div>
-          <p className="text-xs text-zinc-500 mt-1">
+          <p className="text-sm text-neutral-500 mt-1">
             Real-time IoT heartbeat monitor, socket disconnects, solenoid latencies, and thermal sensor alarms
           </p>
         </div>
@@ -103,20 +99,20 @@ export const SystemAlerts: React.FC = () => {
       {/* Filter Row */}
       <div className="flex flex-col sm:flex-row items-center gap-3">
         <div className="relative flex-1 w-full">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
-          <input
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-neutral-400" />
+          <Input
             type="text"
             value={search}
             onChange={e => updateParam('search', e.target.value)}
             placeholder="Search by terminal code, alert title, or site name..."
-            className="w-full pl-10 pr-4 h-10 bg-white border border-zinc-200 rounded-lg text-xs font-medium outline-none focus:border-primary"
+            className="pl-9"
           />
         </div>
 
         <select
           value={severityFilter}
           onChange={e => updateParam('severity', e.target.value)}
-          className="h-10 px-3 bg-white border border-zinc-200 rounded-lg text-xs font-semibold text-zinc-800 outline-none focus:border-primary"
+          className="flex h-9 px-3 bg-white border border-neutral-200 rounded-md text-sm text-neutral-900 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
         >
           <option value="ALL">All Severities</option>
           <option value="CRITICAL">Critical Alarms</option>
@@ -130,22 +126,22 @@ export const SystemAlerts: React.FC = () => {
         {filtered.map(inc => (
           <div
             key={inc.id}
-            className={`p-4 rounded-xl border bg-white shadow-2xs transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+            className={`p-4 rounded-lg border bg-white shadow-sm transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
               inc.severity === 'CRITICAL'
-                ? 'border-red-200 hover:border-red-300'
+                ? 'border-error-100'
                 : inc.severity === 'WARNING'
-                ? 'border-amber-200 hover:border-amber-300'
-                : 'border-zinc-200 hover:border-zinc-300'
+                ? 'border-warning-100'
+                : 'border-neutral-200'
             }`}
           >
             <div className="flex items-start gap-3.5 min-w-0">
               <div
-                className={`p-2.5 rounded-lg shrink-0 ${
+                className={`p-2.5 rounded-md shrink-0 ${
                   inc.severity === 'CRITICAL'
-                    ? 'bg-red-50 text-red-600'
+                    ? 'bg-error-50 text-error-500'
                     : inc.severity === 'WARNING'
-                    ? 'bg-amber-50 text-amber-600'
-                    : 'bg-blue-50 text-blue-600'
+                    ? 'bg-warning-50 text-warning-500'
+                    : 'bg-info-50 text-info-500'
                 }`}
               >
                 {inc.severity === 'CRITICAL' ? (
@@ -159,23 +155,24 @@ export const SystemAlerts: React.FC = () => {
 
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-mono font-bold text-xs text-zinc-900">{inc.terminalCode}</span>
-                  <span className="text-zinc-400">•</span>
-                  <span className="text-xs font-bold text-zinc-800">{inc.title}</span>
-                  <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                  <span className="font-mono font-bold text-xs text-neutral-900">{inc.terminalCode}</span>
+                  <span className="text-neutral-300">•</span>
+                  <span className="text-sm font-semibold text-neutral-900">{inc.title}</span>
+                  <Badge
+                    variant={
                       inc.severity === 'CRITICAL'
-                        ? 'bg-red-100 text-red-700'
+                        ? 'destructive'
                         : inc.severity === 'WARNING'
-                        ? 'bg-amber-100 text-amber-700'
-                        : 'bg-blue-100 text-blue-700'
-                    }`}
+                        ? 'warning'
+                        : 'info'
+                    }
+                    size="sm"
                   >
                     {inc.severity}
-                  </span>
+                  </Badge>
                 </div>
-                <p className="text-xs text-zinc-600 mt-1 leading-relaxed">{inc.message}</p>
-                <div className="flex items-center gap-3 text-[11px] text-zinc-400 mt-1.5 font-mono">
+                <p className="text-sm text-neutral-600 mt-1 leading-relaxed">{inc.message}</p>
+                <div className="flex items-center gap-3 text-xs text-neutral-500 mt-1.5 font-mono">
                   <span>{inc.siteName}</span>
                   <span>•</span>
                   <span>{inc.timestamp}</span>
@@ -185,27 +182,28 @@ export const SystemAlerts: React.FC = () => {
 
             <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
               {inc.status === 'ACTIVE' && (
-                <button
+                <Button
                   type="button"
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleStatusChange(inc.id, 'ACKNOWLEDGED')}
-                  className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold rounded-lg transition-colors"
                 >
                   Acknowledge
-                </button>
+                </Button>
               )}
               {inc.status !== 'RESOLVED' && (
-                <button
+                <Button
                   type="button"
+                  size="sm"
                   onClick={() => handleStatusChange(inc.id, 'RESOLVED')}
-                  className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold rounded-lg transition-colors flex items-center gap-1"
                 >
                   <Check className="h-3.5 w-3.5" /> Resolve
-                </button>
+                </Button>
               )}
               {inc.status === 'RESOLVED' && (
-                <span className="px-3 py-1 bg-zinc-100 text-zinc-600 text-xs font-semibold rounded-lg flex items-center gap-1 font-mono">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" /> RESOLVED
-                </span>
+                <Badge variant="outline" className="text-success-700 bg-success-50 border-success-100 flex items-center gap-1 font-mono">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-success-500" /> RESOLVED
+                </Badge>
               )}
             </div>
           </div>

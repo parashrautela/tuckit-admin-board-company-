@@ -349,11 +349,12 @@ export const Dashboard: React.FC = () => {
 
           {/* Export Dialog */}
           <Button
-            variant="default"
+            variant="outline"
             size="sm"
             onClick={() => setShowExportModal(true)}
+            className="bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 shadow-xs"
           >
-            <FileSpreadsheet className="size-3.5 text-emerald-400" />
+            <FileSpreadsheet className="size-3.5 text-emerald-600" />
             <span>Export CSV</span>
           </Button>
         </div>

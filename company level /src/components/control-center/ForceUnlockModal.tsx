@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { DestructiveActionModal } from '../common/DestructiveActionModal';
 import { SearchableSelect, SelectOption } from '../common/SearchableSelect';
 import { useRealtime } from '../../context/RealtimeContext';
+import { Input } from '@/components/ui/input';
 
 interface ForceUnlockModalProps {
   isOpen: boolean;
@@ -62,7 +63,6 @@ export const ForceUnlockModal: React.FC<ForceUnlockModalProps> = ({
       auditWarning="Action will be permanently recorded in the system audit trail with operator timestamp, IP address, and role."
     >
       <div className="space-y-3">
-        {/* Searchable Combobox for Terminals (No artificial cap) */}
         <SearchableSelect
           label="Select Terminal"
           required
@@ -73,16 +73,16 @@ export const ForceUnlockModal: React.FC<ForceUnlockModalProps> = ({
           searchPlaceholder="Filter by terminal code, site, or city..."
         />
 
-        <div>
-          <label className="block text-[11px] font-bold text-zinc-700 uppercase tracking-wider mb-1.5">
-            Locker Name / Number <span className="text-red-500">*</span>
+        <div className="space-y-1.5">
+          <label className="block text-xs font-medium text-neutral-700">
+            Locker Name / Number <span className="text-error-500">*</span>
           </label>
-          <input
+          <Input
             type="text"
             value={lockerName}
             onChange={e => setLockerName(e.target.value)}
             placeholder="e.g. LKR-A04"
-            className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold font-mono text-zinc-900 focus:bg-white focus:border-zinc-900 outline-none transition-colors"
+            className="font-mono font-semibold"
             required
           />
         </div>

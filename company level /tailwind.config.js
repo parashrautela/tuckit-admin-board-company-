@@ -8,8 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: '#FF7000',
+          foreground: '#FFFFFF',
           50: '#FFF3E8',
           100: '#FFE4CC',
           200: '#FFC898',
@@ -25,8 +31,45 @@ export default {
           light: '#FFF3E8',
           dark: '#C24A00',
         },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
         neutral: {
           0: '#FFFFFF',
+          50: '#FAF9F7',
+          100: '#F3F1EE',
+          200: '#E7E3DE',
+          300: '#D3CDC5',
+          400: '#A8A19A',
+          500: '#7C766F',
+          600: '#5C5852',
+          700: '#423F3B',
+          800: '#2B2926',
+          900: '#1A1917',
+          950: '#0D0C0B',
+        },
+        zinc: {
           50: '#FAF9F7',
           100: '#F3F1EE',
           200: '#E7E3DE',
@@ -93,18 +136,18 @@ export default {
       },
       borderRadius: {
         'xs': '4px',
-        'sm': '6px',
-        'md': '8px',
-        'lg': '12px',
-        'xl': '16px',
-        'xxl': '24px',
+        'sm': 'calc(var(--radius) - 4px)',
+        'md': 'calc(var(--radius) - 2px)',
+        'lg': 'var(--radius)',
+        'xl': 'calc(var(--radius) + 4px)',
+        'xxl': '1.5rem',
         'pill': '9999px',
         'full': '9999px',
       },
       boxShadow: {
-        'xs': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
-        '2xs': '0 1px 1px 0 rgb(0 0 0 / 0.02)',
-        'card': '0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04)',
+        'xs': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        '2xs': '0 1px 1px 0 rgb(0 0 0 / 0.03)',
+        'card': '0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05)',
         'sidebar': '1px 0 3px 0 rgb(0 0 0 / 0.04)',
       },
       width: {
