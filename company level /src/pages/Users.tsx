@@ -124,7 +124,7 @@ export const UsersPage: React.FC = () => {
                     <div className="text-[11px] text-ink-subtle">{u.email}</div>
                   </TableCell>
                   <TableCell className="font-semibold text-ink">{u.totalBookings}</TableCell>
-                  <TableCell className="font-bold text-primary font-mono whitespace-nowrap">
+                  <TableCell className="font-bold text-neutral-900 font-mono whitespace-nowrap">
                     ₹{u.totalSpent.toLocaleString()}
                   </TableCell>
                   <TableCell className="text-ink-muted font-mono text-[11px] whitespace-nowrap">{u.lastActive}</TableCell>
@@ -134,24 +134,25 @@ export const UsersPage: React.FC = () => {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right whitespace-nowrap">
-                    <Button
-                      variant={u.status === 'ACTIVE' ? 'destructive' : 'outline'}
-                      size="sm"
-                      onClick={() => toggleBlacklist(u)}
-                      className="h-7 px-2.5 text-xs font-semibold"
-                    >
-                      {u.status === 'ACTIVE' ? (
-                        <>
-                          <ShieldAlert className="size-3" />
-                          <span>Blacklist User</span>
-                        </>
-                      ) : (
-                        <>
-                          <ShieldCheck className="size-3 text-emerald-600" />
-                          <span>Remove Flag</span>
-                        </>
-                      )}
-                    </Button>
+                    {u.status === 'ACTIVE' ? (
+                      <button
+                        type="button"
+                        onClick={() => toggleBlacklist(u)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/70 text-xs font-semibold rounded-lg shadow-2xs transition-all"
+                      >
+                        <ShieldAlert className="size-3.5 text-rose-600" />
+                        <span>Blacklist User</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => toggleBlacklist(u)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border border-neutral-200 text-xs font-semibold rounded-lg shadow-2xs transition-all"
+                      >
+                        <ShieldCheck className="size-3.5 text-neutral-500" />
+                        <span>Remove Flag</span>
+                      </button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

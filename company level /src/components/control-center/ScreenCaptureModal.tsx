@@ -102,7 +102,7 @@ export const ScreenCaptureModal: React.FC<ScreenCaptureModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg transition-colors"
+              className="px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               Done
             </button>

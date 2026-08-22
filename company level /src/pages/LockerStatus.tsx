@@ -218,7 +218,7 @@ export const LockerStatus: React.FC = () => {
               {Math.min(filteredTerminals.length, currentPage * itemsPerPage)} of{' '}
               {filteredTerminals.length} terminals
             </span>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <Button
                 variant="outline"
                 size="icon-sm"
@@ -227,9 +227,9 @@ export const LockerStatus: React.FC = () => {
               >
                 <ChevronLeft className="size-3.5" />
               </Button>
-              <span className="px-2 font-mono font-bold text-ink">
+              <div className="inline-flex h-8 items-center justify-center px-2.5 text-xs font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-md shadow-xs select-none">
                 {currentPage}/{totalPages}
-              </span>
+              </div>
               <Button
                 variant="outline"
                 size="icon-sm"

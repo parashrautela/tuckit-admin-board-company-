@@ -91,7 +91,6 @@ export const FutureFirst: React.FC = () => {
           variant="default"
           size="sm"
           onClick={() => showToast('Future First station telemetry synced', 'info')}
-          className="bg-zinc-900 hover:bg-zinc-800 text-white font-medium"
         >
           <RefreshCw className="size-3.5 mr-1.5" />
           <span>Sync Telemetry</span>
@@ -230,7 +229,7 @@ export const FutureFirst: React.FC = () => {
                 </div>
                 <div className="h-1.5 bg-zinc-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-zinc-900 rounded-full transition-all"
+                    className="h-full bg-neutral-600 rounded-full transition-all"
                     style={{ width: `${(s.occupiedLockers / s.totalLockers) * 100}%` }}
                   />
                 </div>

@@ -96,7 +96,7 @@ export const BatchConsoleModal: React.FC<BatchConsoleModalProps> = ({ isOpen, on
             <button
               type="submit"
               disabled={isRunning}
-              className="px-4 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition-colors"
+              className="px-4 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg flex items-center gap-1.5 transition-colors shadow-xs"
             >
               <Play className={`h-3.5 w-3.5 ${isRunning ? 'animate-spin' : ''}`} />
               <span>{isRunning ? 'Broadcasting...' : 'Run'}</span>

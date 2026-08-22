@@ -34,7 +34,7 @@ export const StaffProfiles: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-black text-zinc-900 flex items-center gap-2">
-            <Users className="h-5 w-5 text-primary" /> Staff Profiles & Cash Collector Bank
+            <Users className="h-5 w-5 text-zinc-700" /> Staff Profiles & Cash Collector Bank
           </h1>
           <p className="text-xs text-zinc-500 mt-1">Field operations profiles, cash custody balances, banking info, and settlement thresholds</p>
         </div>
@@ -62,7 +62,7 @@ export const StaffProfiles: React.FC = () => {
 
             <div className="mt-3">
               <h3 className="text-sm font-bold text-zinc-900">{s.name}</h3>
-              <p className="text-xs text-primary font-semibold">{s.role}</p>
+              <p className="text-xs text-zinc-700 font-semibold">{s.role}</p>
               <p className="text-xs text-zinc-500 mt-0.5">{s.assignedRegion}</p>
             </div>
 

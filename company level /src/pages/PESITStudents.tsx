@@ -110,13 +110,13 @@ export const PESITStudents: React.FC = () => {
       {/* Header */}
       <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-purple-600 rounded-xl text-white shadow-sm">
+          <div className="p-2.5 bg-primary-500 rounded-xl text-white shadow-sm">
             <GraduationCap className="h-6 w-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-black text-zinc-900 tracking-tight">Student Management & RFID Directory</h1>
-              <span className="px-2 py-0.5 bg-purple-100 text-purple-800 text-[10px] font-black rounded-full uppercase">
+              <span className="px-2 py-0.5 bg-primary-100 text-primary-900 border border-primary-200 text-[10px] font-bold rounded-full uppercase">
                 PESIT CAMPUS
               </span>
             </div>
@@ -129,7 +129,7 @@ export const PESITStudents: React.FC = () => {
         <button
           type="button"
           onClick={() => setCreateModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm shrink-0"
+          className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-xl transition-all shadow-xs shrink-0"
         >
           <Plus className="h-4 w-4" /> Enroll Student
         </button>
@@ -184,7 +184,7 @@ export const PESITStudents: React.FC = () => {
                   </td>
                   <td className="py-3 px-4">
                     <div className="font-semibold text-zinc-700">{s.department}</div>
-                    <div className="text-[11px] text-purple-700 font-bold">{s.year}</div>
+                    <div className="text-[11px] text-primary-700 font-semibold">{s.year}</div>
                   </td>
                   <td className="py-3 px-4">
                     <span className="font-mono text-zinc-800 bg-zinc-100 px-2 py-0.5 rounded-md border border-zinc-200 font-bold text-[11px]">
@@ -213,7 +213,7 @@ export const PESITStudents: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleApprove(s.id)}
-                        className="px-2.5 py-1 bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold rounded-lg transition-colors"
+                        className="px-2.5 py-1 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-[11px] font-semibold rounded-lg transition-colors shadow-xs"
                       >
                         Approve
                       </button>
@@ -221,7 +221,7 @@ export const PESITStudents: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => showToast(`Credentials re-sent to ${s.name}`, 'info')}
-                        className="text-purple-700 hover:underline font-bold text-xs"
+                        className="text-primary-700 hover:text-primary-900 hover:underline font-semibold text-xs"
                       >
                         Re-issue
                       </button>
@@ -252,7 +252,7 @@ export const PESITStudents: React.FC = () => {
               value={form.enrollmentNumber}
               onChange={e => setForm(p => ({ ...p, enrollmentNumber: e.target.value }))}
               placeholder="e.g. 1PI20CS042"
-              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-mono font-bold outline-none focus:border-purple-600"
+              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-mono font-bold outline-none focus:border-primary"
             />
           </div>
 
@@ -266,7 +266,7 @@ export const PESITStudents: React.FC = () => {
               value={form.name}
               onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
               placeholder="e.g. Aarav Sharma"
-              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs outline-none focus:border-purple-600"
+              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs outline-none focus:border-primary"
             />
           </div>
 
@@ -336,7 +336,7 @@ export const PESITStudents: React.FC = () => {
             </button>
             <button
               type="submit"
-              className="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all"
+              className="px-5 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-xl shadow-xs transition-all"
             >
               Enroll & Link RFID
             </button>

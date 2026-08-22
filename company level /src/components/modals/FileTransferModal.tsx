@@ -127,9 +127,9 @@ export const FileTransferModal: React.FC<FileTransferModalProps> = ({ isOpen, on
           <button
             type="submit"
             disabled={isUploading}
-            className="flex items-center gap-1.5 px-4 py-2 bg-primary hover:bg-orange-600 text-white text-xs font-bold rounded-xl shadow-sm transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-xl shadow-xs transition-all"
           >
-            <UploadCloud className="h-3.5 w-3.5" />
+            <UploadCloud className="h-3.5 w-3.5 text-neutral-700" />
             <span>{isUploading ? 'Executing Pipeline...' : 'Deploy via S3 Pipeline'}</span>
           </button>
         </div>

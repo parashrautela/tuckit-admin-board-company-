@@ -57,13 +57,13 @@ export const PESITTerminals: React.FC = () => {
       {/* Header */}
       <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-purple-600 rounded-lg text-white shadow-2xs">
+          <div className="p-2.5 bg-primary-500 rounded-lg text-white shadow-2xs">
             <GraduationCap className="h-6 w-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-bold text-zinc-900 tracking-tight">PESIT Campus Locker Terminals</h1>
-              <span className="px-2 py-0.5 bg-purple-50 text-purple-700 border border-purple-200 text-[10px] font-bold rounded-md uppercase">
+              <span className="px-2 py-0.5 bg-primary-50 text-primary-700 border border-primary-200 text-[10px] font-bold rounded-md uppercase">
                 INSTITUTIONAL HUB
               </span>
             </div>
@@ -76,7 +76,7 @@ export const PESITTerminals: React.FC = () => {
         <button
           type="button"
           onClick={() => showToast('Campus locker cluster status synced', 'info')}
-          className="flex items-center gap-1.5 px-4 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-semibold rounded-lg transition-all shadow-2xs shrink-0"
+          className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-all shadow-xs shrink-0"
         >
           <RefreshCw className="h-3.5 w-3.5" /> Sync Status
         </button>
@@ -112,10 +112,10 @@ export const PESITTerminals: React.FC = () => {
 
                 <div>
                   <h3 className="text-sm font-bold text-zinc-900 truncate">{t.siteName}</h3>
-                  <p className="text-xs text-purple-700 font-semibold mt-0.5">{t.city}, {t.state}</p>
+                  <p className="text-xs text-neutral-700 font-semibold mt-0.5">{t.city}, {t.state}</p>
                 </div>
 
-                <div className="p-3 bg-purple-50/40 rounded-lg border border-purple-100/80 space-y-1.5 text-xs">
+                <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200/80 space-y-1.5 text-xs">
                   <div className="flex justify-between">
                     <span className="text-zinc-500">Lockers:</span>
                     <span className="font-bold text-zinc-900">
@@ -139,9 +139,9 @@ export const PESITTerminals: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleSendCredentials(t.code)}
-                  className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-semibold rounded-lg transition-colors shadow-2xs"
+                  className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-colors shadow-xs"
                 >
-                  <MessageSquare className="h-3.5 w-3.5 text-purple-400" />
+                  <MessageSquare className="h-3.5 w-3.5 text-neutral-700" />
                   <span>Send SMS Credentials</span>
                 </button>
 

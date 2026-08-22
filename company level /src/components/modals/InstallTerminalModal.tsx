@@ -67,7 +67,7 @@ export const InstallTerminalModal: React.FC<InstallTerminalModalProps> = ({ isOp
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="w-full py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg transition-colors"
+              className="w-full py-2.5 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               Generate Terminal Bootstrap Script
             </button>
@@ -84,7 +84,7 @@ export const InstallTerminalModal: React.FC<InstallTerminalModalProps> = ({ isOp
               type="button"
               onClick={handleRunScript}
               disabled={isInstalling}
-              className="w-full py-2.5 bg-zinc-900 hover:bg-black text-white text-xs font-bold rounded-lg flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2.5 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg shadow-xs flex items-center justify-center gap-2 transition-colors"
             >
               <Cpu className={`h-4 w-4 ${isInstalling ? 'animate-spin' : ''}`} />
               <span>{isInstalling ? 'Verifying WebSocket Handshake...' : 'Verify Installation'}</span>
@@ -102,7 +102,7 @@ export const InstallTerminalModal: React.FC<InstallTerminalModalProps> = ({ isOp
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg transition-colors"
+              className="px-6 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               Complete Setup
             </button>

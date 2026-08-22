@@ -114,9 +114,9 @@ export const SmsUnlockModal: React.FC<SmsUnlockModalProps> = ({
           <button
             type="submit"
             disabled={isSubmitting || !mobile.trim()}
-            className="flex items-center gap-1.5 px-4 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-bold rounded-lg shadow-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg shadow-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all"
           >
-            <Send className="h-3.5 w-3.5" />
+            <Send className="h-3.5 w-3.5 text-neutral-700" />
             <span>{isSubmitting ? 'Dispatching...' : 'Send SMS Unlock Link'}</span>
           </button>
         </div>

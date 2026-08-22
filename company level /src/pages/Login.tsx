@@ -113,11 +113,12 @@ export const Login: React.FC = () => {
             <div className="flex flex-col gap-2.5 pt-2">
               <Button
                 type="submit"
+                variant="default"
                 disabled={isLoading}
-                className="w-full h-10 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-sm rounded-lg shadow-xs"
+                className="w-full h-10 text-sm rounded-lg"
               >
                 {isLoading ? (
-                  <div className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="size-4 border-2 border-neutral-800 border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <span>Login</span>
                 )}

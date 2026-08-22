@@ -116,7 +116,7 @@ export const Profile: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full h-9 mt-2 bg-primary hover:bg-orange-600 text-white text-xs font-bold rounded-xl shadow-sm transition-colors flex items-center justify-center gap-1.5"
+              className="w-full h-9 mt-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-xl shadow-xs transition-colors flex items-center justify-center gap-1.5"
             >
               <Save className="h-3.5 w-3.5" /> Save New Credentials
             </button>

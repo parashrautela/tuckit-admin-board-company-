@@ -101,16 +101,16 @@ export const StaffCredit: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setActionModal({ isOpen: true, type: 'APPROVE', item: r })}
-                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#00875A] hover:bg-[#00704A] text-white text-xs font-bold rounded-xl shadow-2xs transition-all"
                         >
-                          <CheckCircle2 className="h-3 w-3" /> Approve
+                          <CheckCircle2 className="size-3.5" /> Approve
                         </button>
                         <button
                           type="button"
                           onClick={() => setActionModal({ isOpen: true, type: 'REJECT', item: r })}
-                          className="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-100 text-xs font-bold rounded-xl transition-all"
                         >
-                          <XCircle className="h-3 w-3" /> Reject
+                          <XCircle className="size-3.5" /> Reject
                         </button>
                       </div>
                     </td>

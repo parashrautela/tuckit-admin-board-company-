@@ -127,9 +127,9 @@ export const TerminalRebootModal: React.FC<TerminalRebootModalProps> = ({
           <button
             type="submit"
             disabled={isSubmitting || !reason.trim()}
-            className="flex items-center gap-1.5 px-4 py-2 bg-zinc-900 hover:bg-black text-white text-xs font-bold rounded-lg shadow-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-bold rounded-lg shadow-xs disabled:opacity-40 disabled:cursor-not-allowed transition-all"
           >
-            <RotateCcw className="h-3.5 w-3.5" />
+            <RotateCcw className="h-3.5 w-3.5 text-neutral-700" />
             <span>{isSubmitting ? 'Sending Signal...' : 'Execute Restart Command'}</span>
           </button>
         </div>

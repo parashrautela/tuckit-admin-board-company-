@@ -475,8 +475,8 @@ export const Dashboard: React.FC = () => {
                   onClick={() => applyView(view)}
                   className={`inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-md border transition-all whitespace-nowrap ${
                     isMatch
-                      ? 'bg-zinc-900 text-white border-zinc-900 shadow-2xs'
-                      : 'bg-zinc-50 hover:bg-zinc-100 text-ink-muted border-hairline'
+                      ? 'bg-neutral-700 text-white border-neutral-700 shadow-2xs hover:bg-neutral-800'
+                      : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-600 border-neutral-200'
                   }`}
                 >
                   <span>{view.name}</span>
@@ -815,18 +815,20 @@ export const Dashboard: React.FC = () => {
               size="sm"
               onClick={() => updateFilter('page', String(Math.max(1, currentPage - 1)))}
               disabled={currentPage === 1}
+              className="h-8 px-3 text-xs"
             >
               <ChevronLeft className="size-4" />
               <span>Previous</span>
             </Button>
-            <span className="px-3 py-1 text-xs font-semibold text-ink bg-white border border-hairline rounded-md">
+            <div className="inline-flex h-8 items-center justify-center px-3 text-xs font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-md shadow-xs select-none">
               Page {currentPage} of {totalPages}
-            </span>
+            </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => updateFilter('page', String(Math.min(totalPages, currentPage + 1)))}
               disabled={currentPage === totalPages}
+              className="h-8 px-3 text-xs"
             >
               <span>Next</span>
               <ChevronRight className="size-4" />

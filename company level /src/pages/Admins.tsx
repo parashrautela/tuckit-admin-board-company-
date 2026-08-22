@@ -134,13 +134,13 @@ export const Admins: React.FC = () => {
                   <TableCell className="font-mono font-bold text-ink whitespace-nowrap">{a.id}</TableCell>
                   <TableCell className="whitespace-nowrap">
                     <div className="font-semibold text-ink">{a.name}</div>
-                    <div className="text-[11px] text-primary font-mono font-medium">@{a.username}</div>
+                    <div className="text-[11px] text-zinc-500 font-mono font-medium">@{a.username}</div>
                   </TableCell>
                   <TableCell className="text-ink-muted font-mono text-xs">{a.email}</TableCell>
                   <TableCell>
-                    <Badge variant="default" size="sm" className="font-mono text-[10px]">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-[#FFE5C6] text-[#7A2E00] border border-[#FFC898]/70 font-bold font-mono text-[10px] uppercase">
                       {a.role}
-                    </Badge>
+                    </span>
                   </TableCell>
                   <TableCell className="text-ink-muted font-mono text-[11px] whitespace-nowrap">{a.lastLogin}</TableCell>
                   <TableCell>

@@ -22,7 +22,7 @@ export const PESITManagers: React.FC = () => {
           </h1>
           <p className="text-xs text-zinc-500 mt-1">Campus coordinators and hostel administrators with locker terminal rights</p>
         </div>
-        <button className="flex items-center gap-1.5 px-3.5 py-2 bg-primary hover:bg-orange-600 text-white text-xs font-bold rounded-lg shadow-sm">
+        <button className="flex items-center gap-1.5 px-3.5 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg shadow-xs transition-colors">
           <Plus className="h-4 w-4" /> Add Campus Manager
         </button>
       </div>

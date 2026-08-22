@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRealtime } from '@/context/RealtimeContext';
 import { Modal } from '@/components/common/Modal';
+import { BookingsOverviewChart } from '@/components/reports/BookingsOverviewChart';
 import {
   Card,
   CardHeader,
@@ -146,11 +147,11 @@ export const Reports: React.FC = () => {
   // Source share data
   const sourceStats = useMemo(() => {
     const channelMeta: Record<string, { color: string; fill: string; bg: string; text: string; icon: any }> = {
-      'Touchscreen': { color: '#FF7000', fill: '#FF7000', bg: 'bg-primary-500', text: 'text-primary-700', icon: Monitor },
-      'Mobile App': { color: '#2563EB', fill: '#2563EB', bg: 'bg-info-500', text: 'text-info-700', icon: Smartphone },
-      'Web': { color: '#16A34A', fill: '#16A34A', bg: 'bg-success-500', text: 'text-success-700', icon: Globe },
-      'WhatsApp': { color: '#8B5CF6', fill: '#8B5CF6', bg: 'bg-purple-500', text: 'text-purple-700', icon: MessageSquare },
-      'Offline Payment / QR': { color: '#F59E0B', fill: '#F59E0B', bg: 'bg-warning-500', text: 'text-warning-700', icon: QrCode },
+      'Touchscreen': { color: '#E58A3C', fill: '#E58A3C', bg: 'bg-[#E58A3C]', text: 'text-[#C2651E]', icon: Monitor },
+      'Mobile App': { color: '#5B84B1', fill: '#5B84B1', bg: 'bg-[#5B84B1]', text: 'text-[#3E6591]', icon: Smartphone },
+      'Web': { color: '#4E9F8E', fill: '#4E9F8E', bg: 'bg-[#4E9F8E]', text: 'text-[#357B6C]', icon: Globe },
+      'WhatsApp': { color: '#8E7C93', fill: '#8E7C93', bg: 'bg-[#8E7C93]', text: 'text-[#6D5D72]', icon: MessageSquare },
+      'Offline Payment / QR': { color: '#C49B58', fill: '#C49B58', bg: 'bg-[#C49B58]', text: 'text-[#96743A]', icon: QrCode },
     };
 
     const counts: Record<string, number> = {
@@ -337,7 +338,6 @@ export const Reports: React.FC = () => {
               size="sm"
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="bg-zinc-900 hover:bg-zinc-800 text-white font-medium"
             >
               <RefreshCw className={`size-3.5 mr-1.5 ${isRefreshing ? 'animate-spin' : ''}`} />
               <span>Sync: {lastRefreshed}</span>
@@ -405,194 +405,7 @@ export const Reports: React.FC = () => {
       </div>
 
       {/* ── Booking Channel Share & Adoption Trends ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Source Share with Graphs */}
-        <Card>
-          <CardHeader className="p-4 pb-3 border-b border-neutral-100 flex flex-row items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BarChart3 className="size-4 text-primary-500" />
-              <CardTitle className="text-sm font-semibold text-neutral-900">Booking Channel Distribution</CardTitle>
-            </div>
-            <Badge variant="outline" size="sm" className="text-neutral-500 font-normal">
-              {filteredBookings.length} Total Bookings
-            </Badge>
-          </CardHeader>
-
-          <CardContent className="p-5 flex flex-col gap-5">
-            {/* Multi-Segment Proportion Bar Graph */}
-            <div className="flex flex-col gap-1.5">
-              <div className="flex items-center justify-between text-xs text-neutral-500">
-                <span className="font-medium text-neutral-700">Channel Share Breakdown</span>
-                <span className="font-mono text-[11px] font-semibold text-neutral-900">100% Total Volume</span>
-              </div>
-              <div className="h-3 w-full bg-neutral-100 rounded-full overflow-hidden flex p-0.5 gap-0.5">
-                {donutData.slices.map(s => s.pct > 0 && (
-                  <div
-                    key={s.name}
-                    className={`h-full rounded-xs transition-all duration-500 ${s.bg}`}
-                    style={{ width: `${s.pct}%` }}
-                    title={`${s.name}: ${s.count} bookings (${s.pct}%)`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Donut Chart & Legend Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
-              {/* Donut SVG Graph */}
-              <div className="sm:col-span-5 flex flex-col items-center justify-center relative py-2">
-                <div className="relative size-36 flex items-center justify-center">
-                  <svg className="size-full -rotate-90" viewBox="0 0 100 100">
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="38"
-                      className="text-neutral-100"
-                      strokeWidth="12"
-                      stroke="currentColor"
-                      fill="transparent"
-                    />
-                    {donutData.slices.map(s => s.pct > 0 && (
-                      <circle
-                        key={s.name}
-                        cx="50"
-                        cy="50"
-                        r="38"
-                        stroke={s.color}
-                        strokeWidth="12"
-                        strokeDasharray={s.strokeDasharray}
-                        strokeDashoffset={s.strokeDashoffset}
-                        strokeLinecap="round"
-                        fill="transparent"
-                        className="transition-all duration-700 hover:opacity-85"
-                      />
-                    ))}
-                  </svg>
-                  {/* Center Metric */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none">
-                    <span className="text-xl font-bold font-mono tracking-tight text-neutral-900 leading-none">
-                      {filteredBookings.length}
-                    </span>
-                    <span className="text-[10px] uppercase font-semibold text-neutral-400 mt-0.5 tracking-wider">
-                      Bookings
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Interactive Channel Breakdown List */}
-              <div className="sm:col-span-7 flex flex-col gap-2.5">
-                {sourceStats.map(s => {
-                  const Icon = s.icon;
-                  return (
-                    <div
-                      key={s.name}
-                      className="group flex flex-col gap-1 p-2 rounded-md hover:bg-neutral-50 border border-transparent hover:border-neutral-200 transition-colors"
-                    >
-                      <div className="flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2 min-w-0">
-                          <span
-                            className="size-2.5 rounded-full shrink-0"
-                            style={{ backgroundColor: s.color }}
-                          />
-                          <Icon className="size-3.5 text-neutral-400 group-hover:text-neutral-700 transition-colors shrink-0" />
-                          <span className="font-medium text-neutral-800 truncate">{s.name}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <span className="font-mono text-neutral-900 font-semibold text-xs">{s.count}</span>
-                          <span
-                            className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold"
-                            style={{ backgroundColor: `${s.color}18`, color: s.color }}
-                          >
-                            {s.pct}%
-                          </span>
-                        </div>
-                      </div>
-                      {/* Micro Progress Bar */}
-                      <div className="h-1 bg-neutral-100 rounded-full overflow-hidden w-full">
-                        <div
-                          className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${s.pct}%`, backgroundColor: s.color }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Adoption Trends & Insights Graph Card */}
-        <Card>
-          <CardHeader className="p-4 pb-3 border-b border-neutral-100 flex flex-row items-center justify-between">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="size-4 text-primary-500" />
-              <CardTitle className="text-sm font-semibold text-neutral-900">Channel Growth & Insight</CardTitle>
-            </div>
-            <Badge variant="outline" size="sm" className="text-neutral-500 font-normal">6-Month Trend</Badge>
-          </CardHeader>
-
-          <CardContent className="p-5 flex flex-col gap-4">
-            {/* Visual KPI Mini Tiles */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-primary-500" />
-                <div className="text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Touchscreen</div>
-                <div className="text-xl font-bold font-mono text-neutral-900 mt-1">68.4%</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5">Primary Kiosk UI</div>
-              </div>
-              <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-info-500" />
-                <div className="text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Mobile App</div>
-                <div className="text-xl font-bold font-mono text-neutral-900 mt-1">19.2%</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5">iOS & Android</div>
-              </div>
-              <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-purple-500" />
-                <div className="text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">WhatsApp Bot</div>
-                <div className="text-xl font-bold font-mono text-neutral-900 mt-1">12.4%</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5">Auto Check-in</div>
-              </div>
-            </div>
-
-            {/* Micro Multi-Month Channel Progression Comparison Bar */}
-            <div className="p-3.5 bg-neutral-50 rounded-lg border border-neutral-200 flex flex-col gap-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-neutral-800">Monthly Digital Adoption Trend</span>
-                <span className="text-[11px] font-mono text-success-700 font-semibold">+32% MoM</span>
-              </div>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-12 text-[10px] font-mono text-neutral-500">Kiosk</span>
-                  <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary-500 rounded-full" style={{ width: '68%' }} />
-                  </div>
-                  <span className="w-8 text-right font-mono text-[10px] text-neutral-700">68%</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-12 text-[10px] font-mono text-neutral-500">App</span>
-                  <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-info-500 rounded-full" style={{ width: '19%' }} />
-                  </div>
-                  <span className="w-8 text-right font-mono text-[10px] text-neutral-700">19%</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-12 text-[10px] font-mono text-neutral-500">WhatsApp</span>
-                  <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-purple-500 rounded-full" style={{ width: '13%' }} />
-                  </div>
-                  <span className="w-8 text-right font-mono text-[10px] text-neutral-700">13%</span>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-xs text-neutral-600 leading-relaxed bg-white p-3 rounded-lg border border-neutral-200">
-              <strong className="text-neutral-900 font-semibold">Executive Insight:</strong> App and WhatsApp adoption rates grew by 32% across Tier-1 airports and metro stations in Q3, reducing kiosk touch latency by 45 seconds per check-in.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <BookingsOverviewChart />
 
       {/* ── Export Control Center Section ── */}
       <div className="flex items-center gap-2 pt-2">
@@ -951,7 +764,6 @@ export const Reports: React.FC = () => {
               variant="default"
               onClick={handleExecuteExport}
               disabled={isDownloading || selectedColumns.length === 0}
-              className="bg-zinc-900 hover:bg-zinc-800 text-white font-medium"
             >
               <Download className="size-3.5 mr-1.5" />
               <span>{isDownloading ? 'Generating File...' : 'Generate & Download'}</span>

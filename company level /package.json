@@ -1,8 +1,15 @@
 {
-  "name": "tuckit-company-admin",
-  "private": true,
+  "name": "clear",
   "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade admin and operations console replica for Tuckit smart IoT physical locker systems.",
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "postcss.config.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -1,78 +1,20 @@
 import React, { useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
+import { LocalNav } from './LocalNav';
 import { ToastContainer } from '../common/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { useRealtime } from '@/context/RealtimeContext';
-import {
-  Bell,
-  Menu,
-  Search,
-  ChevronRight,
-} from 'lucide-react';
+import { Bell, Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
-// Breadcrumb label mapping
-const pathLabels: Record<string, string> = {
-  '/dashboard': 'Live Fleet Bookings Stream',
-  '/reports': 'Reports & Financial Analytics',
-  '/device-status': 'Terminal Telemetry & Fleet Status',
-  '/locker-status': 'Physical Locker Matrix',
-  '/future-first': 'Future First Locker Management',
-  '/pesit-terminals': 'PESIT Terminals',
-  '/pesit-students': 'Student Directory',
-  '/pesit-managers': 'Locker Managers',
-  '/refund-requests': 'Refund Requests',
-  '/refund-history': 'Refund History & Audit',
-  '/pricing': 'Dynamic Pricing Control',
-  '/state-gst': 'State GST & Invoicing',
-  '/staff-credit': 'Staff Credit Requests',
-  '/staff-profiles': 'Staff Directory',
-  '/users': 'Customer Directory',
-  '/admins': 'Admin Directory',
-  '/employee-monitor': 'Employee Monitor',
-  '/roles': 'Roles & Permissions (RBAC)',
-  '/blacklist-history': 'Blacklist Audit Trail',
-  '/audit-logs': 'Immutable Audit Logs',
-  '/profile': 'Operator Profile',
-  '/alerts': 'System Alerts & Diagnostics',
-};
-
-const pathGroups: Record<string, string> = {
-  '/dashboard': 'Overview & Fleet',
-  '/reports': 'Overview & Fleet',
-  '/device-status': 'Overview & Fleet',
-  '/locker-status': 'Overview & Fleet',
-  '/future-first': 'Overview & Fleet',
-  '/pesit-terminals': 'PESIT Campus',
-  '/pesit-students': 'PESIT Campus',
-  '/pesit-managers': 'PESIT Campus',
-  '/refund-requests': 'Revenue & Billing',
-  '/refund-history': 'Revenue & Billing',
-  '/pricing': 'Revenue & Billing',
-  '/state-gst': 'Revenue & Billing',
-  '/staff-credit': 'Revenue & Billing',
-  '/staff-profiles': 'Revenue & Billing',
-  '/users': 'Access & Governance',
-  '/admins': 'Access & Governance',
-  '/employee-monitor': 'Access & Governance',
-  '/roles': 'Access & Governance',
-  '/blacklist-history': 'Access & Governance',
-  '/audit-logs': 'Access & Governance',
-};
-
 export const Layout: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { session } = useAuth();
   const { totalAlertsCount } = useRealtime();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const currentPath = location.pathname;
-  const pageLabel = pathLabels[currentPath] || 'Dashboard';
-  const groupLabel = pathGroups[currentPath];
 
   return (
     <div className="min-h-screen bg-neutral-50 font-sans text-neutral-900 flex flex-col antialiased">
@@ -85,9 +27,9 @@ export const Layout: React.FC = () => {
       {/* Main Content Shell */}
       <div className="lg:ml-64 flex flex-col min-h-screen transition-all duration-200 flex-1">
         {/* Top Header */}
-        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-neutral-200 h-14 flex items-center justify-between px-4 sm:px-6 shrink-0">
-          {/* Left: Mobile Menu Toggle + Breadcrumbs */}
-          <div className="flex items-center gap-3 min-w-0">
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-neutral-200 h-14 flex items-center justify-between px-4 sm:px-6 shrink-0 relative">
+          {/* Left: Mobile Menu Toggle + Breadcrumb Local Nav */}
+          <div className="flex items-center gap-2.5 min-w-0 max-w-[calc(50%-130px)] sm:max-w-[calc(50%-180px)] lg:max-w-[calc(50%-240px)]">
             <Button
               variant="outline"
               size="icon-sm"
@@ -98,37 +40,28 @@ export const Layout: React.FC = () => {
               <Menu className="size-4" />
             </Button>
 
-            {/* Breadcrumbs */}
-            <nav className="flex items-center gap-1.5 text-xs min-w-0 select-none">
-              <button
-                type="button"
-                onClick={() => navigate('/dashboard')}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors font-medium shrink-0"
-              >
-                Tuckit
-              </button>
-              {groupLabel && (
-                <>
-                  <ChevronRight className="size-3 text-neutral-400 shrink-0" />
-                  <span className="text-neutral-500 shrink-0 font-medium">{groupLabel}</span>
-                </>
-              )}
-              <ChevronRight className="size-3 text-neutral-400 shrink-0" />
-              <span className="text-neutral-900 font-semibold truncate">{pageLabel}</span>
-            </nav>
+            {/* Breadcrumb Local Navigation */}
+            <LocalNav />
           </div>
 
-          {/* Right: Quick Search + Alert Bell + Mobile Avatar */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            {/* Search Pill */}
+          {/* Center: Horizontally Centered Large Search Bar */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center justify-center pointer-events-auto z-10 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl px-2 sm:px-4">
             <div
               onClick={() => navigate('/dashboard')}
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md bg-neutral-100 border border-neutral-200 text-neutral-400 text-xs w-48 lg:w-60 cursor-pointer hover:bg-neutral-200/60 transition-colors"
+              className="flex items-center justify-between gap-2.5 px-3.5 py-2 rounded-lg bg-neutral-100/90 border border-neutral-200/90 text-neutral-500 text-xs sm:text-sm w-full cursor-pointer hover:bg-neutral-200/60 hover:border-neutral-300 transition-all shadow-2xs group"
             >
-              <Search className="size-3.5 shrink-0 text-neutral-400" />
-              <span className="truncate">Search terminal or user...</span>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Search className="size-4 shrink-0 text-neutral-400 group-hover:text-primary-600 transition-colors" />
+                <span className="truncate text-neutral-500 font-normal">Search terminal or user...</span>
+              </div>
+              <kbd className="pointer-events-none hidden sm:inline-flex h-4 select-none items-center gap-0.5 rounded border border-neutral-300 bg-white px-1.5 font-mono text-[10px] font-medium text-neutral-400 shadow-2xs">
+                ⌘K
+              </kbd>
             </div>
+          </div>
 
+          {/* Right: Alert Bell + Mobile Avatar */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto z-10">
             {/* Alert Bell */}
             <Button
               variant="ghost"

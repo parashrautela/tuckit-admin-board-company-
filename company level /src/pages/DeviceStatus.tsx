@@ -3,6 +3,7 @@ import { useRealtime } from '@/context/RealtimeContext';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { PrintQrModal } from '@/components/control-center/PrintQrModal';
 import { ScreenCaptureModal } from '@/components/control-center/ScreenCaptureModal';
+import { RegionalTelemetryHub } from '@/components/control-center/RegionalTelemetryHub';
 import { Terminal } from '@/types';
 import {
   Card,
@@ -110,8 +111,9 @@ export const DeviceStatus: React.FC = () => {
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink">Terminal Telemetry & Fleet Status</h1>
-            <Badge variant="success" size="sm" className="font-mono">
-              MQTT LIVE FEED
+            <Badge variant="outline" size="sm" className="font-mono bg-primary-50 text-primary-900 border-primary-200 flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-primary-500 animate-pulse" />
+              <span>MQTT LIVE FEED</span>
             </Badge>
           </div>
           <p className="text-xs sm:text-sm text-ink-muted mt-0.5">
@@ -196,7 +198,7 @@ export const DeviceStatus: React.FC = () => {
               <Activity className="size-3.5 text-zinc-400" />
             </div>
             <div className="flex items-center gap-1.5 mt-1">
-              <span className="size-1.5 rounded-full bg-emerald-500" />
+              <span className="size-1.5 rounded-full bg-primary-500" />
               <span className="text-xs font-semibold text-zinc-900">LIVE SYNC</span>
             </div>
             <span className="text-[11px] text-zinc-500 font-mono truncate">Checked: {lastCheckedTime}</span>
@@ -204,64 +206,15 @@ export const DeviceStatus: React.FC = () => {
         </Card>
       </div>
 
-      {/* ── State-wise Coverage Section ── */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold text-ink-muted uppercase tracking-wider">
-            Regional Telemetry & State Coverage
-          </h2>
-          {stateFilter !== 'ALL' && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setStateFilter('ALL')}
-              className="text-xs text-primary"
-            >
-              Clear state filter ({stateFilter})
-            </Button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {stateCoverage.map(sc => {
-            const onlinePct = sc.total > 0 ? Math.round((sc.online / sc.total) * 100) : 0;
-            const isSelected = stateFilter === sc.state;
-
-            return (
-              <button
-                key={sc.state}
-                type="button"
-                onClick={() => setStateFilter(isSelected ? 'ALL' : sc.state)}
-                className={`flex flex-col gap-2 bg-white rounded-xl border p-3.5 text-left transition-all relative overflow-hidden select-none ${
-                  isSelected
-                    ? 'border-primary ring-1 ring-primary/30 bg-orange-50/20 shadow-2xs'
-                    : 'border-hairline hover:border-zinc-300 shadow-2xs'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-ink truncate">{sc.state}</span>
-                  <span className="text-xs font-mono font-bold text-ink-muted">{sc.total}</span>
-                </div>
-
-                {/* Progress track */}
-                <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-emerald-500 rounded-full transition-all duration-500"
-                    style={{ width: `${onlinePct}%` }}
-                  />
-                </div>
-
-                <div className="flex justify-between text-[10px] font-semibold">
-                  <span className="text-emerald-600">{sc.online} Online</span>
-                  <span className={sc.offline > 0 ? 'text-red-500' : 'text-ink-subtle'}>
-                    {sc.offline} Offline
-                  </span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      {/* ── Regional Telemetry & State Coverage Section ── */}
+      <RegionalTelemetryHub
+        stateCoverage={stateCoverage}
+        stateFilter={stateFilter}
+        setStateFilter={setStateFilter}
+        totalTerminals={totalTerminals}
+        onlineDevices={onlineDevices}
+        offlineDevices={offlineDevices}
+      />
 
       {/* ── Search, Filters & View Toggle ── */}
       <Card>
@@ -477,9 +430,9 @@ export const DeviceStatus: React.FC = () => {
                 <ChevronLeft className="size-3.5" />
                 <span>Previous</span>
               </Button>
-              <span className="px-3 py-1 font-mono font-bold text-ink bg-zinc-50 border border-hairline rounded-md">
+              <div className="inline-flex h-8 items-center justify-center px-3 text-xs font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-md shadow-xs select-none">
                 Page {currentPage} of {totalPages}
-              </span>
+              </div>
               <Button
                 variant="outline"
                 size="sm"
@@ -584,9 +537,9 @@ export const DeviceStatus: React.FC = () => {
                 <ChevronLeft className="size-3.5" />
                 <span>Previous</span>
               </Button>
-              <span className="px-3 py-1 font-mono font-bold text-ink bg-white border border-hairline rounded-md text-xs">
+              <div className="inline-flex h-8 items-center justify-center px-3 text-xs font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-md shadow-xs select-none">
                 Page {currentPage} of {totalPages}
-              </span>
+              </div>
               <Button
                 variant="outline"
                 size="sm"
