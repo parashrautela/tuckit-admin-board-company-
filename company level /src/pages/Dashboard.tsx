@@ -469,12 +469,19 @@ export const Dashboard: React.FC = () => {
           <TableBody>
             {paginatedBookings.length > 0 ? (
               paginatedBookings.map((b, idx) => (
-                <TableRow key={b.id} className="hover:bg-neutral-50/80 transition-colors">
+                <TableRow
+                  key={b.id}
+                  onClick={() => {
+                    setSelectedBooking(b);
+                    setShowDetailsModal(true);
+                  }}
+                  className="hover:bg-neutral-50/90 transition-colors cursor-pointer group"
+                >
                   <TableCell className="font-mono text-xs text-neutral-500 font-medium py-2.5 px-1.5 text-center">
                     {(currentPage - 1) * itemsPerPage + idx + 1}
                   </TableCell>
                   <TableCell className="font-semibold text-neutral-900 whitespace-nowrap py-2.5 px-2">
-                    <span className="bg-neutral-100 px-1.5 py-0.5 rounded font-mono text-xs font-semibold text-neutral-900 border border-neutral-200">
+                    <span className="bg-neutral-100 group-hover:bg-white px-1.5 py-0.5 rounded font-mono text-xs font-semibold text-neutral-900 border border-neutral-200 transition-colors">
                       {b.terminalCode}
                     </span>
                   </TableCell>
@@ -482,7 +489,7 @@ export const Dashboard: React.FC = () => {
                     {b.invoiceNumber}
                   </TableCell>
                   <TableCell className="whitespace-nowrap py-2.5 px-2">
-                    <div className="font-semibold text-sm text-neutral-900 leading-tight">{b.customerName}</div>
+                    <div className="font-semibold text-sm text-neutral-900 leading-tight group-hover:text-primary-900 transition-colors">{b.customerName}</div>
                     <div className="text-xs text-neutral-500 font-mono mt-0.5">{b.mobileNumber}</div>
                   </TableCell>
                   <TableCell className="font-mono text-xs text-neutral-600 whitespace-nowrap py-2.5 px-2">
@@ -523,11 +530,12 @@ export const Dashboard: React.FC = () => {
                   <TableCell className="text-right font-mono font-bold text-sm text-neutral-900 whitespace-nowrap py-2.5 px-2">
                     ₹{b.amount}
                   </TableCell>
-                  <TableCell className="text-center whitespace-nowrap py-2.5 px-1.5">
+                  <TableCell className="text-center whitespace-nowrap py-2.5 px-1.5" onClick={e => e.stopPropagation()}>
                     <div className="flex items-center justify-center gap-1">
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setSelectedBooking(b);
                           setShowDetailsModal(true);
                         }}
@@ -538,7 +546,10 @@ export const Dashboard: React.FC = () => {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForceUnlockBooking(b)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setForceUnlockBooking(b);
+                        }}
                         className="size-7 rounded-lg flex items-center justify-center text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors"
                         title="Emergency Force Unlock"
                       >
