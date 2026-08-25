@@ -293,12 +293,12 @@ export const PricingControl: React.FC = () => {
 
           <Button
             variant="outline"
-            size="icon"
             onClick={handleRefresh}
-            className="size-9 rounded-lg border-neutral-300 hover:bg-neutral-100 text-neutral-700"
+            className="h-9 px-3 rounded-xl bg-amber-100/90 hover:bg-amber-200 text-neutral-950 border border-amber-300 font-bold text-xs flex items-center gap-2 shadow-2xs transition-all active:scale-[0.98]"
             title="Sync Telemetry"
           >
-            <RotateCw className={`size-4 ${isRefreshing ? 'animate-spin text-primary-600' : ''}`} />
+            <RotateCw className={`size-3.5 text-neutral-900 ${isRefreshing ? 'animate-spin text-primary-700' : ''}`} />
+            <span>Sync: {lastUpdated}</span>
           </Button>
         </div>
       </div>
@@ -582,9 +582,9 @@ export const PricingControl: React.FC = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => setEditingConfigId(isEditing ? null : config.id)}
-                        className={`text-xs font-bold uppercase tracking-wider rounded-xl ${
+                        className={`text-xs font-bold uppercase tracking-wider rounded-xl transition-colors ${
                           isEditing
-                            ? 'bg-neutral-800 text-white hover:bg-neutral-700 border-neutral-700'
+                            ? 'bg-amber-100 hover:bg-amber-200 text-neutral-950 border-amber-300'
                             : 'bg-white hover:bg-neutral-100 text-neutral-800 border-neutral-300'
                         }`}
                       >
@@ -738,11 +738,10 @@ export const PricingControl: React.FC = () => {
                     <div className="pt-4 border-t border-neutral-100 flex items-center justify-end">
                       <Button
                         type="button"
-                        variant="default"
                         onClick={() => handleReleaseSetting(config)}
-                        className="px-6 py-2.5 h-10 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm border border-neutral-700/80 transition-all active:scale-[0.98] flex items-center gap-2"
+                        className="px-6 py-2.5 h-10 rounded-xl bg-amber-100 hover:bg-amber-200 text-neutral-950 font-bold text-xs uppercase tracking-wider shadow-2xs border border-amber-300 transition-all active:scale-[0.98] flex items-center gap-2"
                       >
-                        <Send className="size-3.5" />
+                        <Send className="size-3.5 text-neutral-900" />
                         <span>RELEASE SETTING</span>
                       </Button>
                     </div>
