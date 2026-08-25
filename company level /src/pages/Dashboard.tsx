@@ -8,6 +8,7 @@ import { Modal } from '@/components/common/Modal';
 import { ForceUnlockModal } from '@/components/control-center/ForceUnlockModal';
 import { CompactBookingFilters, SavedView } from '@/components/control-center/CompactBookingFilters';
 import { BookingDetailModal } from '@/components/modals/BookingDetailModal';
+import { PaymentHoverBadge } from '@/components/control-center/PaymentHoverBadge';
 import {
   Card,
   CardHeader,
@@ -499,9 +500,7 @@ export const Dashboard: React.FC = () => {
                     <StatusBadge status={b.bookingStatus} pulse={b.bookingStatus === 'ACTIVE'} />
                   </TableCell>
                   <TableCell className="whitespace-nowrap py-2.5 px-1.5">
-                    <Badge variant="secondary" size="sm" className="font-medium text-xs">
-                      {b.paymentMethod}
-                    </Badge>
+                    <PaymentHoverBadge booking={b} />
                   </TableCell>
                   <TableCell className="font-mono text-xs whitespace-nowrap py-2.5 px-1.5">
                     {b.dateOfBirth ? (
