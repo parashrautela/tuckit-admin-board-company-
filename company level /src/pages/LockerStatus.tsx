@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import {
   Grid,
@@ -180,13 +181,12 @@ export const LockerStatus: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <select
+              <Select
                 value={stateFilter}
                 onChange={e => {
                   setStateFilter(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="flex h-9 rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <option value="ALL">All States ({uniqueStates.length})</option>
                 {uniqueStates.map(st => (
@@ -194,12 +194,11 @@ export const LockerStatus: React.FC = () => {
                     {st}
                   </option>
                 ))}
-              </select>
+              </Select>
 
-              <select
+              <Select
                 value={sizeFilter}
                 onChange={e => setSizeFilter(e.target.value)}
-                className="flex h-9 rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <option value="ALL">All Door Sizes</option>
                 {sizes.map(s => (
@@ -207,7 +206,7 @@ export const LockerStatus: React.FC = () => {
                     {s}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
           </div>
 
@@ -253,9 +252,9 @@ export const LockerStatus: React.FC = () => {
                   <span className="font-mono font-bold text-ink text-xs bg-zinc-100 px-1.5 py-0.5 rounded border border-hairline">
                     {terminal.code}
                   </span>
-                  <span className="text-[10px] text-ink-muted font-mono">({terminal.city})</span>
+                  <span className="text-xs text-neutral-500 font-medium">({terminal.city})</span>
                 </div>
-                <div className="text-xs font-semibold text-ink truncate max-w-[220px] mt-0.5">
+                <div className="text-sm font-semibold text-ink truncate max-w-[220px] mt-0.5">
                   {terminal.siteName}
                 </div>
               </div>
@@ -271,7 +270,7 @@ export const LockerStatus: React.FC = () => {
                       key={l.name}
                       type="button"
                       onClick={() => handleLockerClick(terminal, l)}
-                      className={`aspect-square rounded-md border flex flex-col items-center justify-center p-1 transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+                      className={`aspect-square rounded-lg border flex flex-col items-center justify-center p-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer ${
                         l.status === 'AVAILABLE'
                           ? 'bg-emerald-50/80 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
                           : l.status === 'OCCUPIED'
@@ -280,10 +279,10 @@ export const LockerStatus: React.FC = () => {
                       }`}
                       title={`${l.name} (${l.size}) — ${l.status}`}
                     >
-                      <span className="text-[11px] font-bold font-mono leading-none">
+                      <span className="text-xs font-bold font-mono leading-none">
                         {l.name.replace('LKR-', '')}
                       </span>
-                      <span className="text-[8px] font-bold text-ink-subtle uppercase tracking-tighter mt-1 truncate">
+                      <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-tight mt-1 truncate">
                         {l.size}
                       </span>
                     </button>
@@ -302,63 +301,63 @@ export const LockerStatus: React.FC = () => {
         subtitle={`Terminal: ${selectedLocker?.terminalCode} (${selectedLocker?.terminalSite})`}
       >
         {selectedLocker && (
-          <div className="flex flex-col gap-5 text-xs">
+          <div className="flex flex-col gap-5 text-sm">
             {/* Status Pill */}
-            <div className="flex items-center justify-between p-3.5 bg-zinc-50 rounded-xl border border-hairline">
+            <div className="flex items-center justify-between p-3.5 bg-zinc-50 rounded-xl border border-neutral-200">
               <div>
-                <span className="text-[10px] font-bold text-ink-subtle uppercase tracking-wider block">DOOR STATUS</span>
-                <span className="text-sm font-bold text-ink">{selectedLocker.status}</span>
+                <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">DOOR STATUS</span>
+                <span className="text-sm font-bold text-neutral-900 mt-0.5">{selectedLocker.status}</span>
               </div>
               <StatusBadge status={selectedLocker.status} />
             </div>
 
             {/* Hardware Specs */}
-            <div className="p-3.5 bg-zinc-50 rounded-xl border border-hairline flex flex-col gap-2">
+            <div className="p-3.5 bg-zinc-50 rounded-xl border border-neutral-200 flex flex-col gap-2.5 text-xs">
               <div className="flex justify-between">
-                <span className="text-ink-muted">Locker Size:</span>
-                <span className="font-bold text-ink">{selectedLocker.size}</span>
+                <span className="text-neutral-600 font-medium">Locker Size:</span>
+                <span className="font-bold text-neutral-900">{selectedLocker.size}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Terminal Code:</span>
-                <span className="font-mono font-bold text-ink">{selectedLocker.terminalCode}</span>
+                <span className="text-neutral-600 font-medium">Terminal Code:</span>
+                <span className="font-mono font-bold text-neutral-900">{selectedLocker.terminalCode}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Lock Relay Channel:</span>
-                <span className="font-mono text-ink">CH-{selectedLocker.doorNumber.replace('LKR-', '')}</span>
+                <span className="text-neutral-600 font-medium">Lock Relay Channel:</span>
+                <span className="font-mono text-neutral-800">CH-{selectedLocker.doorNumber.replace('LKR-', '')}</span>
               </div>
             </div>
 
             {/* Occupant Details if Occupied */}
             {selectedLocker.status === 'OCCUPIED' && (
-              <div className="p-4 bg-orange-50/50 rounded-xl border border-orange-200 flex flex-col gap-2.5">
+              <div className="p-4 bg-orange-50/50 rounded-xl border border-orange-200 flex flex-col gap-3 text-xs">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-orange-900 uppercase tracking-wider">
-                  <User className="size-3.5 text-primary" /> Active Customer Occupant
+                  <User className="size-4 text-primary-600" /> Active Customer Occupant
                 </div>
                 <div className="flex justify-between pt-1">
-                  <span className="text-ink-muted">Name:</span>
-                  <span className="font-bold text-ink">{selectedLocker.occupantName}</span>
+                  <span className="text-neutral-600 font-medium">Name:</span>
+                  <span className="font-bold text-neutral-900 text-sm">{selectedLocker.occupantName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-ink-muted">Mobile:</span>
-                  <span className="font-mono font-bold text-ink">{selectedLocker.occupantPhone}</span>
+                  <span className="text-neutral-600 font-medium">Mobile:</span>
+                  <span className="font-mono font-bold text-neutral-900">{selectedLocker.occupantPhone}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-ink-muted">Check-in Duration:</span>
+                  <span className="text-neutral-600 font-medium">Check-in Duration:</span>
                   <span className="font-bold text-emerald-700">{selectedLocker.startTime}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
-                    <span className="text-ink-muted">Door Passcode:</span>
+                    <span className="text-neutral-600 font-medium">Door Passcode:</span>
                     <button
                       type="button"
                       onClick={handleToggleDrawerPasscode}
-                      className="text-[10px] text-primary font-bold hover:underline flex items-center gap-0.5"
+                      className="text-xs text-primary-800 font-bold hover:underline flex items-center gap-1"
                     >
-                      {showPasscodeInDrawer ? <EyeOff className="size-3" /> : <Eye className="size-3" />}
+                      {showPasscodeInDrawer ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
                       {showPasscodeInDrawer ? 'Mask' : 'Reveal'}
                     </button>
                   </div>
-                  <span className="font-mono font-bold text-primary bg-white px-2 py-0.5 rounded-md border border-orange-200">
+                  <span className="font-mono font-bold text-primary-900 bg-white px-2.5 py-0.5 rounded-md border border-orange-200 text-xs">
                     {showPasscodeInDrawer ? selectedLocker.passcode : '••••'}
                   </span>
                 </div>

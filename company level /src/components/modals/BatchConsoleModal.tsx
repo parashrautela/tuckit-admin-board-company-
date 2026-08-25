@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
 import { useRealtime } from '../../context/RealtimeContext';
 import { Terminal as TerminalIcon, Play, RefreshCw } from 'lucide-react';
+import { Select } from '@/components/ui/select';
 
 interface BatchConsoleModalProps {
   isOpen: boolean;
@@ -50,32 +51,32 @@ export const BatchConsoleModal: React.FC<BatchConsoleModalProps> = ({ isOpen, on
             <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1">
               Target Scope
             </label>
-            <select
+            <Select
               value={targetScope}
               onChange={e => setTargetScope(e.target.value as any)}
-              className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold"
+              containerClassName="w-full"
             >
               <option value="online">All Online Devices (223 nodes)</option>
               <option value="state">By State Cluster</option>
               <option value="all">All Configured (238 nodes)</option>
-            </select>
+            </Select>
           </div>
           {targetScope === 'state' && (
             <div>
               <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1">
                 Select State
               </label>
-              <select
+              <Select
                 value={selectedState}
                 onChange={e => setSelectedState(e.target.value)}
-                className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-semibold"
+                containerClassName="w-full"
               >
                 <option value="Karnataka">Karnataka (57 nodes)</option>
                 <option value="Maharashtra">Maharashtra (28 nodes)</option>
                 <option value="Telangana">Telangana (25 nodes)</option>
                 <option value="Uttar Pradesh">Uttar Pradesh (22 nodes)</option>
                 <option value="Kerala">Kerala (21 nodes)</option>
-              </select>
+              </Select>
             </div>
           )}
         </div>
@@ -108,7 +109,7 @@ export const BatchConsoleModal: React.FC<BatchConsoleModalProps> = ({ isOpen, on
           <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1">
             Live Streamed Output
           </label>
-          <div className="h-44 bg-zinc-950 text-zinc-300 font-mono text-[11px] p-3 rounded-xl overflow-y-auto custom-scrollbar space-y-1">
+          <div className="h-44 bg-zinc-950 text-zinc-300 font-mono text-xs p-3 rounded-xl overflow-y-auto custom-scrollbar space-y-1">
             {outputLogs.map((log, idx) => (
               <div key={idx} className={log.startsWith('✓') ? 'text-emerald-400' : log.startsWith('>') ? 'text-amber-400' : ''}>
                 {log}

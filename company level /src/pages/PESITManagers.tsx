@@ -41,18 +41,18 @@ export const PESITManagers: React.FC = () => {
         {filtered.map(m => (
           <div key={m.id} className="bg-white rounded-2xl border border-zinc-200 shadow-2xs p-5 hover:shadow-md transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black font-mono text-zinc-400 uppercase">{m.id}</span>
-              <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-50 text-emerald-700">{m.status}</span>
+              <span className="text-xs font-bold font-mono text-zinc-500 uppercase">{m.id}</span>
+              <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60">{m.status}</span>
             </div>
             <div className="mt-3">
-              <h3 className="text-sm font-bold text-zinc-900">{m.name}</h3>
-              <p className="text-xs text-primary font-medium">{m.role}</p>
+              <h3 className="text-base font-bold text-zinc-900">{m.name}</h3>
+              <p className="text-xs text-primary-700 font-semibold mt-0.5">{m.role}</p>
               <p className="text-xs text-zinc-500 mt-1">{m.campus}</p>
             </div>
-            <div className="mt-4 pt-3 border-t border-zinc-100 space-y-1.5 text-xs text-zinc-600">
-              <div className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-zinc-400" /> <span>{m.phone}</span></div>
-              <div className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-zinc-400" /> <span className="truncate">{m.email}</span></div>
-              <div className="flex items-center gap-2"><Shield className="h-3.5 w-3.5 text-zinc-400" /> <span>{m.activeTerminals} Assigned Terminals</span></div>
+            <div className="mt-4 pt-3.5 border-t border-zinc-100 space-y-2 text-xs text-zinc-600">
+              <div className="flex items-center gap-2"><Phone className="size-4 text-zinc-400" /> <span>{m.phone}</span></div>
+              <div className="flex items-center gap-2"><Mail className="size-4 text-zinc-400" /> <span className="truncate">{m.email}</span></div>
+              <div className="flex items-center gap-2"><Shield className="size-4 text-zinc-400" /> <span className="font-medium text-zinc-800">{m.activeTerminals} Assigned Terminals</span></div>
             </div>
           </div>
         ))}

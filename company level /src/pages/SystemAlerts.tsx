@@ -4,6 +4,7 @@ import { useRealtime } from '../context/RealtimeContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Select } from '@/components/ui/select';
 import {
   Bell,
   AlertTriangle,
@@ -109,16 +110,15 @@ export const SystemAlerts: React.FC = () => {
           />
         </div>
 
-        <select
+        <Select
           value={severityFilter}
           onChange={e => updateParam('severity', e.target.value)}
-          className="flex h-9 px-3 bg-white border border-neutral-200 rounded-md text-sm text-neutral-900 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
         >
           <option value="ALL">All Severities</option>
           <option value="CRITICAL">Critical Alarms</option>
           <option value="WARNING">Warnings</option>
           <option value="INFO">Information</option>
-        </select>
+        </Select>
       </div>
 
       {/* Alerts Grid / List */}

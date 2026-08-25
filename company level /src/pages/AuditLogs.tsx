@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import { Modal } from '@/components/common/Modal';
 import {
   ShieldCheck,
@@ -112,16 +113,16 @@ export const AuditLogs: React.FC = () => {
             />
           </div>
 
-          <select
+          <Select
             value={severityFilter}
             onChange={e => updateParam('severity', e.target.value)}
-            className="flex h-9 rounded-md border border-hairline bg-white px-3 py-1 text-xs font-semibold text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-full sm:w-48"
+            containerClassName="w-full sm:w-48"
           >
             <option value="ALL">All Severities</option>
             <option value="CRITICAL">Critical Only</option>
             <option value="WARN">Warning Only</option>
             <option value="INFO">Info Only</option>
-          </select>
+          </Select>
         </CardContent>
       </Card>
 
@@ -160,15 +161,15 @@ export const AuditLogs: React.FC = () => {
               ) : (
                 filtered.map(l => (
                   <TableRow key={l.id}>
-                    <TableCell className="font-mono font-bold text-ink whitespace-nowrap">{l.id}</TableCell>
-                    <TableCell className="text-ink-muted font-mono text-[11px] whitespace-nowrap">{l.timestamp}</TableCell>
+                    <TableCell className="font-mono font-bold text-neutral-900 whitespace-nowrap text-xs">{l.id}</TableCell>
+                    <TableCell className="text-neutral-500 font-mono text-xs whitespace-nowrap">{l.timestamp}</TableCell>
                     <TableCell className="whitespace-nowrap">
-                      <div className="font-semibold text-ink">{l.adminName}</div>
-                      <div className="text-[10px] font-bold text-primary uppercase font-mono">{l.adminRole}</div>
+                      <div className="font-semibold text-neutral-900 text-sm">{l.adminName}</div>
+                      <div className="text-xs font-bold text-primary-700 uppercase font-mono mt-0.5">{l.adminRole}</div>
                     </TableCell>
-                    <TableCell className="font-mono font-semibold text-ink whitespace-nowrap">{l.action}</TableCell>
-                    <TableCell className="text-ink-muted font-mono text-xs max-w-[200px] truncate">{l.target}</TableCell>
-                    <TableCell className="font-mono text-ink-subtle text-xs whitespace-nowrap">{l.ipAddress}</TableCell>
+                    <TableCell className="font-mono font-semibold text-neutral-900 whitespace-nowrap text-xs">{l.action}</TableCell>
+                    <TableCell className="text-neutral-600 font-mono text-xs max-w-[200px] truncate">{l.target}</TableCell>
+                    <TableCell className="font-mono text-neutral-500 text-xs whitespace-nowrap">{l.ipAddress}</TableCell>
                     <TableCell>
                       <Badge
                         variant={
@@ -179,7 +180,7 @@ export const AuditLogs: React.FC = () => {
                             : 'info'
                         }
                         size="sm"
-                        className="font-mono"
+                        className="font-mono text-xs"
                       >
                         {l.severity}
                       </Badge>
@@ -189,10 +190,10 @@ export const AuditLogs: React.FC = () => {
                         variant="ghost"
                         size="icon-sm"
                         onClick={() => setSelectedLog(l)}
-                        className="text-ink-muted hover:text-ink"
+                        className="text-neutral-500 hover:text-neutral-900"
                         title="View Full Details"
                       >
-                        <Eye className="size-3.5" />
+                        <Eye className="size-4" />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -211,22 +212,22 @@ export const AuditLogs: React.FC = () => {
           title={`Audit Log Entry — ${selectedLog.id}`}
           subtitle={`${selectedLog.action} executed by ${selectedLog.adminName} at ${selectedLog.timestamp}`}
         >
-          <div className="flex flex-col gap-3 text-xs">
-            <div className="p-3.5 bg-zinc-50 border border-hairline rounded-xl flex flex-col gap-1.5">
+          <div className="flex flex-col gap-3 text-sm">
+            <div className="p-3.5 bg-zinc-50 border border-hairline rounded-xl flex flex-col gap-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-ink-muted">Action:</span>
-                <span className="font-mono font-bold text-ink">{selectedLog.action}</span>
+                <span className="text-neutral-600 font-medium">Action:</span>
+                <span className="font-mono font-bold text-neutral-900">{selectedLog.action}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Target Asset:</span>
-                <span className="font-mono text-ink">{selectedLog.target}</span>
+                <span className="text-neutral-600 font-medium">Target Asset:</span>
+                <span className="font-mono text-neutral-800">{selectedLog.target}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Operator IP:</span>
-                <span className="font-mono text-ink-subtle">{selectedLog.ipAddress}</span>
+                <span className="text-neutral-600 font-medium">Operator IP:</span>
+                <span className="font-mono text-neutral-600">{selectedLog.ipAddress}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Severity:</span>
+                <span className="text-neutral-600 font-medium">Severity:</span>
                 <Badge
                   variant={
                     selectedLog.severity === 'CRITICAL'
@@ -236,15 +237,16 @@ export const AuditLogs: React.FC = () => {
                       : 'info'
                   }
                   size="sm"
+                  className="text-xs font-semibold"
                 >
                   {selectedLog.severity}
                 </Badge>
               </div>
             </div>
 
-            <div className="p-3 bg-zinc-50 rounded-lg border border-hairline flex flex-col gap-1">
-              <span className="text-[10px] font-bold text-ink-subtle uppercase">Payload & Event Details</span>
-              <p className="text-ink leading-relaxed font-mono text-[11px]">{selectedLog.details}</p>
+            <div className="p-3.5 bg-zinc-50 rounded-lg border border-hairline flex flex-col gap-1.5">
+              <span className="text-xs font-bold text-neutral-700 uppercase tracking-wider">Payload & Event Details</span>
+              <p className="text-neutral-900 leading-relaxed font-mono text-xs bg-white p-2.5 rounded border border-neutral-200">{selectedLog.details}</p>
             </div>
           </div>
         </Modal>

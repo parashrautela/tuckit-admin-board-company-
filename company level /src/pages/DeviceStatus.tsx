@@ -23,6 +23,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import {
   MonitorCheck,
@@ -138,54 +139,54 @@ export const DeviceStatus: React.FC = () => {
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Total Nodes</span>
-              <MonitorCheck className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Total Nodes</span>
+              <MonitorCheck className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 mt-1">{totalTerminals}</div>
-            <span className="text-[11px] text-zinc-500">{onlineDevices} configured active</span>
+            <span className="text-xs text-zinc-500">{onlineDevices} configured active</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Online Nodes</span>
-              <Wifi className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Online Nodes</span>
+              <Wifi className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 mt-1">{onlineDevices}</div>
-            <span className="text-[11px] text-zinc-500">{onlinePercentage}% network uptime</span>
+            <span className="text-xs text-zinc-500">{onlinePercentage}% network uptime</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Offline Nodes</span>
-              <WifiOff className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offline Nodes</span>
+              <WifiOff className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 mt-1">{offlineDevices}</div>
-            <span className="text-[11px] text-zinc-500">Requires attention</span>
+            <span className="text-xs text-zinc-500">Requires attention</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Connection Types</span>
-              <Signal className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Connection Types</span>
+              <Signal className="size-4 text-zinc-400" />
             </div>
             <div className="flex items-center gap-3 mt-1 text-xs">
               <div>
-                <span className="text-[10px] text-zinc-400 block">LAN/WS</span>
-                <span className="font-semibold text-zinc-900 font-mono">{connectionDistribution.lan}</span>
+                <span className="text-xs text-zinc-500 block">LAN/WS</span>
+                <span className="font-semibold text-zinc-900 font-mono text-xs">{connectionDistribution.lan}</span>
               </div>
               <div>
-                <span className="text-[10px] text-zinc-400 block">4G SIM</span>
-                <span className="font-semibold text-zinc-900 font-mono">{connectionDistribution.sim}</span>
+                <span className="text-xs text-zinc-500 block">4G SIM</span>
+                <span className="font-semibold text-zinc-900 font-mono text-xs">{connectionDistribution.sim}</span>
               </div>
               <div>
-                <span className="text-[10px] text-zinc-400 block">WiFi</span>
-                <span className="font-semibold text-zinc-900 font-mono">{connectionDistribution.wifi}</span>
+                <span className="text-xs text-zinc-500 block">WiFi</span>
+                <span className="font-semibold text-zinc-900 font-mono text-xs">{connectionDistribution.wifi}</span>
               </div>
             </div>
           </CardContent>
@@ -194,14 +195,14 @@ export const DeviceStatus: React.FC = () => {
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Sync State</span>
-              <Activity className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Sync State</span>
+              <Activity className="size-4 text-zinc-400" />
             </div>
             <div className="flex items-center gap-1.5 mt-1">
-              <span className="size-1.5 rounded-full bg-primary-500" />
-              <span className="text-xs font-semibold text-zinc-900">LIVE SYNC</span>
+              <span className="size-2 rounded-full bg-primary-500" />
+              <span className="text-xs font-bold text-zinc-900">LIVE SYNC</span>
             </div>
-            <span className="text-[11px] text-zinc-500 font-mono truncate">Checked: {lastCheckedTime}</span>
+            <span className="text-xs text-zinc-500 font-mono truncate">Checked: {lastCheckedTime}</span>
           </CardContent>
         </Card>
       </div>
@@ -256,32 +257,29 @@ export const DeviceStatus: React.FC = () => {
 
           {/* Filter Dropdowns */}
           <div className="flex flex-wrap gap-2 pt-2 border-t border-hairline-soft">
-            <select
+            <Select
               value={stateFilter}
               onChange={e => setStateFilter(e.target.value)}
-              className="flex h-8 rounded-md border border-hairline bg-white px-2.5 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="ALL">All States</option>
               {uniqueStates.map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
-            </select>
+            </Select>
 
-            <select
+            <Select
               value={cityFilter}
               onChange={e => setCityFilter(e.target.value)}
-              className="flex h-8 rounded-md border border-hairline bg-white px-2.5 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="ALL">All Cities</option>
               {uniqueCities.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
-            </select>
+            </Select>
 
-            <select
+            <Select
               value={siteTypeFilter}
               onChange={e => setSiteTypeFilter(e.target.value)}
-              className="flex h-8 rounded-md border border-hairline bg-white px-2.5 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="ALL">All Site Types</option>
               <option value="Mall">Mall</option>
@@ -291,40 +289,37 @@ export const DeviceStatus: React.FC = () => {
               <option value="Campus">Campus</option>
               <option value="Temple">Temple</option>
               <option value="Commercial">Commercial</option>
-            </select>
+            </Select>
 
-            <select
+            <Select
               value={lockerTypeFilter}
               onChange={e => setLockerTypeFilter(e.target.value)}
-              className="flex h-8 rounded-md border border-hairline bg-white px-2.5 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="ALL">All Locker Types</option>
               <option value="BAGGAGE">Baggage</option>
               <option value="MOBILE">Mobile</option>
               <option value="HYBRID">Hybrid</option>
-            </select>
+            </Select>
 
-            <select
+            <Select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
-              className="flex h-8 rounded-md border border-hairline bg-white px-2.5 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="ALL">All Status</option>
               <option value="ONLINE">Online</option>
               <option value="OFFLINE">Offline</option>
-            </select>
+            </Select>
 
-            <select
+            <Select
               value={networkFilter}
               onChange={e => setNetworkFilter(e.target.value)}
-              className="flex h-8 rounded-md border border-hairline bg-white px-2.5 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="ALL">All Network</option>
               <option value="LAN">LAN</option>
               <option value="SIM">SIM</option>
               <option value="WiFi">WiFi</option>
               <option value="WS">WS</option>
-            </select>
+            </Select>
 
             <div className="ml-auto text-xs text-ink-muted self-center font-mono">
               {filteredTerminals.length} of {totalTerminals} nodes
@@ -352,32 +347,32 @@ export const DeviceStatus: React.FC = () => {
 
                 <CardContent className="p-4 pt-1 flex flex-col gap-2.5">
                   <div>
-                    <h4 className="text-xs font-semibold text-ink truncate">{t.siteName}</h4>
-                    <p className="text-[11px] text-ink-muted truncate">{t.city}, {t.state}</p>
+                    <h4 className="text-sm font-semibold text-neutral-900 truncate">{t.siteName}</h4>
+                    <p className="text-xs text-neutral-500 truncate mt-0.5">{t.city}, {t.state}</p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-1.5 text-[11px] p-2.5 bg-zinc-50 rounded-lg border border-hairline-soft">
+                  <div className="grid grid-cols-2 gap-2 text-xs p-3 bg-zinc-50 rounded-lg border border-neutral-200/80">
                     <div>
-                      <span className="text-ink-subtle text-[10px] block uppercase">Network</span>
-                      <span className="font-bold font-mono text-ink">{t.networkType}</span>
+                      <span className="text-zinc-500 text-xs block uppercase font-bold">Network</span>
+                      <span className="font-bold font-mono text-neutral-900 text-xs">{t.networkType}</span>
                     </div>
                     <div>
-                      <span className="text-ink-subtle text-[10px] block uppercase">Firmware</span>
-                      <span className="font-bold font-mono text-ink">{t.firmwareVersion}</span>
+                      <span className="text-zinc-500 text-xs block uppercase font-bold">Firmware</span>
+                      <span className="font-bold font-mono text-neutral-900 text-xs">{t.firmwareVersion}</span>
                     </div>
                     <div>
-                      <span className="text-ink-subtle text-[10px] block uppercase">Hardware</span>
-                      <span className="font-bold text-ink">{t.deviceType}</span>
+                      <span className="text-zinc-500 text-xs block uppercase font-bold">Hardware</span>
+                      <span className="font-bold text-neutral-900 text-xs">{t.deviceType}</span>
                     </div>
                     <div>
-                      <span className="text-ink-subtle text-[10px] block uppercase">Heartbeat</span>
+                      <span className="text-zinc-500 text-xs block uppercase font-bold">Heartbeat</span>
                       <span
-                        className={`font-mono font-bold ${
+                        className={`font-mono font-bold text-xs ${
                           t.heartbeatSecondsAgo < 15
-                            ? 'text-emerald-600'
+                            ? 'text-emerald-700'
                             : t.heartbeatSecondsAgo < 60
-                            ? 'text-amber-600'
-                            : 'text-red-600'
+                            ? 'text-amber-700'
+                            : 'text-rose-600'
                         }`}
                       >
                         {t.heartbeatSecondsAgo < 60
@@ -387,23 +382,23 @@ export const DeviceStatus: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 pt-1">
+                  <div className="flex items-center justify-between gap-2.5 pt-2">
                     <Button
                       variant="outline"
-                      size="sm"
+                      size="default"
                       onClick={() => setPrintQrTerminal(t)}
-                      className="flex-1 text-[11px]"
+                      className="flex-1 h-9 text-xs font-semibold px-3 shadow-xs hover:bg-neutral-50 active:bg-neutral-100"
                     >
-                      <Printer className="size-3" />
+                      <Printer className="size-4 mr-1.5 text-neutral-700" />
                       <span>Print QR</span>
                     </Button>
                     <Button
                       variant="secondary"
-                      size="sm"
+                      size="default"
                       onClick={() => setCaptureTerminal(t)}
-                      className="flex-1 text-[11px]"
+                      className="flex-1 h-9 text-xs font-semibold px-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-800"
                     >
-                      <Camera className="size-3" />
+                      <Camera className="size-4 mr-1.5 text-neutral-700" />
                       <span>Capture</span>
                     </Button>
                   </div>

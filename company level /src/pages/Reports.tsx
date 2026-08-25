@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import {
   BarChart3,
   Calendar,
@@ -304,16 +305,15 @@ export const Reports: React.FC = () => {
 
           <div className="flex flex-wrap items-center gap-2.5">
             {/* Global State Scope */}
-            <select
+            <Select
               value={selectedState}
               onChange={e => setSelectedState(e.target.value)}
-              className="flex h-9 rounded-md border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-800 shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 font-medium"
             >
               <option value="ALL">All States (National)</option>
               {uniqueStates.map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
-            </select>
+            </Select>
 
             {/* Date Scope */}
             <div className="flex items-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-md p-1 text-xs">
@@ -323,7 +323,7 @@ export const Reports: React.FC = () => {
                 onChange={e => setStartDate(e.target.value)}
                 className="bg-transparent px-2 py-0.5 outline-none text-xs font-mono text-zinc-800"
               />
-              <span className="text-zinc-400 font-medium text-[11px]">to</span>
+              <span className="text-zinc-500 font-medium text-xs">to</span>
               <input
                 type="date"
                 value={endDate}
@@ -351,55 +351,55 @@ export const Reports: React.FC = () => {
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Net Revenue</span>
-              <IndianRupee className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Net Revenue</span>
+              <IndianRupee className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl font-bold tracking-tight text-zinc-900 mt-1">₹{netRevenue.toLocaleString()}</div>
-            <span className="text-[11px] text-zinc-500">Post-refund realized</span>
+            <span className="text-xs text-zinc-500">Post-refund realized</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Success Count</span>
-              <CreditCard className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Success Count</span>
+              <CreditCard className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl font-bold tracking-tight text-zinc-900 mt-1">{totalTransactions}</div>
-            <span className="text-[11px] text-zinc-500">Successful deposits</span>
+            <span className="text-xs text-zinc-500">Successful deposits</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Total Refund</span>
-              <RotateCcw className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Total Refund</span>
+              <RotateCcw className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl font-bold tracking-tight text-zinc-900 mt-1">₹{totalRefundAmount.toLocaleString()}</div>
-            <span className="text-[11px] text-zinc-500">1.8% of gross volume</span>
+            <span className="text-xs text-zinc-500">1.8% of gross volume</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Refund Count</span>
-              <ShieldCheck className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Refund Count</span>
+              <ShieldCheck className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl font-bold tracking-tight text-zinc-900 mt-1">{refundCount}</div>
-            <span className="text-[11px] text-zinc-500">Resolved claims</span>
+            <span className="text-xs text-zinc-500">Resolved claims</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">Manual Rev.</span>
-              <Layers className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Manual Rev.</span>
+              <Layers className="size-4 text-zinc-400" />
             </div>
             <div className="text-2xl font-bold tracking-tight text-zinc-900 mt-1">₹{manualRevenue.toLocaleString()}</div>
-            <span className="text-[11px] text-zinc-500">Cash desk & OTC</span>
+            <span className="text-xs text-zinc-500">Cash desk & OTC</span>
           </CardContent>
         </Card>
       </div>
@@ -439,7 +439,7 @@ export const Reports: React.FC = () => {
                     onChange={e => setDailyDate(e.target.value)}
                     className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-mono font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   />
-                  <span className="text-[11px] text-neutral-400">Selected Date</span>
+                  <span className="text-xs text-neutral-500">Selected Date</span>
                 </div>
               </div>
             </div>
@@ -469,10 +469,9 @@ export const Reports: React.FC = () => {
                   Consolidated transaction logs grouped by state. Essential for monthly accounts and tax auditing.
                 </p>
                 <div className="flex items-center gap-2 mt-2">
-                  <select
+                  <Select
                     value={monthlyMonth}
                     onChange={e => setMonthlyMonth(e.target.value)}
-                    className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   >
                     <option value="01">January</option>
                     <option value="02">February</option>
@@ -486,16 +485,15 @@ export const Reports: React.FC = () => {
                     <option value="10">October</option>
                     <option value="11">November</option>
                     <option value="12">December</option>
-                  </select>
-                  <select
+                  </Select>
+                  <Select
                     value={monthlyYear}
                     onChange={e => setMonthlyYear(e.target.value)}
-                    className="h-8 px-2.5 bg-white border border-neutral-200 rounded-md text-xs font-medium text-neutral-800 outline-none focus:ring-1 focus:ring-primary-500"
                   >
                     <option value="2026">2026</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
-                  </select>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -503,7 +501,7 @@ export const Reports: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => openExportModal('monthly', 'Monthly Financial Summary')}
+              onClick={() => openExportModal('monthly', `Monthly Tax Report (${monthlyMonth}/${monthlyYear})`)}
               className="bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-800 shrink-0 self-start md:self-center font-medium shadow-xs"
             >
               <Download className="size-3.5 mr-1.5 text-neutral-600" />
@@ -549,14 +547,20 @@ export const Reports: React.FC = () => {
 
         {/* Card 4: Terminal-Wise Monthly Invoice Report */}
         <Card>
-          <CardContent className="p-4 sm:p-5 flex flex-col gap-4">
+          <CardContent className="p-4 sm:p-6 bg-white flex flex-col gap-4">
             <div className="flex items-start gap-3.5">
-              <div className="p-2.5 bg-zinc-100 text-zinc-700 rounded-lg shrink-0 mt-0.5">
-                <Monitor className="size-5" />
+              <div className="p-2.5 rounded-xl bg-purple-50 text-purple-700 border border-purple-200 shrink-0">
+                <FileSpreadsheet className="size-5" />
               </div>
-              <div>
-                <h3 className="text-sm font-semibold text-zinc-900">Terminal-Wise Monthly Invoice Report</h3>
-                <p className="text-xs text-zinc-500 mt-0.5 max-w-xl">
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-md">
+                    Terminal Deep-Dive
+                  </span>
+                  <span className="text-xs text-neutral-400 font-mono">Scope: Filtered Device Matrix</span>
+                </div>
+                <h3 className="text-sm font-semibold text-neutral-900 mt-1">Terminal-Specific Financial Breakdown</h3>
+                <p className="text-xs text-neutral-500 mt-0.5 max-w-xl">
                   Download a detailed financial summary for a specific terminal node with State, City, and Terminal filtering.
                 </p>
               </div>
@@ -564,53 +568,53 @@ export const Reports: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-3 border-t border-zinc-100">
               <div>
-                <label className="block text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-zinc-600 uppercase tracking-wider mb-1">
                   State
                 </label>
-                <select
+                <Select
                   value={twState}
                   onChange={e => {
                     setTwState(e.target.value);
                     setTwCity('');
                     setTwTerminalId('');
                   }}
-                  className="w-full h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                  containerClassName="w-full"
                 >
                   <option value="">Select State</option>
                   {uniqueStates.map(s => (
                     <option key={s} value={s}>{s}</option>
                   ))}
-                </select>
+                </Select>
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-zinc-600 uppercase tracking-wider mb-1">
                   City
                 </label>
-                <select
+                <Select
                   value={twCity}
                   disabled={!twState}
                   onChange={e => {
                     setTwCity(e.target.value);
                     setTwTerminalId('');
                   }}
-                  className="w-full h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950 disabled:opacity-50"
+                  containerClassName="w-full"
                 >
                   <option value="">Select City</option>
                   {twAvailableCities.map(c => (
                     <option key={c} value={c}>{c}</option>
                   ))}
-                </select>
+                </Select>
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-zinc-600 uppercase tracking-wider mb-1">
                   Terminal Code
                 </label>
-                <select
+                <Select
                   value={twTerminalId}
                   onChange={e => setTwTerminalId(e.target.value)}
-                  className="w-full h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-mono font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                  containerClassName="w-full"
                 >
                   <option value="">Select Terminal ({twAvailableTerminals.length} Available)</option>
                   {twAvailableTerminals.map(t => (
@@ -618,18 +622,18 @@ export const Reports: React.FC = () => {
                       {t.code} — {t.siteName}
                     </option>
                   ))}
-                </select>
+                </Select>
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-zinc-600 uppercase tracking-wider mb-1">
                   Month & Year
                 </label>
                 <div className="flex gap-1.5">
-                  <select
+                  <Select
                     value={twMonth}
                     onChange={e => setTwMonth(e.target.value)}
-                    className="flex-1 h-9 px-2 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                    containerClassName="flex-1"
                   >
                     <option value="01">Jan</option>
                     <option value="02">Feb</option>
@@ -643,16 +647,16 @@ export const Reports: React.FC = () => {
                     <option value="10">Oct</option>
                     <option value="11">Nov</option>
                     <option value="12">Dec</option>
-                  </select>
-                  <select
+                  </Select>
+                  <Select
                     value={twYear}
                     onChange={e => setTwYear(e.target.value)}
-                    className="h-9 px-2 bg-zinc-50 border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950"
+                    containerClassName="w-24"
                   >
                     <option value="2026">2026</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
-                  </select>
+                  </Select>
                 </div>
               </div>
 
@@ -680,7 +684,7 @@ export const Reports: React.FC = () => {
         subtitle="Customize your regional scope and selected data columns before download"
         maxWidth="lg"
       >
-        <div className="flex flex-col gap-4 text-xs">
+        <div className="flex flex-col gap-4 text-sm">
           {/* Regional Scope */}
           <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-200 flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -691,29 +695,29 @@ export const Reports: React.FC = () => {
                 {exportStateScope === 'ALL' ? 'Multi-Sheet Excel' : 'Single State CSV'}
               </Badge>
             </div>
-            <select
+            <Select
               value={exportStateScope}
               onChange={e => setExportStateScope(e.target.value)}
-              className="w-full h-9 px-3 bg-white border border-zinc-200 rounded-md text-xs font-medium text-zinc-800 outline-none focus:border-zinc-950"
+              containerClassName="w-full"
             >
               <option value="ALL">All States (Multi-Sheet Excel Workbook)</option>
               {uniqueStates.map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
-            </select>
+            </Select>
           </div>
 
           {/* Column Checkboxes */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-zinc-800">
+              <span className="text-sm font-semibold text-zinc-800">
                 Visible Export Columns ({selectedColumns.length} of {ALL_EXPORT_COLUMNS.length} selected)
               </span>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleSelectAllColumns(true)}
-                  className="text-[11px] text-zinc-800 font-semibold hover:underline"
+                  className="text-xs text-zinc-800 font-semibold hover:underline"
                 >
                   Select All
                 </button>
@@ -721,7 +725,7 @@ export const Reports: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleSelectAllColumns(false)}
-                  className="text-[11px] text-zinc-500 font-medium hover:underline"
+                  className="text-xs text-zinc-500 font-medium hover:underline"
                 >
                   Clear Non-Essential
                 </button>

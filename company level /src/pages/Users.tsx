@@ -117,17 +117,17 @@ export const UsersPage: React.FC = () => {
             <TableBody>
               {filtered.map(u => (
                 <TableRow key={u.id}>
-                  <TableCell className="font-mono font-bold text-ink whitespace-nowrap">{u.id}</TableCell>
-                  <TableCell className="font-semibold text-ink whitespace-nowrap">{u.name}</TableCell>
+                  <TableCell className="font-mono font-bold text-neutral-900 whitespace-nowrap text-xs">{u.id}</TableCell>
+                  <TableCell className="font-semibold text-neutral-900 whitespace-nowrap text-sm">{u.name}</TableCell>
                   <TableCell className="whitespace-nowrap">
-                    <div className="font-mono text-ink text-xs font-semibold">{u.phone}</div>
-                    <div className="text-[11px] text-ink-subtle">{u.email}</div>
+                    <div className="font-mono text-neutral-900 text-xs font-semibold">{u.phone}</div>
+                    <div className="text-xs text-neutral-500 mt-0.5">{u.email}</div>
                   </TableCell>
-                  <TableCell className="font-semibold text-ink">{u.totalBookings}</TableCell>
-                  <TableCell className="font-bold text-neutral-900 font-mono whitespace-nowrap">
+                  <TableCell className="font-semibold text-neutral-800 text-sm">{u.totalBookings}</TableCell>
+                  <TableCell className="font-bold text-neutral-900 font-mono whitespace-nowrap text-sm">
                     ₹{u.totalSpent.toLocaleString()}
                   </TableCell>
-                  <TableCell className="text-ink-muted font-mono text-[11px] whitespace-nowrap">{u.lastActive}</TableCell>
+                  <TableCell className="text-neutral-600 font-mono text-xs whitespace-nowrap">{u.lastActive}</TableCell>
                   <TableCell>
                     <Badge variant={u.status === 'ACTIVE' ? 'success' : 'destructive'} size="sm">
                       {u.status}

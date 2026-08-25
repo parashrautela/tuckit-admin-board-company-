@@ -25,9 +25,9 @@ const badgeVariants = cva(
           "border-primary-200 bg-primary-50 text-primary-700 font-semibold",
       },
       size: {
-        default: "px-2.5 py-0.5 text-xs",
-        sm: "px-2 py-0.5 text-[11px]",
-        lg: "px-3 py-1 text-xs",
+        default: "px-2.5 py-1 text-xs font-semibold",
+        sm: "px-2.5 py-0.5 text-xs font-semibold",
+        lg: "px-3 py-1 text-sm font-semibold",
       },
     },
     defaultVariants: {

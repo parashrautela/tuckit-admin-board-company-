@@ -58,16 +58,16 @@ export const PESITTerminals: React.FC = () => {
       <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-primary-500 rounded-lg text-white shadow-2xs">
-            <GraduationCap className="h-6 w-6" />
+            <GraduationCap className="size-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-zinc-900 tracking-tight">PESIT Campus Locker Terminals</h1>
-              <span className="px-2 py-0.5 bg-primary-50 text-primary-700 border border-primary-200 text-[10px] font-bold rounded-md uppercase">
+              <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">PESIT Campus Locker Terminals</h1>
+              <span className="px-2.5 py-0.5 bg-primary-50 text-primary-700 border border-primary-200 text-xs font-bold rounded-md uppercase">
                 INSTITUTIONAL HUB
               </span>
             </div>
-            <p className="text-xs text-zinc-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
               Manage student hostel kiosks, RFID card synchronization, and campus emergency overrides
             </p>
           </div>
@@ -76,21 +76,21 @@ export const PESITTerminals: React.FC = () => {
         <button
           type="button"
           onClick={() => showToast('Campus locker cluster status synced', 'info')}
-          className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-all shadow-xs shrink-0"
+          className="flex items-center gap-1.5 px-4 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-all shadow-xs shrink-0 h-9"
         >
-          <RefreshCw className="h-3.5 w-3.5" /> Sync Status
+          <RefreshCw className="size-4" /> <span>Sync Status</span>
         </button>
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs p-4">
+      <div className="bg-white rounded-xl border border-zinc-200 shadow-2xs p-3.5">
         <div className="relative max-w-md">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
+          <Search className="absolute left-3 top-2.5 size-4 text-zinc-400" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search campus terminals by code or block name..."
-            className="w-full pl-10 pr-4 h-9 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium outline-none focus:bg-white focus:border-zinc-900 transition-colors"
+            className="w-full pl-9 pr-4 h-9 bg-zinc-50 border border-zinc-200 rounded-lg text-xs font-medium outline-none focus:bg-white focus:border-zinc-900 transition-colors"
           />
         </div>
       </div>
@@ -106,53 +106,51 @@ export const PESITTerminals: React.FC = () => {
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-zinc-900">{t.code}</span>
+                  <span className="text-xs font-mono font-bold text-zinc-900 bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200">{t.code}</span>
                   <StatusBadge status={t.connectivityStatus} pulse={t.connectivityStatus === 'ONLINE'} />
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-zinc-900 truncate">{t.siteName}</h3>
+                  <h3 className="text-base font-bold text-zinc-900 truncate">{t.siteName}</h3>
                   <p className="text-xs text-neutral-700 font-semibold mt-0.5">{t.city}, {t.state}</p>
                 </div>
 
-                <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200/80 space-y-1.5 text-xs">
+                <div className="p-3.5 bg-neutral-50 rounded-lg border border-neutral-200/80 space-y-2 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Lockers:</span>
+                    <span className="text-zinc-600 font-medium">Lockers:</span>
                     <span className="font-bold text-zinc-900">
                       {t.totalLockers} Total ({t.availableLockers} Free, {occupiedCount} Occupied)
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Firmware:</span>
+                    <span className="text-zinc-600 font-medium">Firmware:</span>
                     <span className="font-mono text-zinc-800">{t.firmwareVersion}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Heartbeat:</span>
-                    <span className="font-mono text-emerald-600 font-semibold">{t.heartbeatSecondsAgo}s ago</span>
+                    <span className="text-zinc-600 font-medium">Heartbeat:</span>
+                    <span className="font-mono text-emerald-700 font-semibold">{t.heartbeatSecondsAgo}s ago</span>
                   </div>
                 </div>
               </div>
 
-              {/* Action Area: Routine primary action + de-escalated destructive action */}
+              {/* Action Area */}
               <div className="pt-3 border-t border-zinc-100 space-y-2">
-                {/* Routine Primary Action */}
                 <button
                   type="button"
                   onClick={() => handleSendCredentials(t.code)}
-                  className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-colors shadow-xs"
+                  className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-colors shadow-xs h-9"
                 >
-                  <MessageSquare className="h-3.5 w-3.5 text-neutral-700" />
+                  <MessageSquare className="size-4 text-neutral-700" />
                   <span>Send SMS Credentials</span>
                 </button>
 
-                {/* De-escalated Tertiary Destructive Action */}
                 <div className="text-center">
                   <button
                     type="button"
                     onClick={() => setForceAllModalTerminal(t.code)}
-                    className="text-[11px] text-zinc-400 hover:text-red-600 font-medium transition-colors inline-flex items-center gap-1 hover:underline pt-0.5"
+                    className="text-xs text-zinc-500 hover:text-rose-600 font-medium transition-colors inline-flex items-center gap-1.5 hover:underline pt-0.5"
                   >
-                    <Unlock className="h-3 w-3" />
+                    <Unlock className="size-3.5" />
                     <span>Emergency: Force Open All Doors</span>
                   </button>
                 </div>

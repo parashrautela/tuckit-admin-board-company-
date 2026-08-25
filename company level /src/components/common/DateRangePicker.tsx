@@ -48,7 +48,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
 
       {isOpen && (
         <div className="absolute left-0 mt-1.5 w-64 bg-white rounded-md shadow-md border border-neutral-200 p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-          <div className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider px-2 py-1 mb-1">
+          <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider px-2 py-1 mb-1">
             Quick Date Presets
           </div>
           <div className="space-y-0.5">
@@ -72,9 +72,9 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
               </button>
             ))}
           </div>
-          <div className="mt-2 pt-2 border-t border-neutral-100 px-2 flex justify-between text-[11px] text-neutral-500 font-mono">
+          <div className="mt-2 pt-2 border-t border-neutral-100 px-2 flex justify-between text-xs text-neutral-600 font-mono">
             <span>2026 Session</span>
-            <span className="text-primary-500 font-semibold">IST (UTC+5:30)</span>
+            <span className="text-primary-600 font-semibold">IST (UTC+5:30)</span>
           </div>
         </div>
       )}

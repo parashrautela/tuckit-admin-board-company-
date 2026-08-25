@@ -50,9 +50,9 @@ export const Profile: React.FC = () => {
               {user?.name.charAt(0)}
             </div>
             <div>
-              <div className="text-sm font-black text-zinc-900">{user?.name}</div>
-              <div className="text-xs text-primary font-mono font-bold">@{user?.username}</div>
-              <span className="inline-block mt-1 px-2 py-0.5 bg-zinc-900 text-white text-[10px] font-bold rounded-md">
+              <div className="text-base font-bold text-zinc-900">{user?.name}</div>
+              <div className="text-xs text-primary-700 font-mono font-bold mt-0.5">@{user?.username}</div>
+              <span className="inline-block mt-1 px-2.5 py-0.5 bg-zinc-900 text-white text-xs font-bold rounded-md">
                 {user?.role}
               </span>
             </div>

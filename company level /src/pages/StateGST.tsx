@@ -68,7 +68,7 @@ export const StateGST: React.FC = () => {
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-zinc-50 border-b border-zinc-200 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+              <tr className="bg-zinc-50 border-b border-zinc-200 text-xs font-bold text-zinc-600 uppercase tracking-wider">
                 <th className="py-3 px-4">GST CODE</th>
                 <th className="py-3 px-4">STATE JURISDICTION</th>
                 <th className="py-3 px-4">CGST RATE</th>
@@ -79,17 +79,17 @@ export const StateGST: React.FC = () => {
                 <th className="py-3 px-4 text-right">ACTION</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-100">
+            <tbody className="divide-y divide-zinc-100 text-sm">
               {filtered.map(g => (
                 <tr key={g.stateCode} className="hover:bg-zinc-50 transition-colors">
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-900">{g.stateCode}</td>
-                  <td className="py-3 px-4 font-bold text-zinc-800">{g.stateName}</td>
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-700">{g.cgst}%</td>
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-700">{g.sgst}%</td>
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-700">{g.igst}%</td>
-                  <td className="py-3 px-4 font-mono font-black text-primary">{g.cgst + g.sgst}%</td>
+                  <td className="py-3 px-4 font-mono font-bold text-zinc-900 text-xs">{g.stateCode}</td>
+                  <td className="py-3 px-4 font-semibold text-zinc-900 text-sm">{g.stateName}</td>
+                  <td className="py-3 px-4 font-mono font-semibold text-zinc-700 text-xs">{g.cgst}%</td>
+                  <td className="py-3 px-4 font-mono font-semibold text-zinc-700 text-xs">{g.sgst}%</td>
+                  <td className="py-3 px-4 font-mono font-semibold text-zinc-700 text-xs">{g.igst}%</td>
+                  <td className="py-3 px-4 font-mono font-bold text-primary-700 text-sm">{g.cgst + g.sgst}%</td>
                   <td className="py-3 px-4">
-                    <span className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${g.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500'}`}>
+                    <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${g.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-zinc-100 text-zinc-600'}`}>
                       {g.status}
                     </span>
                   </td>
@@ -97,7 +97,7 @@ export const StateGST: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => toggleStatus(g.stateCode)}
-                      className="text-xs font-bold text-primary hover:underline"
+                      className="text-xs font-bold text-primary-700 hover:text-primary-900 hover:underline"
                     >
                       {g.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
                     </button>

@@ -6,6 +6,8 @@ import { StatusBadge } from '@/components/common/StatusBadge';
 import { DateRangePicker } from '@/components/common/DateRangePicker';
 import { Modal } from '@/components/common/Modal';
 import { ForceUnlockModal } from '@/components/control-center/ForceUnlockModal';
+import { CompactBookingFilters, SavedView } from '@/components/control-center/CompactBookingFilters';
+import { BookingDetailModal } from '@/components/modals/BookingDetailModal';
 import {
   Card,
   CardHeader,
@@ -45,13 +47,6 @@ import {
   CheckCircle2,
   AlertCircle,
 } from 'lucide-react';
-
-interface SavedView {
-  id: string;
-  name: string;
-  isBuiltIn?: boolean;
-  params: Record<string, string>;
-}
 
 const BUILT_IN_VIEWS: SavedView[] = [
   { id: 'view-all', name: 'Default (All Bookings)', isBuiltIn: true, params: {} },
@@ -320,8 +315,8 @@ export const Dashboard: React.FC = () => {
       {/* ── Page Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink">Live Fleet Bookings Stream</h1>
-          <p className="text-xs sm:text-sm text-ink-muted mt-0.5">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900">Live Fleet Bookings Stream</h1>
+          <p className="text-xs sm:text-sm text-neutral-500 mt-0.5">
             Real-time audit log of active reservations, locker assignments, and penalty alerts.
           </p>
         </div>
@@ -330,18 +325,19 @@ export const Dashboard: React.FC = () => {
           {/* Sensitive PII Toggle */}
           <Button
             variant={showSensitiveData ? 'accent' : 'outline'}
-            size="sm"
+            size="default"
             onClick={handleToggleSensitiveData}
             title="Toggle unmasking of Passcodes & DOB"
+            className="h-9 px-3.5 text-xs font-semibold shadow-2xs"
           >
             {showSensitiveData ? (
               <>
-                <EyeOff className="size-3.5 text-primary" />
+                <EyeOff className="size-4 text-primary-700" />
                 <span>Mask Passcodes</span>
               </>
             ) : (
               <>
-                <Eye className="size-3.5 text-ink-muted" />
+                <Eye className="size-4 text-neutral-500" />
                 <span>Reveal Passcodes</span>
               </>
             )}
@@ -350,11 +346,11 @@ export const Dashboard: React.FC = () => {
           {/* Export Dialog */}
           <Button
             variant="outline"
-            size="sm"
+            size="default"
             onClick={() => setShowExportModal(true)}
-            className="bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 shadow-xs"
+            className="h-9 px-3.5 text-xs font-semibold bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 shadow-2xs"
           >
-            <FileSpreadsheet className="size-3.5 text-emerald-600" />
+            <FileSpreadsheet className="size-4 text-emerald-600" />
             <span>Export CSV</span>
           </Button>
         </div>
@@ -362,448 +358,219 @@ export const Dashboard: React.FC = () => {
 
       {/* ── 4 KPI Metric Cards (Clean, Consistent Monochromatic Palette) ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
+        <Card className="border border-neutral-200 shadow-2xs">
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">Total Bookings</span>
-              <Layers className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">Total Bookings</span>
+              <Layers className="size-4 text-neutral-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900">{bookings.length}</div>
-            <span className="text-[11px] text-zinc-500">All logged reservations</span>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 mt-0.5">{bookings.length}</div>
+            <span className="text-xs text-neutral-500">All logged reservations</span>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-neutral-200 shadow-2xs">
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">Active Lockers</span>
-              <Activity className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">Active Lockers</span>
+              <Activity className="size-4 text-neutral-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900">{activeCount}</div>
-            <span className="text-[11px] text-zinc-500">Occupied in real-time</span>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 mt-0.5">{activeCount}</div>
+            <span className="text-xs text-neutral-500">Occupied in real-time</span>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-neutral-200 shadow-2xs">
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">Checked Out</span>
-              <CheckCircle2 className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">Checked Out</span>
+              <CheckCircle2 className="size-4 text-neutral-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900">{completedCount}</div>
-            <span className="text-[11px] text-zinc-500">Retrieved safely</span>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 mt-0.5">{completedCount}</div>
+            <span className="text-xs text-neutral-500">Retrieved safely</span>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-neutral-200 shadow-2xs">
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">Overdue Alerts</span>
-              <AlertCircle className="size-3.5 text-zinc-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">Overdue Alerts</span>
+              <AlertCircle className="size-4 text-neutral-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900">{overdueCount}</div>
-            <span className="text-[11px] text-zinc-500">Excess duration accrued</span>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 mt-0.5">{overdueCount}</div>
+            <span className="text-xs text-neutral-500">Excess duration accrued</span>
           </CardContent>
         </Card>
       </div>
 
-      {/* ── Filter & Search Panel ── */}
-      <Card>
-        <CardHeader className="pb-3 border-b border-hairline-soft">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <SlidersHorizontal className="size-4 text-primary" />
-              <CardTitle className="text-sm font-bold text-ink">Fleet Filters & Scope</CardTitle>
-              {activeFiltersCount > 0 && (
-                <Badge variant="primary" size="sm">
-                  {activeFiltersCount} active
-                </Badge>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2 flex-wrap">
-              <DateRangePicker
-                startDate={startDate}
-                endDate={endDate}
-                onChange={(s, e) => setDateRange(s, e)}
-              />
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSaveViewModal(true)}
-                title="Save current filters as custom view"
-              >
-                <BookmarkPlus className="size-3.5 text-primary" />
-                <span>Save View</span>
-              </Button>
-
-              {activeFiltersCount > 0 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={resetFilters}
-                  className="text-ink-muted hover:text-ink"
-                >
-                  Reset
-                </Button>
-              )}
-
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => setShowAdvanced(!showAdvanced)}
-              >
-                {showAdvanced ? 'Simple Filters' : 'Advanced Filters'}
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="pt-4 flex flex-col gap-4">
-          {/* Saved Views Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
-            <span className="text-[10px] font-bold text-ink-muted uppercase tracking-wider flex items-center gap-1 shrink-0 mr-1">
-              <Bookmark className="size-3" /> Views:
-            </span>
-            {allSavedViews.map(view => {
-              const isMatch = Object.entries(view.params).every(([k, v]) => searchParams.get(k) === v);
-              return (
-                <button
-                  key={view.id}
-                  type="button"
-                  onClick={() => applyView(view)}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-md border transition-all whitespace-nowrap ${
-                    isMatch
-                      ? 'bg-neutral-700 text-white border-neutral-700 shadow-2xs hover:bg-neutral-800'
-                      : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-600 border-neutral-200'
-                  }`}
-                >
-                  <span>{view.name}</span>
-                  {!view.isBuiltIn && (
-                    <span
-                      onClick={(e) => handleDeleteSavedView(view.id, e)}
-                      className="p-0.5 text-zinc-400 hover:text-red-400 rounded ml-0.5 cursor-pointer"
-                      title="Delete saved view"
-                    >
-                      <X className="size-3" />
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Quick Date Presets */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar border-t border-hairline-soft pt-3">
-            <span className="text-[10px] font-bold text-ink-muted uppercase tracking-wider shrink-0 mr-1">
-              Presets:
-            </span>
-            {['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'This Month', 'This Year'].map(preset => {
-              const isActive = activePreset === preset;
-              return (
-                <button
-                  key={preset}
-                  type="button"
-                  onClick={() => handleSelectPreset(preset)}
-                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-md border transition-all whitespace-nowrap ${
-                    isActive
-                      ? 'bg-primary text-white border-primary shadow-2xs'
-                      : 'bg-zinc-50 text-ink-muted border-hairline hover:bg-orange-50 hover:text-primary hover:border-orange-200'
-                  }`}
-                >
-                  {preset}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Primary Filter Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-1">
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">
-                Search Customer / Mobile
-              </label>
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 size-3.5 text-ink-subtle" />
-                <Input
-                  type="text"
-                  value={mobileFilter}
-                  onChange={e => updateFilter('mobile', e.target.value)}
-                  placeholder="Mobile number or name..."
-                  className="pl-8"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">
-                Booking Source
-              </label>
-              <select
-                value={sourceFilter}
-                onChange={e => updateFilter('source', e.target.value)}
-                className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                <option value="ALL">All Sources</option>
-                <option value="Touchscreen">Touchscreen (Kiosk)</option>
-                <option value="Web">Web Portal</option>
-                <option value="Mobile App">Mobile App</option>
-                <option value="WhatsApp">WhatsApp Bot</option>
-                <option value="Offline Payment / QR">Offline Payment / QR</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">
-                Locker Type
-              </label>
-              <select
-                value={typeFilter}
-                onChange={e => updateFilter('type', e.target.value)}
-                className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                <option value="ALL">All Types</option>
-                <option value="BAGGAGE">Baggage Locker</option>
-                <option value="MOBILE">Mobile Phone Locker</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">
-                Booking Status
-              </label>
-              <select
-                value={statusFilter}
-                onChange={e => updateFilter('status', e.target.value)}
-                className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                <option value="ALL">All Statuses</option>
-                <option value="ACTIVE">ACTIVE</option>
-                <option value="COMPLETED">COMPLETED</option>
-                <option value="OVERDUE">OVERDUE</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Advanced Filter Grid (State, City, SiteType, Terminal) */}
-          {showAdvanced && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-hairline-soft">
-              <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">State</label>
-                <select
-                  value={stateFilter}
-                  onChange={e => updateFilter('state', e.target.value)}
-                  className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  <option value="ALL">All States</option>
-                  <option value="Karnataka">Karnataka</option>
-                  <option value="Maharashtra">Maharashtra</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Tamil Nadu">Tamil Nadu</option>
-                  <option value="Telangana">Telangana</option>
-                  <option value="West Bengal">West Bengal</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">City</label>
-                <select
-                  value={cityFilter}
-                  onChange={e => updateFilter('city', e.target.value)}
-                  className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  <option value="ALL">All Cities</option>
-                  <option value="Bengaluru">Bengaluru</option>
-                  <option value="Mumbai">Mumbai</option>
-                  <option value="New Delhi">New Delhi</option>
-                  <option value="Chennai">Chennai</option>
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Kolkata">Kolkata</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">Site Type</label>
-                <select
-                  value={siteTypeFilter}
-                  onChange={e => updateFilter('siteType', e.target.value)}
-                  className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  <option value="ALL">All Facility Types</option>
-                  <option value="AIRPORT">Airport</option>
-                  <option value="MALL">Shopping Mall</option>
-                  <option value="METRO">Metro Station</option>
-                  <option value="COLLEGE">University / College</option>
-                  <option value="TEMPLE">Temple / Religious</option>
-                  <option value="RAILWAY">Railway Junction</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-ink-muted uppercase tracking-wider">Terminal Node</label>
-                <select
-                  value={terminalFilter}
-                  onChange={e => updateFilter('terminal', e.target.value)}
-                  className="flex h-9 w-full rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  <option value="ALL">All Terminals ({terminals.length})</option>
-                  {terminals.map(t => (
-                    <option key={t.id} value={t.code}>
-                      {t.code} — {t.siteName} ({t.city})
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      {/* ── Compact Filter & Search Panel with Active Filter Chips ── */}
+      <CompactBookingFilters
+        mobileFilter={mobileFilter}
+        sourceFilter={sourceFilter}
+        typeFilter={typeFilter}
+        statusFilter={statusFilter}
+        stateFilter={stateFilter}
+        cityFilter={cityFilter}
+        siteTypeFilter={siteTypeFilter}
+        terminalFilter={terminalFilter}
+        startDate={startDate}
+        endDate={endDate}
+        activePreset={activePreset}
+        updateFilter={updateFilter}
+        setDateRange={setDateRange}
+        handleSelectPreset={handleSelectPreset}
+        resetFilters={resetFilters}
+        terminals={terminals}
+        allSavedViews={allSavedViews}
+        searchParams={searchParams}
+        applyView={applyView}
+        handleDeleteSavedView={handleDeleteSavedView}
+        onOpenSaveView={() => setShowSaveViewModal(true)}
+        filteredCount={filteredBookings.length}
+        totalCount={bookings.length}
+        activeFiltersCount={activeFiltersCount}
+      />
 
       {/* ── Main Bookings Stream Table ── */}
-      <Card className="overflow-hidden">
-        <CardHeader className="p-4 sm:px-6 border-b border-hairline-soft bg-zinc-50/50 flex flex-row items-center justify-between">
+      <Card className="overflow-hidden border border-neutral-200 shadow-2xs">
+        <CardHeader className="p-4 sm:px-6 border-b border-neutral-200 bg-neutral-50/50 flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="text-sm font-bold text-ink">
+            <CardTitle className="text-sm font-bold text-neutral-900">
               Live Reservations Stream ({filteredBookings.length} total)
             </CardTitle>
-            <CardDescription className="text-xs text-ink-muted">
+            <CardDescription className="text-xs text-neutral-500 mt-0.5">
               Auto-syncing realtime MQTT telemetry feed
             </CardDescription>
           </div>
 
-          <Badge variant="outline" className="font-mono text-[11px]">
+          <Badge variant="outline" className="font-mono text-xs font-medium text-neutral-600 bg-white">
             Page {currentPage} of {totalPages}
           </Badge>
         </CardHeader>
 
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12">#</TableHead>
-                <TableHead>Terminal</TableHead>
-                <TableHead>Invoice ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Check-In Time</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Payment</TableHead>
-                <TableHead>DOB</TableHead>
-                <TableHead>Door</TableHead>
-                <TableHead>Passcode</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-center">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedBookings.length > 0 ? (
-                paginatedBookings.map((b, idx) => (
-                  <TableRow key={b.id}>
-                    <TableCell className="font-mono text-ink-subtle">
-                      {(currentPage - 1) * itemsPerPage + idx + 1}
-                    </TableCell>
-                    <TableCell className="font-semibold text-ink whitespace-nowrap">
-                      <span className="bg-zinc-100 px-1.5 py-0.5 rounded font-mono text-[11px] border border-hairline-soft">
-                        {b.terminalCode}
+        <Table containerClassName="overflow-x-auto xl:overflow-hidden">
+          <TableHeader>
+            <TableRow className="bg-neutral-50/80 hover:bg-neutral-50/80 text-xs">
+              <TableHead className="w-8 text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5 text-center">#</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Terminal</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Invoice</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Customer</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Check-In</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Status</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Payment</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">DOB</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Door</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Passcode</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Duration</TableHead>
+              <TableHead className="text-right text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Amount</TableHead>
+              <TableHead className="text-center text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paginatedBookings.length > 0 ? (
+              paginatedBookings.map((b, idx) => (
+                <TableRow key={b.id} className="hover:bg-neutral-50/80 transition-colors">
+                  <TableCell className="font-mono text-xs text-neutral-500 font-medium py-2.5 px-1.5 text-center">
+                    {(currentPage - 1) * itemsPerPage + idx + 1}
+                  </TableCell>
+                  <TableCell className="font-semibold text-neutral-900 whitespace-nowrap py-2.5 px-2">
+                    <span className="bg-neutral-100 px-1.5 py-0.5 rounded font-mono text-xs font-semibold text-neutral-900 border border-neutral-200">
+                      {b.terminalCode}
+                    </span>
+                  </TableCell>
+                  <TableCell className="font-mono text-xs font-bold text-neutral-800 whitespace-nowrap py-2.5 px-2">
+                    {b.invoiceNumber}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap py-2.5 px-2">
+                    <div className="font-semibold text-sm text-neutral-900 leading-tight">{b.customerName}</div>
+                    <div className="text-xs text-neutral-500 font-mono mt-0.5">{b.mobileNumber}</div>
+                  </TableCell>
+                  <TableCell className="font-mono text-xs text-neutral-600 whitespace-nowrap py-2.5 px-2">
+                    {b.openDateTime}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap py-2.5 px-1.5">
+                    <StatusBadge status={b.bookingStatus} pulse={b.bookingStatus === 'ACTIVE'} />
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap py-2.5 px-1.5">
+                    <Badge variant="secondary" size="sm" className="font-medium text-xs">
+                      {b.paymentMethod}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="font-mono text-xs whitespace-nowrap py-2.5 px-1.5">
+                    {b.dateOfBirth ? (
+                      showSensitiveData ? (
+                        <span className="text-neutral-900 font-semibold">{b.dateOfBirth}</span>
+                      ) : (
+                        <span className="text-neutral-400">••••-••-••</span>
+                      )
+                    ) : (
+                      <span className="text-neutral-400">—</span>
+                    )}
+                  </TableCell>
+                  <TableCell className="font-mono text-xs font-bold text-neutral-800 whitespace-nowrap py-2.5 px-1.5">
+                    {b.lockName}
+                  </TableCell>
+                  <TableCell className="font-mono text-xs whitespace-nowrap py-2.5 px-1.5">
+                    {showSensitiveData ? (
+                      <span className="font-bold text-neutral-900 bg-amber-50 text-amber-900 border border-amber-200 px-1.5 py-0.5 rounded text-xs">
+                        {b.passcode}
                       </span>
-                    </TableCell>
-                    <TableCell className="font-mono text-ink-muted whitespace-nowrap">
-                      {b.invoiceNumber}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      <div className="font-semibold text-ink">{b.customerName}</div>
-                      <div className="text-[11px] text-ink-subtle font-mono">{b.mobileNumber}</div>
-                    </TableCell>
-                    <TableCell className="font-mono text-ink-muted whitespace-nowrap">
-                      {b.openDateTime}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      <StatusBadge status={b.bookingStatus} pulse={b.bookingStatus === 'ACTIVE'} />
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      <Badge variant="secondary" size="sm">
-                        {b.paymentMethod}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="font-mono whitespace-nowrap">
-                      {b.dateOfBirth ? (
-                        showSensitiveData ? (
-                          <span className="text-ink font-medium">{b.dateOfBirth}</span>
-                        ) : (
-                          <span className="text-ink-subtle">••••-••-••</span>
-                        )
-                      ) : (
-                        <span className="text-ink-tertiary">—</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="font-mono font-medium text-zinc-700 whitespace-nowrap">
-                      {b.lockName}
-                    </TableCell>
-                    <TableCell className="font-mono whitespace-nowrap">
-                      {showSensitiveData ? (
-                        <span className="font-semibold text-zinc-900 bg-zinc-100 px-1.5 py-0.5 rounded border border-zinc-200">
-                          {b.passcode}
-                        </span>
-                      ) : (
-                        <span className="text-zinc-400">••••</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-ink-muted whitespace-nowrap">{b.duration}</TableCell>
-                    <TableCell className="text-right font-mono font-bold text-ink whitespace-nowrap">
-                      ₹{b.amount}
-                    </TableCell>
-                    <TableCell className="text-center whitespace-nowrap">
-                      <div className="flex items-center justify-center gap-1">
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => {
-                            setSelectedBooking(b);
-                            setShowDetailsModal(true);
-                          }}
-                          className="text-ink-muted hover:text-ink"
-                          title="View Details"
-                        >
-                          <FileText className="size-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => setForceUnlockBooking(b)}
-                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                          title="Emergency Force Unlock"
-                        >
-                          <KeyRound className="size-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={13} className="py-12 text-center text-ink-muted">
-                    <AlertTriangle className="size-8 mx-auto text-ink-subtle mb-2" />
-                    <p className="font-semibold text-sm text-ink">No bookings match the active filter criteria</p>
-                    <p className="text-xs text-ink-subtle mt-0.5">Try resetting or adjusting the filter conditions above.</p>
-                    <Button
-                      variant="default"
-                      size="sm"
-                      onClick={resetFilters}
-                      className="mt-3"
-                    >
-                      Clear All Filters
-                    </Button>
+                    ) : (
+                      <span className="text-neutral-400">••••</span>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-xs text-neutral-600 font-medium whitespace-nowrap py-2.5 px-1.5">{b.duration}</TableCell>
+                  <TableCell className="text-right font-mono font-bold text-sm text-neutral-900 whitespace-nowrap py-2.5 px-2">
+                    ₹{b.amount}
+                  </TableCell>
+                  <TableCell className="text-center whitespace-nowrap py-2.5 px-1.5">
+                    <div className="flex items-center justify-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedBooking(b);
+                          setShowDetailsModal(true);
+                        }}
+                        className="size-7 rounded-lg flex items-center justify-center text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                        title="View Details"
+                      >
+                        <FileText className="size-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setForceUnlockBooking(b)}
+                        className="size-7 rounded-lg flex items-center justify-center text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors"
+                        title="Emergency Force Unlock"
+                      >
+                        <KeyRound className="size-3.5" />
+                      </button>
+                    </div>
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={13} className="py-12 text-center text-neutral-500">
+                  <AlertTriangle className="size-8 mx-auto text-neutral-400 mb-2" />
+                  <p className="font-semibold text-sm text-neutral-900">No bookings match the active filter criteria</p>
+                  <p className="text-xs text-neutral-500 mt-0.5">Try resetting or adjusting the filter conditions above.</p>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={resetFilters}
+                    className="mt-3 font-semibold text-xs"
+                  >
+                    Clear All Filters
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
 
         {/* ── Table Pagination Bar ── */}
-        <div className="p-3 sm:px-6 border-t border-hairline-soft flex items-center justify-between bg-zinc-50/50">
-          <span className="text-xs text-ink-muted">
+        <div className="p-3.5 sm:px-6 border-t border-neutral-200 flex items-center justify-between bg-neutral-50/50">
+          <span className="text-xs text-neutral-600 font-medium">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
             {Math.min(currentPage * itemsPerPage, filteredBookings.length)} of{' '}
             {filteredBookings.length} entries
@@ -812,97 +579,42 @@ export const Dashboard: React.FC = () => {
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
-              size="sm"
+              size="default"
               onClick={() => updateFilter('page', String(Math.max(1, currentPage - 1)))}
               disabled={currentPage === 1}
-              className="h-8 px-3 text-xs"
+              className="h-9 px-3 text-xs font-semibold"
             >
-              <ChevronLeft className="size-4" />
+              <ChevronLeft className="size-4 mr-0.5" />
               <span>Previous</span>
             </Button>
-            <div className="inline-flex h-8 items-center justify-center px-3 text-xs font-semibold text-neutral-800 bg-white border border-neutral-200 rounded-md shadow-xs select-none">
-              Page {currentPage} of {totalPages}
-            </div>
             <Button
               variant="outline"
-              size="sm"
+              size="default"
               onClick={() => updateFilter('page', String(Math.min(totalPages, currentPage + 1)))}
               disabled={currentPage === totalPages}
-              className="h-8 px-3 text-xs"
+              className="h-9 px-3 text-xs font-semibold"
             >
               <span>Next</span>
-              <ChevronRight className="size-4" />
+              <ChevronRight className="size-4 ml-0.5" />
             </Button>
           </div>
         </div>
       </Card>
 
-      {/* ── Booking Details Modal ── */}
-      {selectedBooking && (
-        <Modal
-          isOpen={showDetailsModal}
-          onClose={() => {
-            setShowDetailsModal(false);
-            setSelectedBooking(null);
-          }}
-          title={`Booking ${selectedBooking.invoiceNumber}`}
-          subtitle={`${selectedBooking.terminalCode} • Lock ${selectedBooking.lockName}`}
-        >
-          <div className="flex flex-col gap-4 text-xs">
-            <div className="grid grid-cols-2 gap-3 p-4 bg-zinc-50 rounded-xl border border-hairline">
-              <div>
-                <span className="text-[10px] font-bold text-ink-muted uppercase">Customer Name</span>
-                <p className="font-bold text-ink text-sm mt-0.5">{selectedBooking.customerName}</p>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-ink-muted uppercase">Mobile Number</span>
-                <p className="font-mono font-bold text-ink mt-0.5">{selectedBooking.mobileNumber}</p>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-ink-muted uppercase">Date of Birth</span>
-                <p className="font-mono font-bold text-ink mt-0.5">
-                  {selectedBooking.dateOfBirth ? (
-                    showSensitiveData ? (
-                      selectedBooking.dateOfBirth
-                    ) : (
-                      <span className="text-ink-subtle">••••-••-•• (Masked)</span>
-                    )
-                  ) : (
-                    'Not specified'
-                  )}
-                </p>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-ink-muted uppercase">Door Passcode</span>
-                <p className="font-mono font-bold text-ink mt-0.5">
-                  {showSensitiveData ? (
-                    <span className="text-primary font-black">{selectedBooking.passcode}</span>
-                  ) : (
-                    <span className="text-ink-subtle">•••• (Masked)</span>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              <div className="p-3 bg-zinc-50 rounded-lg border border-hairline">
-                <span className="text-[10px] text-ink-muted font-bold uppercase">Status</span>
-                <div className="mt-1">
-                  <StatusBadge status={selectedBooking.bookingStatus} />
-                </div>
-              </div>
-              <div className="p-3 bg-zinc-50 rounded-lg border border-hairline">
-                <span className="text-[10px] text-ink-muted font-bold uppercase">Payment Mode</span>
-                <p className="font-bold text-ink mt-1">{selectedBooking.paymentMethod}</p>
-              </div>
-              <div className="p-3 bg-zinc-50 rounded-lg border border-hairline">
-                <span className="text-[10px] text-ink-muted font-bold uppercase">Total Charged</span>
-                <p className="font-bold text-emerald-600 mt-1 text-sm">₹{selectedBooking.amount}</p>
-              </div>
-            </div>
-          </div>
-        </Modal>
-      )}
+      {/* ── Upgraded Booking Details Modal (100% Field Parity) ── */}
+      <BookingDetailModal
+        isOpen={showDetailsModal}
+        onClose={() => {
+          setShowDetailsModal(false);
+          setSelectedBooking(null);
+        }}
+        booking={selectedBooking}
+        onForceUnlock={(b) => {
+          setShowDetailsModal(false);
+          setForceUnlockBooking(b);
+        }}
+        showToast={showToast}
+      />
 
       {/* ── Save View Modal ── */}
       {showSaveViewModal && (
@@ -929,7 +641,7 @@ export const Dashboard: React.FC = () => {
 
             <div className="p-3 bg-zinc-50 rounded-lg border border-hairline text-xs flex flex-col gap-1 text-ink-muted">
               <span className="font-bold text-ink">Included Parameters:</span>
-              <p className="font-mono text-[11px] text-ink-subtle truncate">
+              <p className="font-mono text-xs text-neutral-500 truncate">
                 {searchParams.toString() || 'All default filters'}
               </p>
             </div>
@@ -995,7 +707,7 @@ export const Dashboard: React.FC = () => {
                   <span className="text-xs font-bold text-amber-900 block">
                     Include Unmasked Sensitive PII (Date of Birth & Passcodes)
                   </span>
-                  <p className="text-[11px] text-amber-700 mt-0.5 leading-relaxed">
+                  <p className="text-xs text-amber-800 mt-0.5 leading-relaxed">
                     By default, customer DOB and door passcodes are exported as masked bullets (••••). Unmasking sensitive credentials will be logged in the system audit trail.
                   </p>
                 </div>

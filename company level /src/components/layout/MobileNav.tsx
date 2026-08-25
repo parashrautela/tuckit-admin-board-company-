@@ -171,7 +171,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
               <span className="text-sm font-semibold text-neutral-800 truncate leading-tight">
                 Tuckit Inc
               </span>
-              <span className="text-[11px] text-neutral-500 truncate leading-tight">
+              <span className="text-xs text-neutral-500 truncate leading-tight mt-0.5">
                 Enterprise Console
               </span>
             </div>
@@ -190,7 +190,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
         <div className="flex-1 overflow-y-auto custom-scrollbar p-2 flex flex-col gap-4">
           {navGroups.map((group, gIdx) => (
             <div key={gIdx} className="flex flex-col gap-1">
-              <div className="px-2 py-1 text-xs font-medium text-neutral-500">
+              <div className="px-2 py-1 text-xs font-bold uppercase tracking-wider text-neutral-500">
                 {group.label}
               </div>
 
@@ -217,7 +217,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
                       <Icon className={cn("size-4 shrink-0", isDirectActive ? "text-primary-500" : "text-neutral-500")} />
                       <span className="truncate flex-1">{item.title}</span>
                       {item.badge && item.badge > 0 ? (
-                        <span className="bg-error-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                        <span className="bg-error-500 text-white text-xs font-bold px-2 py-0.5 rounded-full leading-none">
                           {item.badge > 9 ? '9+' : item.badge}
                         </span>
                       ) : null}
@@ -240,7 +240,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
                       <Icon className={cn("size-4 shrink-0", isChildActive ? "text-primary-500" : "text-neutral-500")} />
                       <span className="truncate flex-1">{item.title}</span>
                       {item.badge && item.badge > 0 && (
-                        <span className="bg-error-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none mr-1">
+                        <span className="bg-error-500 text-white text-xs font-bold px-2 py-0.5 rounded-full leading-none mr-1">
                           {item.badge > 9 ? '9+' : item.badge}
                         </span>
                       )}
@@ -271,7 +271,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
                             >
                               <span className="truncate pr-1">{subItem.label}</span>
                               {subItem.badge && subItem.badge > 0 && (
-                                <span className="bg-error-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                                <span className="bg-error-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
                                   {subItem.badge > 9 ? '9+' : subItem.badge}
                                 </span>
                               )}
@@ -299,7 +299,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
               <span className="text-sm font-semibold text-neutral-800 truncate leading-tight">
                 {session?.name || 'Parash Rautela'}
               </span>
-              <span className="text-[11px] text-neutral-500 truncate leading-tight">
+              <span className="text-xs text-neutral-500 truncate leading-tight mt-0.5">
                 {session?.username ? `${session.username}@tuckit.in` : 'parash@tuckit.in'}
               </span>
             </div>

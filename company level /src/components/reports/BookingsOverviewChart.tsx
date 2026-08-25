@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Calendar, ChevronDown } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Select } from '@/components/ui/select';
 
 interface TimePoint {
   date: string;
@@ -138,19 +139,15 @@ export const BookingsOverviewChart: React.FC = () => {
           </div>
 
           {/* Terminal Scope Dropdown */}
-          <div className="relative">
-            <select
-              value={selectedTerminal}
-              onChange={e => setSelectedTerminal(e.target.value)}
-              className="h-8 pl-3 pr-7 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 outline-none appearance-none cursor-pointer"
-            >
-              <option value="ALL">All Terminals</option>
-              <option value="MALL-BLR-01">MALL-BLR-01</option>
-              <option value="METRO-DEL-04">METRO-DEL-04</option>
-              <option value="AIRP-HYD-01">AIRP-HYD-01</option>
-            </select>
-            <ChevronDown className="absolute right-2 top-2.5 size-3.5 text-neutral-400 pointer-events-none" />
-          </div>
+          <Select
+            value={selectedTerminal}
+            onChange={e => setSelectedTerminal(e.target.value)}
+          >
+            <option value="ALL">All Terminals</option>
+            <option value="MALL-BLR-01">MALL-BLR-01</option>
+            <option value="METRO-DEL-04">METRO-DEL-04</option>
+            <option value="AIRP-HYD-01">AIRP-HYD-01</option>
+          </Select>
 
           {/* Date Range Badge */}
           <div className="h-8 px-3 bg-white border border-neutral-200 rounded-lg flex items-center gap-1.5 text-neutral-700 font-mono text-xs">
@@ -204,7 +201,7 @@ export const BookingsOverviewChart: React.FC = () => {
                   x={padding.left - 8}
                   y={t.y + 4}
                   textAnchor="end"
-                  className="text-[11px] font-mono fill-neutral-400 font-medium"
+                  className="text-xs font-mono fill-neutral-500 font-medium"
                 >
                   {t.value}
                 </text>
@@ -220,7 +217,7 @@ export const BookingsOverviewChart: React.FC = () => {
                   x={x}
                   y={height - 10}
                   textAnchor="middle"
-                  className="text-[11px] font-mono fill-neutral-400 font-medium"
+                  className="text-xs font-mono fill-neutral-500 font-medium"
                 >
                   {d.date}
                 </text>
@@ -339,10 +336,10 @@ export const BookingsOverviewChart: React.FC = () => {
                 transform: hoveredIdx > 4 ? 'translateX(-105%)' : 'translateX(10%)',
               }}
             >
-              <div className="font-bold text-[11px] text-neutral-300 border-b border-neutral-800 pb-1 font-mono">
+              <div className="font-bold text-xs text-neutral-200 border-b border-neutral-800 pb-1 font-mono">
                 {DEFAULT_TIME_SERIES[hoveredIdx].date}, 2026
               </div>
-              <div className="space-y-1 text-[11px]">
+              <div className="space-y-1.5 text-xs">
                 <div className="flex items-center justify-between gap-3">
                   <span className="flex items-center gap-1.5 text-[#8BB1DB]">
                     <span className="size-2 rounded-full bg-[#5B84B1]" /> Web:
@@ -375,17 +372,17 @@ export const BookingsOverviewChart: React.FC = () => {
           {/* Web Bookings Card */}
           <div className="p-4 bg-white rounded-xl border border-neutral-200 shadow-2xs hover:shadow-xs transition-all flex items-center justify-between">
             <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-600 uppercase tracking-wider">
                 <span className="size-2 rounded-full bg-[#5B84B1]" />
                 <span>Web Bookings</span>
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-xl font-bold font-mono text-neutral-900">26,326</span>
-                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md">
+                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
                   +8.1%
                 </span>
               </div>
-              <p className="text-[10px] text-neutral-400 font-mono">Jul 26 - Aug 22, 2026</p>
+              <p className="text-xs text-neutral-400 font-mono">Jul 26 - Aug 22, 2026</p>
             </div>
             {/* Sparkline Curve */}
             <div className="w-20 h-10">
@@ -404,17 +401,17 @@ export const BookingsOverviewChart: React.FC = () => {
           {/* Terminal Bookings Card */}
           <div className="p-4 bg-white rounded-xl border border-neutral-200 shadow-2xs hover:shadow-xs transition-all flex items-center justify-between">
             <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-600 uppercase tracking-wider">
                 <span className="size-2 rounded-full bg-[#E58A3C]" />
                 <span>Terminal Bookings</span>
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-xl font-bold font-mono text-neutral-900">24,676</span>
-                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md">
+                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
                   +15.2%
                 </span>
               </div>
-              <p className="text-[10px] text-neutral-400 font-mono">Jul 26 - Aug 22, 2026</p>
+              <p className="text-xs text-neutral-400 font-mono">Jul 26 - Aug 22, 2026</p>
             </div>
             {/* Sparkline Curve */}
             <div className="w-20 h-10">
@@ -433,17 +430,17 @@ export const BookingsOverviewChart: React.FC = () => {
           {/* WhatsApp Bookings Card */}
           <div className="p-4 bg-white rounded-xl border border-neutral-200 shadow-2xs hover:shadow-xs transition-all flex items-center justify-between">
             <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-600 uppercase tracking-wider">
                 <span className="size-2 rounded-full bg-[#4E9F8E]" />
                 <span>WhatsApp Bookings</span>
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-xl font-bold font-mono text-neutral-900">7,277</span>
-                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md">
+                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
                   +5.0%
                 </span>
               </div>
-              <p className="text-[10px] text-neutral-400 font-mono">Jul 26 - Aug 22, 2026</p>
+              <p className="text-xs text-neutral-400 font-mono">Jul 26 - Aug 22, 2026</p>
             </div>
             {/* Sparkline Curve */}
             <div className="w-20 h-10">

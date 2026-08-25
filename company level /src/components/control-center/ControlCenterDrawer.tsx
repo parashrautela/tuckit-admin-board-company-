@@ -64,20 +64,20 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                   MQTT / WS STREAM ACTIVE
                 </span>
               </div>
-              <span className="text-[11px] text-zinc-400 font-mono">Sync: {lastCheckedTime}</span>
+              <span className="text-xs text-zinc-400 font-mono">Sync: {lastCheckedTime}</span>
             </div>
 
             <div className="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-800">
               <div className="bg-zinc-900/80 p-2.5 rounded-xl border border-zinc-800">
-                <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Total Nodes</div>
+                <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Total Nodes</div>
                 <div className="text-lg font-black text-white">{totalTerminals}</div>
               </div>
               <div className="bg-zinc-900/80 p-2.5 rounded-xl border border-zinc-800">
-                <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">WS Online</div>
+                <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">WS Online</div>
                 <div className="text-lg font-black text-emerald-400">{wsConnectedCount}</div>
               </div>
               <div className="bg-zinc-900/80 p-2.5 rounded-xl border border-zinc-800">
-                <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Mesh Tunnel</div>
+                <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Mesh Tunnel</div>
                 <div className="text-lg font-black text-sky-400">Tailscale</div>
               </div>
             </div>
@@ -96,13 +96,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-orange-50/50 border border-zinc-200 hover:border-primary/50 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-orange-100 text-primary rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <KeyRound className="h-5 w-5" />
+                  <KeyRound className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-primary transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-primary transition-colors">
                     Force Unlock Locker
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Direct solenoid unlatch pulse to physical terminal
                   </div>
                 </div>
@@ -114,13 +114,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-purple-50/50 border border-zinc-200 hover:border-purple-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-purple-100 text-purple-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <MessageSquare className="h-5 w-5" />
+                  <MessageSquare className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-purple-700 transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-purple-700 transition-colors">
                     Unlock via SMS
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Dispatch one-time fallback link to customer
                   </div>
                 </div>
@@ -132,11 +132,11 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-zinc-100 border border-zinc-200 hover:border-zinc-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-zinc-100 text-zinc-800 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <RotateCcw className="h-5 w-5" />
+                  <RotateCcw className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900">Restart Terminal</div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-sm font-bold text-zinc-900">Restart Terminal</div>
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Soft kiosk reload or full hardware reboot
                   </div>
                 </div>
@@ -148,13 +148,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-red-50/50 border border-zinc-200 hover:border-red-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-red-100 text-red-600 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <UserX className="h-5 w-5" />
+                  <UserX className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-red-600 transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-red-600 transition-colors">
                     Block / Blacklist User
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Restrict mobile number across network
                   </div>
                 </div>
@@ -175,13 +175,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-emerald-50/50 border border-zinc-200 hover:border-emerald-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-emerald-100 text-emerald-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <PlusCircle className="h-5 w-5" />
+                  <PlusCircle className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-emerald-700 transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-emerald-700 transition-colors">
                     Create New Site
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Deploy station code to new mall or metro
                   </div>
                 </div>
@@ -193,13 +193,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-sky-50/50 border border-zinc-200 hover:border-sky-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-sky-100 text-sky-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <Server className="h-5 w-5" />
+                  <Server className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-sky-700 transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-sky-700 transition-colors">
                     Install Terminal
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Generate Linaro SBC deployment scripts
                   </div>
                 </div>
@@ -211,13 +211,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-amber-50/50 border border-zinc-200 hover:border-amber-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-amber-100 text-amber-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <Monitor className="h-5 w-5" />
+                  <Monitor className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-amber-700 transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-amber-700 transition-colors">
                     Remote Assistance
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Live screen stream & touch mirror
                   </div>
                 </div>
@@ -229,11 +229,11 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-zinc-100 border border-zinc-200 hover:border-zinc-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group"
               >
                 <div className="p-2.5 bg-zinc-900 text-emerald-400 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <TerminalIcon className="h-5 w-5" />
+                  <TerminalIcon className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900">Batch Console</div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-sm font-bold text-zinc-900">Batch Console</div>
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Execute shell diagnostics over cluster
                   </div>
                 </div>
@@ -245,13 +245,13 @@ export const ControlCenterDrawer: React.FC<ControlCenterDrawerProps> = ({ isOpen
                 className="flex items-start gap-3 p-3.5 bg-white hover:bg-indigo-50/50 border border-zinc-200 hover:border-indigo-300 rounded-xl text-left shadow-2xs hover:shadow-md transition-all group sm:col-span-2"
               >
                 <div className="p-2.5 bg-indigo-100 text-indigo-700 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-                  <UploadCloud className="h-5 w-5" />
+                  <UploadCloud className="size-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-zinc-900 group-hover:text-indigo-700 transition-colors">
+                  <div className="text-sm font-bold text-zinc-900 group-hover:text-indigo-700 transition-colors">
                     Update Software / File Transfer (S3 Pipeline)
                   </div>
-                  <div className="text-[11px] text-zinc-500 mt-0.5">
+                  <div className="text-xs text-zinc-500 mt-0.5">
                     Deploy builds & patches across nationwide kiosk clusters
                   </div>
                 </div>

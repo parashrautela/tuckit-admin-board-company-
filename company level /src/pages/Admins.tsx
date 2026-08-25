@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import { Modal } from '@/components/common/Modal';
 import {
   Shield,
@@ -131,26 +132,26 @@ export const Admins: React.FC = () => {
             <TableBody>
               {filtered.map(a => (
                 <TableRow key={a.id}>
-                  <TableCell className="font-mono font-bold text-ink whitespace-nowrap">{a.id}</TableCell>
+                  <TableCell className="font-mono font-bold text-neutral-900 whitespace-nowrap text-xs">{a.id}</TableCell>
                   <TableCell className="whitespace-nowrap">
-                    <div className="font-semibold text-ink">{a.name}</div>
-                    <div className="text-[11px] text-zinc-500 font-mono font-medium">@{a.username}</div>
+                    <div className="font-semibold text-sm text-neutral-900">{a.name}</div>
+                    <div className="text-xs text-neutral-500 font-mono font-medium mt-0.5">@{a.username}</div>
                   </TableCell>
-                  <TableCell className="text-ink-muted font-mono text-xs">{a.email}</TableCell>
+                  <TableCell className="text-neutral-600 font-mono text-xs">{a.email}</TableCell>
                   <TableCell>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-[#FFE5C6] text-[#7A2E00] border border-[#FFC898]/70 font-bold font-mono text-[10px] uppercase">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-[#FFE5C6] text-[#7A2E00] border border-[#FFC898]/70 font-bold font-mono text-xs uppercase">
                       {a.role}
                     </span>
                   </TableCell>
-                  <TableCell className="text-ink-muted font-mono text-[11px] whitespace-nowrap">{a.lastLogin}</TableCell>
+                  <TableCell className="text-neutral-600 font-mono text-xs whitespace-nowrap">{a.lastLogin}</TableCell>
                   <TableCell>
                     <Badge variant={a.status === 'ACTIVE' ? 'success' : 'destructive'} size="sm">
                       {a.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon-sm" className="text-ink-muted hover:text-ink">
-                      <Edit2 className="size-3.5" />
+                    <Button variant="ghost" size="icon-sm" className="text-neutral-500 hover:text-neutral-900">
+                      <Edit2 className="size-4" />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -167,9 +168,9 @@ export const Admins: React.FC = () => {
         title="Provision New Admin Account"
         subtitle="Create an internal staff operator account with designated role privileges"
       >
-        <form onSubmit={handleCreate} className="flex flex-col gap-4 text-xs">
+        <form onSubmit={handleCreate} className="flex flex-col gap-4 text-sm">
           <div className="flex flex-col gap-1.5">
-            <label className="font-bold text-ink uppercase tracking-wider text-[11px]">Username *</label>
+            <label className="font-bold text-neutral-700 uppercase tracking-wider text-xs">Username *</label>
             <Input
               type="text"
               required
@@ -179,7 +180,7 @@ export const Admins: React.FC = () => {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-bold text-ink uppercase tracking-wider text-[11px]">Full Name</label>
+            <label className="font-bold text-neutral-700 uppercase tracking-wider text-xs">Full Name</label>
             <Input
               type="text"
               value={newAdmin.name}
@@ -188,7 +189,7 @@ export const Admins: React.FC = () => {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-bold text-ink uppercase tracking-wider text-[11px]">Email Address *</label>
+            <label className="font-bold text-neutral-700 uppercase tracking-wider text-xs">Email Address *</label>
             <Input
               type="email"
               required
@@ -198,17 +199,16 @@ export const Admins: React.FC = () => {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-bold text-ink uppercase tracking-wider text-[11px]">Assigned Role</label>
-            <select
+            <label className="font-bold text-neutral-700 uppercase tracking-wider text-xs">Assigned Role</label>
+            <Select
               value={newAdmin.role}
               onChange={e => setNewAdmin(p => ({ ...p, role: e.target.value }))}
-              className="flex h-9 rounded-md border border-hairline bg-white px-3 py-1 text-xs text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="OPERATIONS">OPERATIONS (Fleet Diagnostics & Overrides)</option>
               <option value="SUPPORT_AGENT">SUPPORT_AGENT (Customer Service & Unlock)</option>
               <option value="FINANCE">FINANCE (Reports & Refunds)</option>
               <option value="SUPERADMIN">SUPERADMIN (Full Root Privileges)</option>
-            </select>
+            </Select>
           </div>
 
           <div className="flex items-center justify-end gap-2 pt-3 border-t border-hairline-soft">

@@ -52,7 +52,7 @@ export const BlacklistHistory: React.FC = () => {
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-zinc-50 border-b border-zinc-200 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+              <tr className="bg-zinc-50 border-b border-zinc-200 text-xs font-bold text-zinc-600 uppercase tracking-wider">
                 <th className="py-3 px-4">INCIDENT ID</th>
                 <th className="py-3 px-4">PHONE NUMBER</th>
                 <th className="py-3 px-4">CUSTOMER NAME</th>
@@ -63,17 +63,17 @@ export const BlacklistHistory: React.FC = () => {
                 <th className="py-3 px-4 text-right">ACTION</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-100">
+            <tbody className="divide-y divide-zinc-100 text-sm">
               {filtered.map(r => (
                 <tr key={r.id} className="hover:bg-zinc-50 transition-colors">
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-900">{r.id}</td>
-                  <td className="py-3 px-4 font-mono font-bold text-red-600">{r.phone}</td>
-                  <td className="py-3 px-4 font-semibold text-zinc-800">{r.name}</td>
-                  <td className="py-3 px-4 text-zinc-600 max-w-[280px]">{r.reason}</td>
-                  <td className="py-3 px-4 text-zinc-400 font-mono text-[11px]">{r.blockedAt}</td>
-                  <td className="py-3 px-4 text-zinc-700 font-medium">{r.blockedBy}</td>
+                  <td className="py-3 px-4 font-mono font-bold text-zinc-900 text-xs">{r.id}</td>
+                  <td className="py-3 px-4 font-mono font-bold text-rose-700 text-xs">{r.phone}</td>
+                  <td className="py-3 px-4 font-semibold text-zinc-900 text-sm">{r.name}</td>
+                  <td className="py-3 px-4 text-zinc-700 text-xs max-w-[280px]">{r.reason}</td>
+                  <td className="py-3 px-4 text-zinc-500 font-mono text-xs">{r.blockedAt}</td>
+                  <td className="py-3 px-4 text-zinc-800 font-medium text-xs">{r.blockedBy}</td>
                   <td className="py-3 px-4">
-                    <span className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${r.status === 'BLOCKED' ? 'bg-red-50 text-red-700' : 'bg-zinc-100 text-zinc-600'}`}>
+                    <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${r.status === 'BLOCKED' ? 'bg-rose-50 text-rose-700 border border-rose-200/70' : 'bg-zinc-100 text-zinc-700'}`}>
                       {r.status}
                     </span>
                   </td>
@@ -82,9 +82,9 @@ export const BlacklistHistory: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => unblockUser(r.id)}
-                        className="text-xs font-bold text-primary hover:underline flex items-center gap-1 ml-auto"
+                        className="text-xs font-bold text-primary-700 hover:text-primary-900 flex items-center gap-1.5 ml-auto"
                       >
-                        <RotateCcw className="h-3 w-3" /> Unblock
+                        <RotateCcw className="size-3.5" /> <span>Unblock</span>
                       </button>
                     )}
                   </td>

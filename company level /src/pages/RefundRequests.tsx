@@ -24,6 +24,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import { Modal } from '@/components/common/Modal';
 
 interface RefundRequest {
@@ -114,16 +115,16 @@ export const RefundRequests: React.FC = () => {
               className="pl-9"
             />
           </div>
-          <select
+          <Select
             value={statusFilter}
             onChange={e => updateParam('status', e.target.value)}
-            className="flex h-9 rounded-md border border-hairline bg-white px-3 py-1 text-xs font-semibold text-ink shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-full sm:w-56"
+            containerClassName="w-full sm:w-56"
           >
             <option value="PENDING">Status: Pending ({pendingCount})</option>
             <option value="APPROVED">Status: Approved</option>
             <option value="REJECTED">Status: Rejected</option>
             <option value="ALL">All Statuses</option>
-          </select>
+          </Select>
         </CardContent>
       </Card>
 
@@ -170,25 +171,25 @@ export const RefundRequests: React.FC = () => {
               ) : (
                 filteredRequests.map(r => (
                   <TableRow key={r.id}>
-                    <TableCell className="font-mono font-bold text-ink whitespace-nowrap">{r.id}</TableCell>
-                    <TableCell className="font-mono font-semibold text-primary whitespace-nowrap">{r.bookingId}</TableCell>
+                    <TableCell className="font-mono font-bold text-neutral-900 whitespace-nowrap text-xs">{r.id}</TableCell>
+                    <TableCell className="font-mono font-semibold text-primary-700 whitespace-nowrap text-xs">{r.bookingId}</TableCell>
                     <TableCell className="whitespace-nowrap">
-                      <div className="font-semibold text-ink">{r.customerName}</div>
-                      <div className="text-[11px] text-ink-subtle font-mono">{r.phone}</div>
+                      <div className="font-semibold text-neutral-900 text-sm">{r.customerName}</div>
+                      <div className="text-xs text-neutral-500 font-mono mt-0.5">{r.phone}</div>
                     </TableCell>
-                    <TableCell className="font-mono text-ink font-medium whitespace-nowrap">{r.terminalCode}</TableCell>
-                    <TableCell className="font-bold text-ink font-mono whitespace-nowrap">₹{r.amount}</TableCell>
-                    <TableCell className="text-ink-muted max-w-[220px] truncate" title={r.reason}>
+                    <TableCell className="font-mono text-neutral-800 font-medium whitespace-nowrap text-xs">{r.terminalCode}</TableCell>
+                    <TableCell className="font-bold text-neutral-900 font-mono whitespace-nowrap text-sm">₹{r.amount}</TableCell>
+                    <TableCell className="text-neutral-700 max-w-[220px] truncate text-xs" title={r.reason}>
                       {r.reason}
                     </TableCell>
-                    <TableCell className="text-ink-subtle font-mono text-[11px] whitespace-nowrap">{r.requestedAt}</TableCell>
+                    <TableCell className="text-neutral-500 font-mono text-xs whitespace-nowrap">{r.requestedAt}</TableCell>
                     <TableCell className="text-right whitespace-nowrap">
                       {r.status === 'PENDING' ? (
                         <div className="flex items-center justify-end gap-2">
                           <button
                             type="button"
                             onClick={() => setActionModal({ isOpen: true, type: 'APPROVE', item: r })}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#00875A] hover:bg-[#00704A] text-white text-xs font-bold rounded-xl shadow-2xs transition-all"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#00875A] hover:bg-[#00704A] text-white text-xs font-bold rounded-lg shadow-2xs transition-all"
                           >
                             <CheckCircle2 className="size-3.5" />
                             <span>Approve</span>
@@ -196,7 +197,7 @@ export const RefundRequests: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setActionModal({ isOpen: true, type: 'REJECT', item: r })}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-100 text-xs font-bold rounded-xl transition-all"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/70 text-xs font-bold rounded-lg transition-all"
                           >
                             <XCircle className="size-3.5" />
                             <span>Reject</span>
@@ -224,24 +225,24 @@ export const RefundRequests: React.FC = () => {
           title={`${actionModal.type === 'APPROVE' ? 'Approve' : 'Reject'} Refund ${actionModal.item.id}`}
           subtitle={`Customer: ${actionModal.item.customerName} • Booking ${actionModal.item.bookingId}`}
         >
-          <div className="flex flex-col gap-4 text-xs">
-            <div className="p-3.5 bg-zinc-50 border border-hairline rounded-xl flex flex-col gap-1.5">
+          <div className="flex flex-col gap-4 text-sm">
+            <div className="p-3.5 bg-zinc-50 border border-hairline rounded-xl flex flex-col gap-1.5 text-xs">
               <div className="flex justify-between">
-                <span className="text-ink-muted">Claim Amount:</span>
-                <span className="font-bold text-ink text-sm">₹{actionModal.item.amount}</span>
+                <span className="text-zinc-600 font-medium">Claim Amount:</span>
+                <span className="font-bold text-neutral-900 text-sm">₹{actionModal.item.amount}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Reported Issue:</span>
-                <span className="font-semibold text-ink">{actionModal.item.reason}</span>
+                <span className="text-zinc-600 font-medium">Reported Issue:</span>
+                <span className="font-semibold text-neutral-900">{actionModal.item.reason}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink-muted">Gateway Ref:</span>
-                <span className="font-mono text-ink-subtle">{actionModal.item.paymentGatewayRef}</span>
+                <span className="text-zinc-600 font-medium">Gateway Ref:</span>
+                <span className="font-mono text-neutral-600">{actionModal.item.paymentGatewayRef}</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-[11px] font-bold text-ink uppercase tracking-wider">
+              <label className="text-xs font-bold text-neutral-700 uppercase tracking-wider">
                 Audit Note / Verification Reason
               </label>
               <textarea
@@ -249,7 +250,7 @@ export const RefundRequests: React.FC = () => {
                 onChange={e => setAdminNote(e.target.value)}
                 placeholder="State verification note for financial ledger..."
                 rows={2}
-                className="w-full p-2.5 bg-white border border-hairline rounded-md text-xs outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-2.5 bg-white border border-neutral-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-primary font-medium"
               />
             </div>
 

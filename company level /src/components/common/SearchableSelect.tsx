@@ -150,14 +150,14 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-semibold text-neutral-900">{opt.value}</span>
+                        <span className="font-mono font-semibold text-neutral-900 text-xs">{opt.value}</span>
                         {opt.badge && (
-                          <span className="px-1.5 py-0.2 bg-neutral-100 text-neutral-600 text-[10px] font-mono rounded">
+                          <span className="px-1.5 py-0.5 bg-neutral-100 text-neutral-600 text-xs font-mono rounded font-medium">
                             {opt.badge}
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-neutral-500 truncate mt-0.5">
+                      <div className="text-xs text-neutral-500 truncate mt-0.5">
                         {opt.label} {opt.sublabel && `(${opt.sublabel})`}
                       </div>
                     </div>

@@ -54,36 +54,36 @@ export const StaffProfiles: React.FC = () => {
         {filtered.map(s => (
           <div key={s.id} className="bg-white rounded-2xl border border-zinc-200 shadow-2xs p-5 hover:shadow-md transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black font-mono text-zinc-400 uppercase">{s.id}</span>
-              <span className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${s.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+              <span className="text-xs font-bold font-mono text-zinc-500 uppercase">{s.id}</span>
+              <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${s.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-amber-50 text-amber-700 border border-amber-200/60'}`}>
                 {s.status}
               </span>
             </div>
 
             <div className="mt-3">
-              <h3 className="text-sm font-bold text-zinc-900">{s.name}</h3>
-              <p className="text-xs text-zinc-700 font-semibold">{s.role}</p>
+              <h3 className="text-base font-bold text-zinc-900">{s.name}</h3>
+              <p className="text-sm text-zinc-700 font-semibold mt-0.5">{s.role}</p>
               <p className="text-xs text-zinc-500 mt-0.5">{s.assignedRegion}</p>
             </div>
 
-            <div className="mt-4 p-3 bg-zinc-50 rounded-xl border border-zinc-100 space-y-1.5 text-xs">
+            <div className="mt-4 p-3.5 bg-zinc-50 rounded-xl border border-zinc-100 space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-zinc-500">Cash in Hand:</span>
-                <span className="font-black text-zinc-900">₹{s.cashInHand.toLocaleString()}</span>
+                <span className="text-zinc-600 font-medium">Cash in Hand:</span>
+                <span className="font-bold text-zinc-900 text-sm">₹{s.cashInHand.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Max Limit:</span>
-                <span className="font-bold text-zinc-700">₹{s.collectionLimit.toLocaleString()}</span>
+                <span className="text-zinc-600 font-medium">Max Limit:</span>
+                <span className="font-semibold text-zinc-800">₹{s.collectionLimit.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between pt-1 border-t border-zinc-200/60">
-                <span className="text-zinc-500">Bank / IFSC:</span>
-                <span className="font-mono text-zinc-800 text-[11px]">{s.bankAccount} ({s.ifsc})</span>
+              <div className="flex justify-between pt-1.5 border-t border-zinc-200/60">
+                <span className="text-zinc-600 font-medium">Bank / IFSC:</span>
+                <span className="font-mono text-zinc-800 text-xs font-medium">{s.bankAccount} ({s.ifsc})</span>
               </div>
             </div>
 
-            <div className="mt-3 pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] text-zinc-500">
+            <div className="mt-3 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500 font-medium">
               <span>{s.phone}</span>
-              <span className="truncate max-w-[120px]">{s.email}</span>
+              <span className="truncate max-w-[140px]">{s.email}</span>
             </div>
           </div>
         ))}

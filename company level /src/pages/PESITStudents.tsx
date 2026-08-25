@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useRealtime } from '../context/RealtimeContext';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Modal } from '../components/common/Modal';
+import { Select } from '@/components/ui/select';
 import {
   GraduationCap,
   Search,
@@ -115,12 +116,12 @@ export const PESITStudents: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-black text-zinc-900 tracking-tight">Student Management & RFID Directory</h1>
-              <span className="px-2 py-0.5 bg-primary-100 text-primary-900 border border-primary-200 text-[10px] font-bold rounded-full uppercase">
+              <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">Student Management & RFID Directory</h1>
+              <span className="px-2.5 py-0.5 bg-primary-100 text-primary-900 border border-primary-200 text-xs font-bold rounded-full uppercase">
                 PESIT CAMPUS
               </span>
             </div>
-            <p className="text-xs text-zinc-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
               Hostel student directory, contactless RFID smart-card bindings, and locker assignments
             </p>
           </div>
@@ -147,16 +148,15 @@ export const PESITStudents: React.FC = () => {
           />
         </div>
 
-        <select
+        <Select
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value)}
-          className="h-9 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-800"
         >
           <option value="ALL">All Status</option>
           <option value="ACTIVE">Active</option>
           <option value="PENDING_APPROVAL">Pending Approval</option>
           <option value="EXPIRED">Expired</option>
-        </select>
+        </Select>
       </div>
 
       {/* Table */}
@@ -164,7 +164,7 @@ export const PESITStudents: React.FC = () => {
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-zinc-50 border-b border-zinc-200 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+              <tr className="bg-zinc-50 border-b border-zinc-200 text-xs font-bold text-zinc-600 uppercase tracking-wider">
                 <th className="py-3 px-4">ROLL / ENROLLMENT #</th>
                 <th className="py-3 px-4">STUDENT NAME</th>
                 <th className="py-3 px-4">DEPARTMENT / YEAR</th>
@@ -174,30 +174,30 @@ export const PESITStudents: React.FC = () => {
                 <th className="py-3 px-4 text-right">ACTION</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-100">
+            <tbody className="divide-y divide-zinc-100 text-sm">
               {filtered.map(s => (
                 <tr key={s.id} className="hover:bg-zinc-50 transition-colors">
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-900">{s.enrollmentNumber}</td>
+                  <td className="py-3 px-4 font-mono font-bold text-zinc-900 text-xs">{s.enrollmentNumber}</td>
                   <td className="py-3 px-4">
-                    <div className="font-bold text-zinc-900">{s.name}</div>
-                    <div className="text-[11px] text-zinc-400 font-mono">{s.phone}</div>
+                    <div className="font-semibold text-zinc-900 text-sm">{s.name}</div>
+                    <div className="text-xs text-zinc-500 font-mono mt-0.5">{s.phone}</div>
                   </td>
                   <td className="py-3 px-4">
-                    <div className="font-semibold text-zinc-700">{s.department}</div>
-                    <div className="text-[11px] text-primary-700 font-semibold">{s.year}</div>
+                    <div className="font-medium text-zinc-800 text-xs">{s.department}</div>
+                    <div className="text-xs text-primary-700 font-semibold mt-0.5">{s.year}</div>
                   </td>
                   <td className="py-3 px-4">
-                    <span className="font-mono text-zinc-800 bg-zinc-100 px-2 py-0.5 rounded-md border border-zinc-200 font-bold text-[11px]">
+                    <span className="font-mono text-zinc-800 bg-zinc-100 px-2 py-0.5 rounded-md border border-zinc-200 font-semibold text-xs">
                       {s.rfidCard}
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <span className="font-mono font-bold text-primary">{s.assignedTerminal}</span>
-                    <span className="text-zinc-500 ml-1.5">({s.assignedLocker})</span>
+                    <span className="font-mono font-bold text-primary-700 text-xs">{s.assignedTerminal}</span>
+                    <span className="text-zinc-500 ml-1.5 text-xs">({s.assignedLocker})</span>
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                      className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
                         s.status === 'ACTIVE'
                           ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           : s.status === 'PENDING_APPROVAL'
@@ -213,7 +213,7 @@ export const PESITStudents: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleApprove(s.id)}
-                        className="px-2.5 py-1 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-[11px] font-semibold rounded-lg transition-colors shadow-xs"
+                        className="px-3 py-1.5 bg-[#FFE5C6] hover:bg-[#FFD7A8] text-neutral-900 border border-[#FFC898]/70 text-xs font-semibold rounded-lg transition-colors shadow-xs"
                       >
                         Approve
                       </button>
@@ -273,31 +273,31 @@ export const PESITStudents: React.FC = () => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1">Department</label>
-              <select
+              <Select
                 value={form.department}
                 onChange={e => setForm(p => ({ ...p, department: e.target.value }))}
-                className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-medium"
+                containerClassName="w-full"
               >
                 <option value="Computer Science & Engineering">CSE</option>
                 <option value="Electronics & Communication">ECE</option>
                 <option value="Information Science & Engineering">ISE</option>
                 <option value="Mechanical Engineering">Mechanical</option>
                 <option value="Biotechnology">Biotechnology</option>
-              </select>
+              </Select>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1">Year</label>
-              <select
+              <Select
                 value={form.year}
                 onChange={e => setForm(p => ({ ...p, year: e.target.value }))}
-                className="w-full h-10 px-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-medium"
+                containerClassName="w-full"
               >
                 <option value="1st Year">1st Year</option>
                 <option value="2nd Year">2nd Year</option>
                 <option value="3rd Year">3rd Year</option>
                 <option value="4th Year">4th Year</option>
-              </select>
+              </Select>
             </div>
           </div>
 

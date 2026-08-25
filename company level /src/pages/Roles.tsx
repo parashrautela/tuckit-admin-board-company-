@@ -185,7 +185,7 @@ export const Roles: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Role Selector Cards */}
         <div className="lg:col-span-4 flex flex-col gap-3">
-          <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider px-1">
+          <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider px-1">
             Configured System Roles ({roles.length})
           </span>
 
@@ -197,26 +197,26 @@ export const Roles: React.FC = () => {
                 onClick={() => setSelectedRole(r)}
                 className={`cursor-pointer transition-all ${
                   isSelected
-                    ? 'border-primary ring-1 ring-primary/30 bg-orange-50/20 shadow-xs'
+                    ? 'border-primary-500 ring-1 ring-primary-500/30 bg-orange-50/20 shadow-xs'
                     : 'hover:border-zinc-300 shadow-2xs'
                 }`}
               >
                 <CardContent className="p-4 flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Lock className={`size-4 ${isSelected ? 'text-primary' : 'text-ink-subtle'}`} />
-                      <span className="text-sm font-bold text-ink font-mono">{r.name}</span>
+                      <Lock className={`size-4 ${isSelected ? 'text-primary-600' : 'text-neutral-500'}`} />
+                      <span className="text-sm font-bold text-neutral-900 font-mono">{r.name}</span>
                     </div>
-                    <Badge variant="secondary" size="sm">
+                    <Badge variant="secondary" size="sm" className="text-xs">
                       {r.userCount} Users
                     </Badge>
                   </div>
 
-                  <p className="text-xs text-ink-muted leading-relaxed line-clamp-2">{r.description}</p>
+                  <p className="text-xs text-neutral-600 leading-relaxed line-clamp-2">{r.description}</p>
 
-                  <div className="pt-2 border-t border-hairline-soft flex items-center justify-between text-[11px]">
-                    <span className="text-primary font-semibold font-mono">{r.permissions.length} Permissions</span>
-                    <ChevronRight className={`size-3.5 ${isSelected ? 'text-primary' : 'text-ink-subtle'}`} />
+                  <div className="pt-2 border-t border-neutral-100 flex items-center justify-between text-xs">
+                    <span className="text-primary-700 font-semibold font-mono">{r.permissions.length} Permissions</span>
+                    <ChevronRight className={`size-4 ${isSelected ? 'text-primary-600' : 'text-neutral-400'}`} />
                   </div>
                 </CardContent>
               </Card>
@@ -230,16 +230,16 @@ export const Roles: React.FC = () => {
             <CardHeader className="p-5 border-b border-hairline-soft bg-zinc-50/50 flex flex-row items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="size-4 text-primary" />
-                  <CardTitle className="text-sm font-bold text-ink">
-                    Permission Matrix: <span className="font-mono text-primary">{selectedRole.name}</span>
+                  <ShieldCheck className="size-5 text-primary-600" />
+                  <CardTitle className="text-base font-bold text-neutral-900">
+                    Permission Matrix: <span className="font-mono text-primary-700">{selectedRole.name}</span>
                   </CardTitle>
                 </div>
-                <CardDescription className="text-xs text-ink-muted mt-0.5">
+                <CardDescription className="text-xs text-neutral-500 mt-0.5">
                   {selectedRole.description}
                 </CardDescription>
               </div>
-              <Badge variant="outline" className="font-mono">
+              <Badge variant="outline" className="font-mono text-xs font-semibold">
                 {selectedRole.permissions.length} Allowed
               </Badge>
             </CardHeader>
@@ -248,8 +248,8 @@ export const Roles: React.FC = () => {
               {PERMISSION_CATEGORIES.map(category => (
                 <div key={category.id} className="flex flex-col gap-2.5">
                   <div className="flex items-center gap-2">
-                    <Layers className="size-3.5 text-ink-subtle" />
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-ink">
+                    <Layers className="size-4 text-neutral-500" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-800">
                       {category.name}
                     </h3>
                   </div>
@@ -263,23 +263,23 @@ export const Roles: React.FC = () => {
                           onClick={() => handleTogglePerm(perm.id)}
                           className={`p-3 rounded-lg border text-xs cursor-pointer transition-all flex items-start gap-2.5 select-none ${
                             isGranted
-                              ? 'bg-emerald-50/40 border-emerald-200 text-ink'
-                              : 'bg-zinc-50/40 border-hairline-soft text-ink-muted hover:bg-zinc-100/60'
+                              ? 'bg-emerald-50/50 border-emerald-200 text-neutral-900'
+                              : 'bg-zinc-50/40 border-neutral-200/70 text-neutral-600 hover:bg-zinc-100/60'
                           }`}
                         >
                           <div
                             className={`size-4 rounded flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                              isGranted ? 'bg-emerald-600 text-white' : 'border border-hairline bg-white'
+                              isGranted ? 'bg-emerald-600 text-white' : 'border border-neutral-300 bg-white'
                             }`}
                           >
                             {isGranted && <Check className="size-3 stroke-[3]" />}
                           </div>
 
                           <div className="flex flex-col gap-0.5 min-w-0">
-                            <span className={`font-semibold ${isGranted ? 'text-ink' : 'text-ink-muted'}`}>
+                            <span className={`font-semibold text-xs ${isGranted ? 'text-neutral-900' : 'text-neutral-700'}`}>
                               {perm.label}
                             </span>
-                            <span className="text-[11px] text-ink-subtle leading-tight">
+                            <span className="text-xs text-neutral-500 leading-tight">
                               {perm.description}
                             </span>
                           </div>
@@ -301,9 +301,9 @@ export const Roles: React.FC = () => {
         title="Engineer New RBAC Role"
         subtitle="Define policy name and select base permissions for this role definition"
       >
-        <form onSubmit={handleCreateRole} className="flex flex-col gap-4 text-xs">
+        <form onSubmit={handleCreateRole} className="flex flex-col gap-4 text-sm">
           <div className="flex flex-col gap-1.5">
-            <label className="font-bold text-ink uppercase tracking-wider text-[11px]">Role Identifier *</label>
+            <label className="font-bold text-neutral-700 uppercase tracking-wider text-xs">Role Identifier *</label>
             <Input
               type="text"
               required
@@ -314,7 +314,7 @@ export const Roles: React.FC = () => {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="font-bold text-ink uppercase tracking-wider text-[11px]">Description</label>
+            <label className="font-bold text-neutral-700 uppercase tracking-wider text-xs">Description</label>
             <Input
               type="text"
               value={newRoleDesc}

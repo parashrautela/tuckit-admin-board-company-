@@ -201,10 +201,10 @@ export const Sidebar: React.FC = () => {
               {!isCollapsed && (
                 <>
                   <div className="flex flex-col min-w-0 flex-1">
-                    <span className="text-sm font-semibold text-neutral-800 truncate leading-tight">
+                    <span className="text-sm font-semibold text-neutral-900 truncate leading-tight">
                       Tuckit Inc
                     </span>
-                    <span className="text-[11px] text-neutral-500 truncate leading-tight">
+                    <span className="text-xs text-neutral-500 truncate leading-tight mt-0.5">
                       Enterprise Console
                     </span>
                   </div>
@@ -215,24 +215,24 @@ export const Sidebar: React.FC = () => {
 
             {/* Org Switcher Popover */}
             {isOrgMenuOpen && (
-              <div className="absolute top-full left-0 mt-1 w-60 bg-white border border-neutral-200 rounded-md shadow-md p-1 z-50 animate-in fade-in slide-in-from-top-1 text-xs">
-                <div className="px-2.5 py-1.5 text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
+              <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-neutral-200 rounded-lg shadow-md p-1.5 z-50 animate-in fade-in slide-in-from-top-1 text-xs">
+                <div className="px-2.5 py-1.5 text-xs font-bold text-neutral-500 uppercase tracking-wider">
                   Select Workspace
                 </div>
-                <div className="flex items-center justify-between px-2.5 py-2 rounded-sm bg-primary-50 border border-primary-100 font-medium text-neutral-800 cursor-pointer">
+                <div className="flex items-center justify-between px-2.5 py-2 rounded-md bg-primary-50 border border-primary-100 font-semibold text-neutral-900 cursor-pointer">
                   <div className="flex items-center gap-2">
-                    <div className="size-5 rounded bg-primary-500 text-white flex items-center justify-center text-[10px] font-bold">
+                    <div className="size-6 rounded bg-primary-500 text-white flex items-center justify-center text-xs font-bold">
                       T
                     </div>
-                    <span className="text-primary-700 font-semibold">Tuckit Inc (Production)</span>
+                    <span className="text-primary-800 font-bold">Tuckit Inc (Production)</span>
                   </div>
-                  <Check className="size-3.5 text-primary-500" />
+                  <Check className="size-4 text-primary-600" />
                 </div>
-                <div className="flex items-center gap-2 px-2.5 py-2 rounded-sm hover:bg-neutral-50 text-neutral-600 cursor-pointer transition-colors mt-0.5">
-                  <div className="size-5 rounded bg-neutral-200 text-neutral-700 flex items-center justify-center text-[10px] font-bold">
+                <div className="flex items-center gap-2 px-2.5 py-2 rounded-md hover:bg-neutral-50 text-neutral-700 cursor-pointer transition-colors mt-0.5">
+                  <div className="size-6 rounded bg-neutral-200 text-neutral-700 flex items-center justify-center text-xs font-bold">
                     S
                   </div>
-                  <span>PESIT Staging Cluster</span>
+                  <span className="font-medium">PESIT Staging Cluster</span>
                 </div>
               </div>
             )}
@@ -244,7 +244,7 @@ export const Sidebar: React.FC = () => {
           {navGroups.map((group, gIdx) => (
             <div key={gIdx} className="flex flex-col gap-1">
               {!isCollapsed && (
-                <div className="px-2 py-1 text-xs font-medium text-neutral-500">
+                <div className="px-2 py-1 text-xs font-bold text-neutral-500 uppercase tracking-wider">
                   {group.label}
                 </div>
               )}
@@ -264,19 +264,19 @@ export const Sidebar: React.FC = () => {
                       onClick={() => item.path && navigate(item.path)}
                       title={isCollapsed ? item.title : undefined}
                       className={cn(
-                        "w-full flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors text-left font-medium",
+                        "w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors text-left font-medium",
                         isCollapsed && "justify-center p-2",
                         isDirectActive
-                          ? "bg-primary-50 text-primary-700 font-semibold"
+                          ? "bg-primary-50 text-primary-800 font-semibold"
                           : "text-neutral-700 hover:bg-neutral-200/50 hover:text-neutral-900"
                       )}
                     >
-                      <Icon className={cn("size-4 shrink-0", isDirectActive ? "text-primary-500" : "text-neutral-500")} />
+                      <Icon className={cn("size-4 shrink-0", isDirectActive ? "text-primary-600" : "text-neutral-500")} />
                       {!isCollapsed && (
                         <>
                           <span className="truncate flex-1">{item.title}</span>
                           {item.badge && item.badge > 0 ? (
-                            <span className="bg-error-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                            <span className="bg-error-500 text-white text-xs font-bold px-2 py-0.5 rounded-full leading-none">
                               {item.badge > 9 ? '9+' : item.badge}
                             </span>
                           ) : null}
@@ -293,19 +293,19 @@ export const Sidebar: React.FC = () => {
                       onClick={() => toggleItem(item.key)}
                       title={isCollapsed ? item.title : undefined}
                       className={cn(
-                        "w-full flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors text-left font-medium",
+                        "w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors text-left font-medium",
                         isCollapsed && "justify-center p-2",
                         (isChildActive && !isOpen) || isDirectActive
-                          ? "bg-primary-50 text-primary-700 font-semibold"
+                          ? "bg-primary-50 text-primary-800 font-semibold"
                           : "text-neutral-700 hover:bg-neutral-200/50 hover:text-neutral-900"
                       )}
                     >
-                      <Icon className={cn("size-4 shrink-0", isChildActive ? "text-primary-500" : "text-neutral-500")} />
+                      <Icon className={cn("size-4 shrink-0", isChildActive ? "text-primary-600" : "text-neutral-500")} />
                       {!isCollapsed && (
                         <>
                           <span className="truncate flex-1">{item.title}</span>
                           {item.badge && item.badge > 0 && (
-                            <span className="bg-error-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none mr-1">
+                            <span className="bg-error-500 text-white text-xs font-bold px-2 py-0.5 rounded-full leading-none mr-1">
                               {item.badge > 9 ? '9+' : item.badge}
                             </span>
                           )}
@@ -330,15 +330,15 @@ export const Sidebar: React.FC = () => {
                               type="button"
                               onClick={() => navigate(subItem.path)}
                               className={cn(
-                                "w-full text-left px-2 py-1.5 rounded-md text-sm transition-colors flex items-center justify-between",
+                                "w-full text-left px-2.5 py-1.5 rounded-md text-sm transition-colors flex items-center justify-between",
                                 isSubActive
-                                  ? "bg-primary-50 text-primary-700 font-semibold"
-                                  : "text-neutral-600 hover:bg-neutral-200/50 hover:text-neutral-900 font-normal"
+                                  ? "bg-primary-50 text-primary-800 font-semibold"
+                                  : "text-neutral-600 hover:bg-neutral-200/50 hover:text-neutral-900 font-medium"
                               )}
                             >
                               <span className="truncate pr-1">{subItem.label}</span>
                               {subItem.badge && subItem.badge > 0 && (
-                                <span className="bg-error-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+                                <span className="bg-error-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
                                   {subItem.badge > 9 ? '9+' : subItem.badge}
                                 </span>
                               )}
@@ -362,12 +362,12 @@ export const Sidebar: React.FC = () => {
             size={isCollapsed ? 'icon-sm' : 'sm'}
             onClick={() => setIsControlCenterOpen(true)}
             className={cn(
-              "w-full justify-start text-xs font-semibold gap-2 border-neutral-200 text-neutral-700 hover:bg-neutral-200/50",
+              "w-full justify-start text-xs font-semibold gap-2 border-neutral-200 text-neutral-700 hover:bg-neutral-200/50 h-9",
               isCollapsed && "justify-center"
             )}
             title={isCollapsed ? 'Hardware Control Center' : undefined}
           >
-            <Sliders className="size-3.5 text-primary-500 shrink-0" />
+            <Sliders className="size-4 text-primary-500 shrink-0" />
             {!isCollapsed && <span>Control Center</span>}
           </Button>
 
@@ -377,7 +377,7 @@ export const Sidebar: React.FC = () => {
               type="button"
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
               className={cn(
-                "w-full flex items-center gap-2.5 rounded-lg p-1.5 transition-colors text-left hover:bg-neutral-200/60",
+                "w-full flex items-center gap-2.5 rounded-lg p-2 transition-colors text-left hover:bg-neutral-200/60",
                 isCollapsed && "justify-center p-1"
               )}
             >
@@ -390,10 +390,10 @@ export const Sidebar: React.FC = () => {
               {!isCollapsed && (
                 <>
                   <div className="flex flex-col min-w-0 flex-1">
-                    <span className="text-sm font-semibold text-neutral-800 truncate leading-tight">
+                    <span className="text-sm font-semibold text-neutral-900 truncate leading-tight">
                       {session?.name || 'Parash Rautela'}
                     </span>
-                    <span className="text-[11px] text-neutral-500 truncate leading-tight">
+                    <span className="text-xs text-neutral-500 truncate leading-tight mt-0.5">
                       {session?.username ? `${session.username}@tuckit.in` : 'parash@tuckit.in'}
                     </span>
                   </div>
@@ -404,10 +404,10 @@ export const Sidebar: React.FC = () => {
 
             {/* Profile Popover */}
             {isUserMenuOpen && (
-              <div className="absolute bottom-full left-0 mb-1 w-56 bg-white border border-neutral-200 rounded-md shadow-md p-1 z-50 animate-in fade-in slide-in-from-bottom-1 text-xs">
+              <div className="absolute bottom-full left-0 mb-1 w-60 bg-white border border-neutral-200 rounded-lg shadow-md p-1.5 z-50 animate-in fade-in slide-in-from-bottom-1 text-xs">
                 <div className="px-3 py-2 border-b border-neutral-100">
-                  <div className="font-semibold text-neutral-800">{session?.name || 'Parash Rautela'}</div>
-                  <div className="text-[11px] text-neutral-500">{session?.username ? `${session.username}@tuckit.in` : 'parash@tuckit.in'}</div>
+                  <div className="font-bold text-sm text-neutral-900">{session?.name || 'Parash Rautela'}</div>
+                  <div className="text-xs text-neutral-500 mt-0.5">{session?.username ? `${session.username}@tuckit.in` : 'parash@tuckit.in'}</div>
                 </div>
 
                 <div className="py-1">
@@ -417,9 +417,9 @@ export const Sidebar: React.FC = () => {
                       setIsUserMenuOpen(false);
                       navigate('/profile');
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-neutral-100 rounded-sm text-neutral-700 text-left transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-100 rounded-md text-neutral-700 text-left transition-colors text-xs font-medium"
                   >
-                    <User className="size-3.5 text-neutral-500" />
+                    <User className="size-4 text-neutral-500" />
                     <span>Account Profile</span>
                   </button>
                   <button
@@ -428,9 +428,9 @@ export const Sidebar: React.FC = () => {
                       setIsUserMenuOpen(false);
                       setIsBlacklistModalOpen(true);
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-error-50 rounded-sm text-error-700 text-left transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-rose-50 rounded-md text-rose-700 text-left transition-colors text-xs font-medium"
                   >
-                    <ShieldAlert className="size-3.5 text-error-500" />
+                    <ShieldAlert className="size-4 text-rose-500" />
                     <span>Blacklist Customer</span>
                   </button>
                 </div>
@@ -439,9 +439,9 @@ export const Sidebar: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-error-50 text-error-700 rounded-sm text-left transition-colors font-medium"
+                    className="w-full flex items-center gap-2 px-3 py-2 hover:bg-rose-50 text-rose-700 rounded-md text-left transition-colors font-semibold text-xs"
                   >
-                    <LogOut className="size-3.5 text-error-500" />
+                    <LogOut className="size-4 text-rose-500" />
                     <span>Log out</span>
                   </button>
                 </div>

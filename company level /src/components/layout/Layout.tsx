@@ -54,7 +54,7 @@ export const Layout: React.FC = () => {
                 <Search className="size-4 shrink-0 text-neutral-400 group-hover:text-primary-600 transition-colors" />
                 <span className="truncate text-neutral-500 font-normal">Search terminal or user...</span>
               </div>
-              <kbd className="pointer-events-none hidden sm:inline-flex h-4 select-none items-center gap-0.5 rounded border border-neutral-300 bg-white px-1.5 font-mono text-[10px] font-medium text-neutral-400 shadow-2xs">
+              <kbd className="pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-0.5 rounded border border-neutral-300 bg-white px-1.5 font-mono text-xs font-semibold text-neutral-500 shadow-2xs">
                 ⌘K
               </kbd>
             </div>
@@ -96,9 +96,9 @@ export const Layout: React.FC = () => {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-neutral-200 bg-white py-3.5 px-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 gap-2 font-mono shrink-0">
+        <footer className="border-t border-neutral-200 bg-white py-3.5 px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-2 font-mono shrink-0 font-medium">
           <div className="flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-success-500" />
+            <span className="size-2 rounded-full bg-emerald-500" />
             <span>TUCKIT FLEET CONTROL • v2.4.0</span>
           </div>
           <div>AWS IoT ap-south-1 • Telemetry Engine</div>

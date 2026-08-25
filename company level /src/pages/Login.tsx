@@ -156,7 +156,7 @@ export const Login: React.FC = () => {
             </div>
           </form>
 
-          <div className="pt-2 border-t border-zinc-100 text-center text-[11px] text-zinc-400 font-mono">
+          <div className="pt-2 border-t border-zinc-100 text-center text-xs text-zinc-400 font-mono">
             AWS IoT ap-south-1 • Node v2.4
           </div>
         </CardContent>

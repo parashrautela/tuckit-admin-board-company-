@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Globe, MapPin, Search, CheckCircle2, AlertTriangle, ChevronRight, X } from 'lucide-react';
+import { Globe, MapPin, Search, CheckCircle2, AlertTriangle, ChevronRight, X, ArrowUpRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -88,7 +88,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
             <div className="text-xs font-bold text-neutral-700 uppercase tracking-wider">
               Primary Deployment Hubs
             </div>
-            <span className="text-[11px] text-neutral-400 font-mono">By Node Count</span>
+            <span className="text-xs text-neutral-500 font-mono">By Node Count</span>
           </div>
 
           <div className="flex flex-col gap-2.5">
@@ -112,7 +112,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
                       <span className="font-semibold text-neutral-900 group-hover:text-primary-700 transition-colors truncate">
                         {hub.state}
                       </span>
-                      <span className="text-[10px] text-neutral-400 font-mono shrink-0">
+                      <span className="text-xs text-neutral-500 font-mono shrink-0">
                         {hub.cities?.length ? `${hub.cities.length} ${hub.cities.length === 1 ? 'City' : 'Cities'}` : 'Regional Fleet'}
                       </span>
                     </div>
@@ -122,7 +122,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
                         {hub.online}/{hub.total}
                       </span>
                       <span
-                        className={`text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded ${
+                        className={`text-xs font-mono font-semibold px-2 py-0.5 rounded ${
                           hub.offline === 0
                             ? 'bg-neutral-100 text-neutral-700'
                             : 'bg-rose-50 text-rose-700 border border-rose-200/60'
@@ -151,9 +151,9 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between text-[10px] text-neutral-400 font-mono">
+                  <div className="flex items-center justify-between text-xs text-neutral-500 font-mono">
                     <span>{fleetSharePct}% of National Fleet</span>
-                    <span className={hub.offline > 0 ? 'text-rose-600 font-semibold' : 'text-neutral-500'}>
+                    <span className={hub.offline > 0 ? 'text-rose-600 font-semibold' : 'text-neutral-600'}>
                       {hub.offline > 0 ? `${hub.offline} Nodes Offline` : 'All Nodes Online'}
                     </span>
                   </div>
@@ -169,7 +169,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
               <span>National Fleet Health:</span>
               <strong className="text-neutral-900 font-mono">{nationalUptime}% Uptime</strong>
             </div>
-            <span className="text-[11px] text-neutral-400 font-mono">
+            <span className="text-xs text-neutral-500 font-mono">
               {offlineDevices} Offline Total
             </span>
           </div>
@@ -183,14 +183,14 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
             </div>
 
             {/* Quick State Search Input */}
-            <div className="relative w-44">
-              <Search className="absolute left-2.5 top-2 size-3.5 text-neutral-400" />
+            <div className="relative w-48">
+              <Search className="absolute left-2.5 top-2.5 size-3.5 text-neutral-400" />
               <input
                 type="text"
                 value={stateSearch}
                 onChange={e => setStateSearch(e.target.value)}
                 placeholder="Search state..."
-                className="w-full pl-8 pr-2.5 h-7.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs outline-none focus:bg-white focus:border-primary transition-colors"
+                className="w-full pl-8 pr-2.5 h-8 bg-neutral-50 border border-neutral-200 rounded-lg text-xs outline-none focus:bg-white focus:border-primary transition-colors text-neutral-900 placeholder:text-neutral-400 font-medium"
               />
             </div>
           </div>
@@ -198,7 +198,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
           {/* Compact Scrollable State Matrix Table */}
           <div className="border border-neutral-200 rounded-xl overflow-hidden bg-white max-h-[345px] overflow-y-auto custom-scrollbar">
             <table className="w-full text-left text-xs">
-              <thead className="sticky top-0 bg-neutral-50 border-b border-neutral-200 text-[10px] font-bold text-neutral-500 uppercase tracking-wider select-none z-10">
+              <thead className="sticky top-0 bg-neutral-50 border-b border-neutral-200 text-xs font-bold text-neutral-600 uppercase tracking-wider select-none z-10">
                 <tr>
                   <th className="py-2.5 px-3">State</th>
                   <th className="py-2.5 px-3 text-center">Nodes</th>
@@ -209,7 +209,6 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
               <tbody className="divide-y divide-neutral-100">
                 {filteredStates.map(st => {
                   const isSelected = stateFilter === st.state;
-                  const onlinePct = st.total > 0 ? Math.round((st.online / st.total) * 100) : 100;
                   const isAllOnline = st.offline === 0;
 
                   return (
@@ -222,7 +221,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
                     >
                       <td className="py-2.5 px-3">
                         <div className="flex items-center gap-1.5">
-                          <MapPin className={`size-3 shrink-0 ${isSelected ? 'text-primary-600' : 'text-neutral-400'}`} />
+                          <MapPin className={`size-3.5 shrink-0 ${isSelected ? 'text-primary-600' : 'text-neutral-400'}`} />
                           <span className={`text-xs ${isSelected ? 'text-primary-900 font-bold' : 'text-neutral-800'}`}>
                             {st.state}
                           </span>
@@ -236,7 +235,7 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
 
                       <td className="py-2.5 px-3 text-center">
                         <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium ${
+                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium ${
                             isAllOnline
                               ? 'bg-neutral-100 text-neutral-700'
                               : 'bg-rose-50 text-rose-700 border border-rose-200/70'
@@ -253,11 +252,12 @@ export const RegionalTelemetryHub: React.FC<RegionalTelemetryHubProps> = ({
 
                       <td className="py-2.5 px-3 text-right">
                         <span
-                          className={`text-xs font-semibold transition-colors ${
-                            isSelected ? 'text-primary-700' : 'text-neutral-400 group-hover:text-neutral-700'
+                          className={`inline-flex items-center gap-1 text-xs font-semibold ${
+                            isSelected ? 'text-primary-700' : 'text-neutral-500 hover:text-neutral-800'
                           }`}
                         >
-                          {isSelected ? 'Active' : 'Filter'}
+                          <span>{isSelected ? 'Active' : 'Filter'}</span>
+                          <ArrowUpRight className="size-3.5" />
                         </span>
                       </td>
                     </tr>

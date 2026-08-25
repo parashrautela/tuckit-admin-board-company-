@@ -4,6 +4,7 @@ import { useRealtime } from '../../context/RealtimeContext';
 import { Terminal } from '../../types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 import { Plus } from 'lucide-react';
 
 interface CreateSiteModalProps {
@@ -52,10 +53,10 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
             <label className="block text-xs font-medium text-neutral-700">
               State
             </label>
-            <select
+            <Select
               value={state}
               onChange={e => setState(e.target.value)}
-              className="flex h-9 w-full rounded-md border border-neutral-200 bg-white px-3 py-1 text-sm shadow-xs text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              containerClassName="w-full"
             >
               <option value="Karnataka">Karnataka</option>
               <option value="Maharashtra">Maharashtra</option>
@@ -67,7 +68,7 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
               <option value="Gujarat">Gujarat</option>
               <option value="Rajasthan">Rajasthan</option>
               <option value="Goa">Goa</option>
-            </select>
+            </Select>
           </div>
           <div className="space-y-1.5">
             <label className="block text-xs font-medium text-neutral-700">
@@ -87,10 +88,10 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
           <label className="block text-xs font-medium text-neutral-700">
             Venue / Site Category
           </label>
-          <select
+          <Select
             value={siteType}
             onChange={e => setSiteType(e.target.value as Terminal['siteType'])}
-            className="flex h-9 w-full rounded-md border border-neutral-200 bg-white px-3 py-1 text-sm shadow-xs text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            containerClassName="w-full"
           >
             <option value="Mall">Mall & Shopping Center</option>
             <option value="Metro">Metro Station</option>
@@ -99,7 +100,7 @@ export const CreateSiteModal: React.FC<CreateSiteModalProps> = ({ isOpen, onClos
             <option value="Campus">University / Campus</option>
             <option value="Temple">Temple / Religious Shrine</option>
             <option value="Commercial">Commercial Hub</option>
-          </select>
+          </Select>
         </div>
 
         <div className="space-y-1.5">

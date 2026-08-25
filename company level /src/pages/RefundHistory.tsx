@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { History, Search, Download, CheckCircle2, XCircle, Filter } from 'lucide-react';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { Select } from '@/components/ui/select';
 
 const initialHistory = [
   { id: 'REF-7998', bookingId: 'BK-98102', customerName: 'Kavita Menon', phone: '+91 9845012399', amount: 180, reason: 'Terminal touchscreen unresponsiveness', status: 'SETTLED', processedAt: '15 Aug 2024, 14:20', processor: 'Parash R (SuperAdmin)', gatewayRef: 'pay_Hh7712kK0' },
@@ -37,48 +38,47 @@ export const RefundHistory: React.FC = () => {
       {/* 3 Summary KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl">
-          <div className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">Total Settled</div>
-          <div className="text-2xl font-black text-emerald-700 mt-1">₹14,850</div>
-          <div className="text-[11px] text-emerald-600 font-semibold mt-0.5">Disbursed to customer accounts</div>
+          <div className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Total Settled</div>
+          <div className="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-800 mt-1">₹14,850</div>
+          <div className="text-xs text-emerald-700 font-semibold mt-0.5">Disbursed to customer accounts</div>
         </div>
         <div className="bg-amber-50 border border-amber-100 p-4 rounded-2xl">
-          <div className="text-[10px] font-bold text-amber-800 uppercase tracking-wider">Yet to be settled</div>
-          <div className="text-2xl font-black text-amber-700 mt-1">₹1,220</div>
-          <div className="text-[11px] text-amber-600 font-semibold mt-0.5">Pending banking transfer</div>
+          <div className="text-xs font-bold text-amber-800 uppercase tracking-wider">Yet to be settled</div>
+          <div className="text-2xl sm:text-3xl font-bold tracking-tight text-amber-800 mt-1">₹1,220</div>
+          <div className="text-xs text-amber-700 font-semibold mt-0.5">Pending banking transfer</div>
         </div>
-        <div className="bg-red-50 border border-red-100 p-4 rounded-2xl">
-          <div className="text-[10px] font-bold text-red-800 uppercase tracking-wider">Rejected Claims</div>
-          <div className="text-2xl font-black text-red-700 mt-1">6</div>
-          <div className="text-[11px] text-red-600 font-semibold mt-0.5">Disallowed by audit policy</div>
+        <div className="bg-rose-50 border border-rose-100 p-4 rounded-2xl">
+          <div className="text-xs font-bold text-rose-800 uppercase tracking-wider">Rejected Claims</div>
+          <div className="text-2xl sm:text-3xl font-bold tracking-tight text-rose-800 mt-1">6</div>
+          <div className="text-xs text-rose-700 font-semibold mt-0.5">Disallowed by audit policy</div>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
+          <Search className="absolute left-3 top-2.5 size-4 text-zinc-400" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search refund ID, booking, customer..."
-            className="w-full pl-10 pr-4 h-10 bg-white border border-zinc-200 rounded-xl text-xs font-medium outline-none focus:border-primary"
+            className="w-full pl-9 pr-4 h-9 bg-white border border-zinc-200 rounded-xl text-xs font-medium outline-none focus:border-primary"
           />
         </div>
-        <select
+        <Select
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value)}
-          className="h-10 px-3 bg-white border border-zinc-200 rounded-xl text-xs font-semibold"
         >
           <option value="ALL">All Status</option>
           <option value="SETTLED">Settled</option>
           <option value="REJECTED">Rejected</option>
-        </select>
+        </Select>
       </div>
 
       <div className="bg-white rounded-2xl border border-zinc-200 shadow-2xs overflow-hidden">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-zinc-50 border-b border-zinc-200 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+              <tr className="bg-zinc-50 border-b border-zinc-200 text-xs font-bold text-zinc-600 uppercase tracking-wider">
                 <th className="py-3 px-4">REFUND ID</th>
                 <th className="py-3 px-4">BOOKING</th>
                 <th className="py-3 px-4">CUSTOMER</th>
@@ -89,29 +89,29 @@ export const RefundHistory: React.FC = () => {
                 <th className="py-3 px-4">GATEWAY REF</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-100">
+            <tbody className="divide-y divide-zinc-100 text-sm">
               {filtered.map(r => (
                 <tr key={r.id} className="hover:bg-zinc-50 transition-colors">
-                  <td className="py-3 px-4 font-mono font-bold text-zinc-900">{r.id}</td>
-                  <td className="py-3 px-4 font-mono font-semibold text-primary">{r.bookingId}</td>
+                  <td className="py-3 px-4 font-mono font-bold text-zinc-900 text-xs">{r.id}</td>
+                  <td className="py-3 px-4 font-mono font-semibold text-primary-700 text-xs">{r.bookingId}</td>
                   <td className="py-3 px-4">
-                    <div className="font-bold text-zinc-800">{r.customerName}</div>
-                    <div className="text-[11px] text-zinc-400 font-mono">{r.phone}</div>
+                    <div className="font-semibold text-zinc-900 text-sm">{r.customerName}</div>
+                    <div className="text-xs text-zinc-500 font-mono mt-0.5">{r.phone}</div>
                   </td>
-                  <td className="py-3 px-4 font-black text-zinc-900">₹{r.amount}</td>
+                  <td className="py-3 px-4 font-bold text-zinc-900 font-mono text-sm">₹{r.amount}</td>
                   <td className="py-3 px-4">
                     <span
-                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                        r.status === 'SETTLED' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'
+                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                        r.status === 'SETTLED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60'
                       }`}
                     >
-                      {r.status === 'SETTLED' ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
-                      {r.status}
+                      {r.status === 'SETTLED' ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}
+                      <span>{r.status}</span>
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-zinc-500 font-mono text-[11px]">{r.processedAt}</td>
-                  <td className="py-3 px-4 text-zinc-700 font-medium">{r.processor}</td>
-                  <td className="py-3 px-4 font-mono text-[11px] text-zinc-500">{r.gatewayRef}</td>
+                  <td className="py-3 px-4 text-zinc-500 font-mono text-xs">{r.processedAt}</td>
+                  <td className="py-3 px-4 text-zinc-800 font-medium text-xs">{r.processor}</td>
+                  <td className="py-3 px-4 font-mono text-xs text-zinc-600">{r.gatewayRef}</td>
                 </tr>
               ))}
             </tbody>
