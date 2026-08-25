@@ -428,9 +428,9 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
         <div className="p-4 border-t border-neutral-200 flex items-center justify-center bg-white shrink-0">
           <Button
             type="button"
-            variant="default"
+            variant="outline"
             onClick={onClose}
-            className="px-8 py-2.5 h-10 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all active:scale-[0.98]"
+            className="px-8 py-2.5 h-10 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-300 font-bold text-xs uppercase tracking-wider shadow-2xs transition-all active:scale-[0.98]"
           >
             Close Details
           </Button>
