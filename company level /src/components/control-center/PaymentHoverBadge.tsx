@@ -122,7 +122,7 @@ export const PaymentHoverBadge: React.FC<PaymentHoverBadgeProps> = ({ booking })
           align="start"
           side="top"
           sideOffset={8}
-          className="w-[360px] p-0 rounded-2xl border border-neutral-200/90 bg-white shadow-xl shadow-neutral-900/10 overflow-hidden text-neutral-900 animate-in fade-in zoom-in-95 duration-150"
+          className="w-[380px] sm:w-[400px] p-0 rounded-2xl border border-neutral-200/90 bg-white shadow-xl shadow-neutral-900/10 overflow-hidden text-neutral-900 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* ── 1. Header ── */}
           <div className="p-4 border-b border-neutral-100 flex items-start justify-between gap-3 bg-white">
@@ -178,12 +178,12 @@ export const PaymentHoverBadge: React.FC<PaymentHoverBadgeProps> = ({ booking })
 
             {/* ── 3. Transaction Items List or Empty State ── */}
             {isPayLater ? (
-              <div className="py-6 px-4 text-center flex flex-col items-center justify-center bg-white rounded-xl">
+              <div className="py-7 px-4 text-center flex flex-col items-center justify-center bg-white rounded-xl">
                 <div className="size-12 rounded-2xl bg-neutral-100 flex items-center justify-center mb-2.5 text-neutral-400">
                   <Receipt className="size-6 stroke-[1.5]" />
                 </div>
                 <h5 className="text-xs font-bold text-neutral-900">No Transactions Recorded</h5>
-                <p className="text-[11px] text-neutral-500 mt-1 max-w-[240px] leading-relaxed">
+                <p className="text-xs text-neutral-500 mt-1 max-w-[280px] leading-normal text-center whitespace-normal">
                   Transactions will appear here when payment activity occurs.
                 </p>
               </div>
