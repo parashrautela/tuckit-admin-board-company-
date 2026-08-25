@@ -294,7 +294,7 @@ export const PricingControl: React.FC = () => {
           <Button
             variant="outline"
             onClick={handleRefresh}
-            className="h-9 px-3 rounded-xl bg-amber-100/90 hover:bg-amber-200 text-neutral-950 border border-amber-300 font-bold text-xs flex items-center gap-2 shadow-2xs transition-all active:scale-[0.98]"
+            className="h-9 px-3 rounded-full bg-[#FFD6A1] hover:bg-[#FDC785] text-neutral-950 border border-[#FDBA74] font-bold text-xs flex items-center gap-2 shadow-2xs transition-all active:scale-[0.98]"
             title="Sync Telemetry"
           >
             <RotateCw className={`size-3.5 text-neutral-900 ${isRefreshing ? 'animate-spin text-primary-700' : ''}`} />
@@ -373,11 +373,11 @@ export const PricingControl: React.FC = () => {
                         return (
                           <div
                             key={node.id}
-                            className="h-16 rounded-xl bg-neutral-800 border border-neutral-700 flex flex-col items-center justify-center text-white shadow-sm relative group cursor-pointer"
+                            className="h-16 rounded-xl bg-[#FFD6A1] border border-[#FDBA74] flex flex-col items-center justify-center text-neutral-950 shadow-2xs relative group cursor-pointer"
                           >
-                            <div className="size-2 rounded-full bg-blue-500 animate-ping absolute top-1.5 right-1.5" />
-                            <Monitor className="size-5 text-neutral-200" />
-                            <span className="text-[9px] font-mono font-bold text-neutral-400 mt-1">HOST</span>
+                            <div className="size-2 rounded-full bg-primary-600 animate-ping absolute top-1.5 right-1.5" />
+                            <Monitor className="size-5 text-neutral-900" />
+                            <span className="text-[9px] font-mono font-bold text-neutral-900 mt-1">HOST</span>
                           </div>
                         );
                       }
@@ -584,7 +584,7 @@ export const PricingControl: React.FC = () => {
                         onClick={() => setEditingConfigId(isEditing ? null : config.id)}
                         className={`text-xs font-bold uppercase tracking-wider rounded-xl transition-colors ${
                           isEditing
-                            ? 'bg-amber-100 hover:bg-amber-200 text-neutral-950 border-amber-300'
+                            ? 'bg-[#FFD6A1] hover:bg-[#FDC785] text-neutral-950 border border-[#FDBA74]'
                             : 'bg-white hover:bg-neutral-100 text-neutral-800 border-neutral-300'
                         }`}
                       >
@@ -739,7 +739,7 @@ export const PricingControl: React.FC = () => {
                       <Button
                         type="button"
                         onClick={() => handleReleaseSetting(config)}
-                        className="px-6 py-2.5 h-10 rounded-xl bg-amber-100 hover:bg-amber-200 text-neutral-950 font-bold text-xs uppercase tracking-wider shadow-2xs border border-amber-300 transition-all active:scale-[0.98] flex items-center gap-2"
+                        className="px-6 py-2.5 h-10 rounded-xl bg-[#FFD6A1] hover:bg-[#FDC785] text-neutral-950 font-bold text-xs uppercase tracking-wider shadow-2xs border border-[#FDBA74] transition-all active:scale-[0.98] flex items-center gap-2"
                       >
                         <Send className="size-3.5 text-neutral-900" />
                         <span>RELEASE SETTING</span>
