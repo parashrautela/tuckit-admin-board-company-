@@ -92,8 +92,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
         {/* ── Modal Header ── */}
         <div className="p-6 pb-4 border-b border-neutral-200 flex items-start justify-between gap-4 bg-white shrink-0 pr-14">
           <div className="flex items-center gap-3.5">
-            <div className="size-12 rounded-2xl bg-neutral-100 flex items-center justify-center border border-neutral-300 shrink-0 shadow-2xs">
-              <Box className="size-6 text-neutral-900" strokeWidth={2} />
+            <div className="size-12 rounded-2xl bg-neutral-100 flex items-center justify-center border border-neutral-200 shrink-0 shadow-2xs">
+              <Box className="size-6 text-neutral-800" strokeWidth={1.8} />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
@@ -118,15 +118,15 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
 
         {/* ── Scrollable Body Content ── */}
         <div className="p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6 bg-white">
-          {/* ── 1. Top Section: 6 Info Cards + High Contrast Payable Card ── */}
+          {/* ── 1. Top Section: 6 Unified Icon Cards + Refined Dark Grey Card ── */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Left 2 cols: 6 Metadata Cards in 2x3 grid */}
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Customer Name */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-blue-100 text-blue-900 flex items-center justify-center shrink-0">
-                    <User className="size-4.5" strokeWidth={2.2} />
+                  <div className="size-9 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <User className="size-4.5" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Customer Name</span>
@@ -138,8 +138,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Mobile Number */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-emerald-100 text-emerald-900 flex items-center justify-center shrink-0">
-                    <Phone className="size-4.5" strokeWidth={2.2} />
+                  <div className="size-9 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Phone className="size-4.5" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Mobile Number</span>
@@ -151,8 +151,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Date of Birth */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-neutral-200 text-neutral-900 flex items-center justify-center shrink-0">
-                    <Calendar className="size-4.5" strokeWidth={2.2} />
+                  <div className="size-9 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Calendar className="size-4.5" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Date of Birth</span>
@@ -166,8 +166,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Terminal Code */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-primary-100 text-primary-900 flex items-center justify-center shrink-0">
-                    <Briefcase className="size-4.5" strokeWidth={2.2} />
+                  <div className="size-9 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Briefcase className="size-4.5" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Terminal Code</span>
@@ -179,8 +179,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Locker Name */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-amber-100 text-amber-950 flex items-center justify-center shrink-0">
-                    <Lock className="size-4.5" strokeWidth={2.2} />
+                  <div className="size-9 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Lock className="size-4.5" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Locker Name</span>
@@ -195,8 +195,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="size-9 rounded-lg bg-purple-100 text-purple-950 flex items-center justify-center shrink-0">
-                      <Tag className="size-4.5" strokeWidth={2.2} />
+                    <div className="size-9 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                      <Tag className="size-4.5" strokeWidth={2} />
                     </div>
                     <div className="min-w-0 flex-1">
                       <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Passcode</span>
@@ -210,7 +210,7 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
                     variant="ghost"
                     size="icon"
                     onClick={() => setShowSensitive(!showSensitive)}
-                    className="size-7 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200"
+                    className="size-7 text-neutral-500 hover:text-neutral-800 hover:bg-neutral-200"
                     title={showSensitive ? 'Hide Passcode' : 'Reveal Passcode'}
                   >
                     {showSensitive ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -219,8 +219,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               </Card>
             </div>
 
-            {/* Right col: High-Emphasis Dark Payable Card (WCAG AAA Contrast > 10:1) */}
-            <Card className="border border-neutral-800 bg-neutral-950 text-white shadow-md flex flex-col justify-between overflow-hidden">
+            {/* Right col: Refined Charcoal-Grey Payable Card (Soft, subtle & elegant) */}
+            <Card className="border border-neutral-700/80 bg-neutral-800 text-white shadow-md flex flex-col justify-between overflow-hidden">
               <CardContent className="p-5 flex flex-col justify-between h-full">
                 <div>
                   <span className="text-xs font-bold text-neutral-300 uppercase tracking-wider block">
@@ -232,16 +232,16 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-neutral-800 mt-5 text-xs">
+                <div className="flex items-center justify-between pt-4 border-t border-neutral-700 mt-5 text-xs">
                   <div>
                     <span className="text-xs font-bold text-neutral-300 block uppercase tracking-wider">Paid Amount</span>
-                    <span className="text-base font-bold font-mono text-emerald-300 mt-0.5 block">
+                    <span className="text-base font-bold font-mono text-emerald-400 mt-0.5 block">
                       ₹{paidAmount.toFixed(2)}
                     </span>
                   </div>
                   <div className="text-right">
                     <span className="text-xs font-bold text-neutral-300 block uppercase tracking-wider">Pending</span>
-                    <span className="text-base font-bold font-mono text-amber-300 mt-0.5 block">
+                    <span className="text-base font-bold font-mono text-amber-400 mt-0.5 block">
                       ₹{pendingAmount.toFixed(2)}
                     </span>
                   </div>
@@ -257,8 +257,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Check-in */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-emerald-100 text-emerald-900 flex items-center justify-center shrink-0">
-                    <Clock className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Clock className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Check-In Time</span>
@@ -272,8 +272,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Check-out Expected */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-amber-100 text-amber-950 flex items-center justify-center shrink-0">
-                    <Clock className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Clock className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Check-Out (Exp)</span>
@@ -287,8 +287,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Duration */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-blue-100 text-blue-900 flex items-center justify-center shrink-0">
-                    <Activity className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Activity className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Total Duration</span>
@@ -302,8 +302,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               {/* Overdue Time */}
               <Card className="border border-neutral-200 bg-neutral-50/60 shadow-2xs">
                 <CardContent className="p-3.5 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-neutral-200 text-neutral-900 flex items-center justify-center shrink-0">
-                    <Info className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Info className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Overdue Time</span>
@@ -352,11 +352,11 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* Bottom 3 attributes */}
+              {/* Bottom 3 attributes with unified icon chips */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded-lg bg-white border border-neutral-200 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-blue-100 text-blue-900 flex items-center justify-center shrink-0">
-                    <Globe className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Globe className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Booking Source</span>
@@ -367,8 +367,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-neutral-200 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-neutral-200 text-neutral-900 flex items-center justify-center shrink-0">
-                    <RotateCcw className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <RotateCcw className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Modification Count</span>
@@ -379,8 +379,8 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-neutral-200 flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-amber-100 text-amber-950 flex items-center justify-center shrink-0">
-                    <Package className="size-4" strokeWidth={2.2} />
+                  <div className="size-8 rounded-lg bg-neutral-100 border border-neutral-200/80 text-neutral-700 flex items-center justify-center shrink-0">
+                    <Package className="size-4" strokeWidth={2} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Stored Items</span>
