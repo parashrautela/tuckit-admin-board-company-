@@ -451,20 +451,20 @@ export const Dashboard: React.FC = () => {
 
         <Table containerClassName="overflow-x-auto xl:overflow-hidden">
           <TableHeader>
-            <TableRow className="bg-neutral-50/80 hover:bg-neutral-50/80 text-xs">
-              <TableHead className="w-8 text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5 text-center">#</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Terminal</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Invoice</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Customer</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Check-In</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Status</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Payment</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">DOB</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Door</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Passcode</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Duration</TableHead>
-              <TableHead className="text-right text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-2">Amount</TableHead>
-              <TableHead className="text-center text-xs font-bold text-neutral-600 uppercase tracking-wider py-2.5 px-1.5">Actions</TableHead>
+            <TableRow className="bg-neutral-100/90 hover:bg-neutral-100/90 text-xs border-b border-neutral-200">
+              <TableHead className="w-8 text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 text-center">#</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Terminal</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Invoice</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Customer</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Check-In</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Status</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Payment</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">DOB</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Door</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Passcode</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Duration</TableHead>
+              <TableHead className="text-right text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Amount</TableHead>
+              <TableHead className="text-center text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -478,22 +478,22 @@ export const Dashboard: React.FC = () => {
                   }}
                   className="hover:bg-neutral-50/90 transition-colors cursor-pointer group"
                 >
-                  <TableCell className="font-mono text-xs text-neutral-500 font-medium py-2.5 px-1.5 text-center">
+                  <TableCell className="font-mono text-xs text-neutral-700 font-semibold py-2.5 px-1.5 text-center">
                     {(currentPage - 1) * itemsPerPage + idx + 1}
                   </TableCell>
                   <TableCell className="font-semibold text-neutral-900 whitespace-nowrap py-2.5 px-2">
-                    <span className="bg-neutral-100 group-hover:bg-white px-1.5 py-0.5 rounded font-mono text-xs font-semibold text-neutral-900 border border-neutral-200 transition-colors">
+                    <span className="bg-neutral-100 group-hover:bg-white px-1.5 py-0.5 rounded font-mono text-xs font-bold text-neutral-900 border border-neutral-300 transition-colors">
                       {b.terminalCode}
                     </span>
                   </TableCell>
-                  <TableCell className="font-mono text-xs font-bold text-neutral-800 whitespace-nowrap py-2.5 px-2">
+                  <TableCell className="font-mono text-xs font-bold text-neutral-900 whitespace-nowrap py-2.5 px-2">
                     {b.invoiceNumber}
                   </TableCell>
                   <TableCell className="whitespace-nowrap py-2.5 px-2">
-                    <div className="font-semibold text-sm text-neutral-900 leading-tight group-hover:text-primary-900 transition-colors">{b.customerName}</div>
-                    <div className="text-xs text-neutral-500 font-mono mt-0.5">{b.mobileNumber}</div>
+                    <div className="font-bold text-sm text-neutral-900 leading-tight group-hover:text-primary-900 transition-colors">{b.customerName}</div>
+                    <div className="text-xs text-neutral-600 font-semibold font-mono mt-0.5">{b.mobileNumber}</div>
                   </TableCell>
-                  <TableCell className="font-mono text-xs text-neutral-600 whitespace-nowrap py-2.5 px-2">
+                  <TableCell className="font-mono text-xs text-neutral-800 font-medium whitespace-nowrap py-2.5 px-2">
                     {b.openDateTime}
                   </TableCell>
                   <TableCell className="whitespace-nowrap py-2.5 px-1.5">
@@ -505,27 +505,27 @@ export const Dashboard: React.FC = () => {
                   <TableCell className="font-mono text-xs whitespace-nowrap py-2.5 px-1.5">
                     {b.dateOfBirth ? (
                       showSensitiveData ? (
-                        <span className="text-neutral-900 font-semibold">{b.dateOfBirth}</span>
+                        <span className="text-neutral-900 font-bold">{b.dateOfBirth}</span>
                       ) : (
-                        <span className="text-neutral-400">••••-••-••</span>
+                        <span className="text-neutral-600 font-semibold">••••-••-••</span>
                       )
                     ) : (
-                      <span className="text-neutral-400">—</span>
+                      <span className="text-neutral-500 font-medium">—</span>
                     )}
                   </TableCell>
-                  <TableCell className="font-mono text-xs font-bold text-neutral-800 whitespace-nowrap py-2.5 px-1.5">
+                  <TableCell className="font-mono text-xs font-bold text-neutral-900 whitespace-nowrap py-2.5 px-1.5">
                     {b.lockName}
                   </TableCell>
                   <TableCell className="font-mono text-xs whitespace-nowrap py-2.5 px-1.5">
                     {showSensitiveData ? (
-                      <span className="font-bold text-neutral-900 bg-amber-50 text-amber-900 border border-amber-200 px-1.5 py-0.5 rounded text-xs">
+                      <span className="font-bold text-neutral-900 bg-amber-50 text-amber-950 border border-amber-300 px-1.5 py-0.5 rounded text-xs">
                         {b.passcode}
                       </span>
                     ) : (
-                      <span className="text-neutral-400">••••</span>
+                      <span className="text-neutral-600 font-semibold">••••</span>
                     )}
                   </TableCell>
-                  <TableCell className="text-xs text-neutral-600 font-medium whitespace-nowrap py-2.5 px-1.5">{b.duration}</TableCell>
+                  <TableCell className="text-xs text-neutral-800 font-semibold whitespace-nowrap py-2.5 px-1.5">{b.duration}</TableCell>
                   <TableCell className="text-right font-mono font-bold text-sm text-neutral-900 whitespace-nowrap py-2.5 px-2">
                     ₹{b.amount}
                   </TableCell>
@@ -538,7 +538,7 @@ export const Dashboard: React.FC = () => {
                           setSelectedBooking(b);
                           setShowDetailsModal(true);
                         }}
-                        className="size-7 rounded-lg flex items-center justify-center text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                        className="size-7 rounded-lg flex items-center justify-center text-neutral-700 hover:text-neutral-950 hover:bg-neutral-200 transition-colors"
                         title="View Details"
                       >
                         <FileText className="size-3.5" />
@@ -549,7 +549,7 @@ export const Dashboard: React.FC = () => {
                           e.stopPropagation();
                           setForceUnlockBooking(b);
                         }}
-                        className="size-7 rounded-lg flex items-center justify-center text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors"
+                        className="size-7 rounded-lg flex items-center justify-center text-rose-700 hover:text-rose-900 hover:bg-rose-100 transition-colors"
                         title="Emergency Force Unlock"
                       >
                         <KeyRound className="size-3.5" />

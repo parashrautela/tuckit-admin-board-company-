@@ -20,43 +20,43 @@
     --color-primary-900: #7A2E00;
     --color-primary-950: #4A1B00;
 
-    /* Neutrals */
+    /* Neutrals - High Contrast for WCAG AA (min 4.5:1 on white) */
     --color-neutral-0: #FFFFFF;
     --color-neutral-50: #FAF9F7;
     --color-neutral-100: #F3F1EE;
     --color-neutral-200: #E7E3DE;
     --color-neutral-300: #D3CDC5;
-    --color-neutral-400: #A8A19A;
-    --color-neutral-500: #7C766F;
-    --color-neutral-600: #5C5852;
-    --color-neutral-700: #423F3B;
-    --color-neutral-800: #2B2926;
-    --color-neutral-900: #1A1917;
-    --color-neutral-950: #0D0C0B;
+    --color-neutral-400: #6E6862;
+    --color-neutral-500: #544F49;
+    --color-neutral-600: #3E3A35;
+    --color-neutral-700: #2B2825;
+    --color-neutral-800: #1D1B19;
+    --color-neutral-900: #121110;
+    --color-neutral-950: #0A0A09;
 
-    /* Semantic: Success */
+    /* Semantic: Success (Darkened for high contrast on light backgrounds) */
     --color-success-50: #EFFAF3;
     --color-success-100: #B7EAC7;
     --color-success-500: #16A34A;
-    --color-success-700: #0F7A37;
+    --color-success-700: #095926;
 
-    /* Semantic: Warning */
+    /* Semantic: Warning (Rich amber-brown for high contrast on yellow/white) */
     --color-warning-50: #FEF9EC;
     --color-warning-100: #F5DE9C;
-    --color-warning-500: #EAB308;
-    --color-warning-700: #946200;
+    --color-warning-500: #D97706;
+    --color-warning-700: #6B2E05;
 
-    /* Semantic: Error */
+    /* Semantic: Error (Deep red for high contrast on light red/white) */
     --color-error-50: #FDF0F0;
     --color-error-100: #F3B9B9;
     --color-error-500: #DC2626;
-    --color-error-700: #A01818;
+    --color-error-700: #7F1D1D;
 
-    /* Semantic: Info */
+    /* Semantic: Info (Deep blue for high contrast on light blue/white) */
     --color-info-50: #EEF4FE;
     --color-info-100: #B9D0F5;
     --color-info-500: #2563EB;
-    --color-info-700: #1D4ED8;
+    --color-info-700: #1E3A8A;
 
     /* Surfaces & text shortcuts */
     --bg-app: var(--color-neutral-50);
