@@ -50,25 +50,29 @@ export const LocalNav: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <nav
       aria-label="Local page navigation"
-      className={cn('flex items-center gap-1.5 text-xs text-neutral-500 select-none', className)}
+      className={cn('flex items-center gap-1.5 text-xs text-neutral-500 select-none min-w-0 overflow-hidden', className)}
     >
       <button
         type="button"
         onClick={() => navigate('/dashboard')}
-        className="text-neutral-500 hover:text-neutral-900 transition-colors font-normal"
+        className="text-neutral-500 hover:text-neutral-900 transition-colors font-normal shrink-0 hidden sm:inline"
       >
         Tuckit
       </button>
 
       {meta.group && (
         <>
-          <ChevronRight className="size-3 text-neutral-400 shrink-0" />
-          <span className="text-neutral-500 font-normal">{meta.group}</span>
+          <ChevronRight className="size-3 text-neutral-400 shrink-0 hidden sm:inline-block" />
+          <span className="text-neutral-500 font-normal shrink-0 hidden md:inline truncate max-w-[140px] xl:max-w-none">
+            {meta.group}
+          </span>
         </>
       )}
 
-      <ChevronRight className="size-3 text-neutral-400 shrink-0" />
-      <span className="text-neutral-900 font-semibold truncate">{meta.label}</span>
+      <ChevronRight className="size-3 text-neutral-400 shrink-0 hidden md:inline-block" />
+      <span className="text-neutral-900 font-semibold truncate">
+        {meta.label}
+      </span>
     </nav>
   );
 };
