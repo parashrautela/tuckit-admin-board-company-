@@ -27,9 +27,9 @@ export const Layout: React.FC = () => {
       {/* Main Content Shell */}
       <div className="lg:ml-64 flex flex-col min-h-screen transition-all duration-200 flex-1">
         {/* Top Header */}
-        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-neutral-200 h-14 flex items-center justify-between gap-3 px-3 sm:px-6 shrink-0">
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-neutral-200 h-14 flex md:grid md:grid-cols-[1fr_minmax(260px,440px)_1fr] lg:grid-cols-[1fr_minmax(320px,480px)_1fr] items-center justify-between gap-3 px-3 sm:px-6 shrink-0">
           {/* Left: Mobile Menu Toggle + Breadcrumb Local Nav */}
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1 md:flex-initial">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 pr-2">
             <Button
               variant="outline"
               size="icon-sm"
@@ -44,8 +44,8 @@ export const Layout: React.FC = () => {
             <LocalNav className="min-w-0" />
           </div>
 
-          {/* Center: Search Bar (Centrally Positioned) */}
-          <div className="hidden md:flex items-center justify-center flex-1 max-w-sm lg:max-w-md mx-3 lg:mx-6 min-w-0">
+          {/* Center: Search Bar (Centrally Positioned in Header) */}
+          <div className="hidden md:flex items-center justify-center w-full min-w-0 px-2">
             <div
               onClick={() => navigate('/dashboard')}
               className="flex items-center justify-between gap-2.5 px-3.5 py-1.5 rounded-lg bg-neutral-100/90 border border-neutral-200/90 text-neutral-500 text-xs sm:text-sm w-full cursor-pointer hover:bg-neutral-200/60 hover:border-neutral-300 transition-all shadow-2xs group"
