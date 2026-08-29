@@ -92,87 +92,28 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
 
   return (
     <div className="bg-white rounded-xl border border-neutral-200 shadow-2xs p-3.5 flex flex-col gap-3">
-      {/* ── Primary Row: Quick Search, Inline Selects & Core Actions ── */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 w-full">
-        {/* Left Section: Search Input + High-Frequency Filters */}
-        <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
-          {/* Global Search Input */}
-          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-full lg:max-w-xs">
-            <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
-            <input
-              type="text"
-              value={mobileFilter}
-              onChange={e => updateFilter('mobile', e.target.value)}
-              placeholder="Search customer, mobile, ID..."
-              className="w-full pl-9 pr-8 h-9 bg-neutral-50 hover:bg-neutral-100/60 focus:bg-white border border-neutral-200 rounded-lg text-xs font-medium outline-none focus:border-primary transition-all text-neutral-900 placeholder:text-neutral-500"
-            />
-            {mobileFilter && (
-              <button
-                type="button"
-                onClick={() => updateFilter('mobile', '')}
-                className="absolute right-2.5 top-2.5 text-neutral-400 hover:text-neutral-700"
-                title="Clear search"
-              >
-                <X className="size-4" />
-              </button>
-            )}
-          </div>
-
-          {/* Quick Filter: Status */}
-          <Select
-            value={statusFilter}
-            onChange={e => updateFilter('status', e.target.value)}
-            className={statusFilter !== 'ALL' ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50' : ''}
-          >
-            <option value="ALL">All Statuses</option>
-            <option value="ACTIVE">● Active</option>
-            <option value="COMPLETED">✓ Completed</option>
-            <option value="OVERDUE">⚠ Overdue</option>
-          </Select>
-
-          {/* Quick Filter: Source */}
-          <Select
-            value={sourceFilter}
-            onChange={e => updateFilter('source', e.target.value)}
-            className={sourceFilter !== 'ALL' ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50' : ''}
-          >
-            <option value="ALL">All Sources</option>
-            <option value="Touchscreen">Touchscreen (Kiosk)</option>
-            <option value="Web">Web Portal</option>
-            <option value="Mobile App">Mobile App</option>
-            <option value="WhatsApp">WhatsApp Bot</option>
-            <option value="Offline Payment / QR">QR / Offline</option>
-          </Select>
-
-          {/* Quick Filter: Locker Type */}
-          <Select
-            value={typeFilter}
-            onChange={e => updateFilter('type', e.target.value)}
-            className={typeFilter !== 'ALL' ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50' : ''}
-          >
-            <option value="ALL">All Types</option>
-            <option value="BAGGAGE">Baggage Locker</option>
-            <option value="MOBILE">Mobile Phone Locker</option>
-          </Select>
-
-          {/* More Filters Toggle */}
-          <button
-            type="button"
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-semibold transition-all shrink-0 ${
-              showAdvanced || secondaryFilterCount > 0
-                ? 'bg-neutral-800 text-white border-neutral-800 shadow-2xs'
-                : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border-neutral-200'
-            }`}
-          >
-            <SlidersHorizontal className="size-3.5" />
-            <span>More Filters</span>
-            {secondaryFilterCount > 0 && (
-              <span className="ml-0.5 size-4 rounded-full bg-primary text-neutral-900 text-xs font-bold flex items-center justify-center">
-                {secondaryFilterCount}
-              </span>
-            )}
-          </button>
+      {/* ── Top Bar: Search Input & Time/View Controls ── */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 w-full">
+        {/* Global Search Input */}
+        <div className="relative flex-1 min-w-0">
+          <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
+          <input
+            type="text"
+            value={mobileFilter}
+            onChange={e => updateFilter('mobile', e.target.value)}
+            placeholder="Search customer, mobile, ID, invoice..."
+            className="w-full pl-9 pr-8 h-9 bg-neutral-50 hover:bg-neutral-100/60 focus:bg-white border border-neutral-200 rounded-lg text-xs font-medium outline-none focus:border-primary transition-all text-neutral-900 placeholder:text-neutral-500"
+          />
+          {mobileFilter && (
+            <button
+              type="button"
+              onClick={() => updateFilter('mobile', '')}
+              className="absolute right-2.5 top-2.5 text-neutral-400 hover:text-neutral-700"
+              title="Clear search"
+            >
+              <X className="size-4" />
+            </button>
+          )}
         </div>
 
         {/* Right Section: Date Range, Presets & Saved Views */}
@@ -185,7 +126,7 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
                 setShowPresetsDropdown(!showPresetsDropdown);
                 setShowViewsDropdown(false);
               }}
-              className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-semibold transition-all ${
+              className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-semibold transition-all shrink-0 ${
                 activePreset
                   ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50'
                   : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border-neutral-200'
@@ -291,6 +232,73 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* ── Bottom Bar: Status, Source, Type & More Filters ── */}
+      <div className="flex flex-wrap items-center gap-2 pt-0.5 border-t border-neutral-100/80">
+        {/* Quick Filter: Status */}
+        <Select
+          value={statusFilter}
+          onChange={e => updateFilter('status', e.target.value)}
+          className={statusFilter !== 'ALL' ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50' : ''}
+        >
+          <option value="ALL">All Statuses</option>
+          <option value="ACTIVE">● Active</option>
+          <option value="COMPLETED">✓ Completed</option>
+          <option value="OVERDUE">⚠ Overdue</option>
+        </Select>
+
+        {/* Quick Filter: Source */}
+        <Select
+          value={sourceFilter}
+          onChange={e => updateFilter('source', e.target.value)}
+          className={sourceFilter !== 'ALL' ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50' : ''}
+        >
+          <option value="ALL">All Sources</option>
+          <option value="Touchscreen">Touchscreen (Kiosk)</option>
+          <option value="Web">Web Portal</option>
+          <option value="Mobile App">Mobile App</option>
+          <option value="WhatsApp">WhatsApp Bot</option>
+          <option value="Offline Payment / QR">QR / Offline</option>
+        </Select>
+
+        {/* Quick Filter: Locker Type */}
+        <Select
+          value={typeFilter}
+          onChange={e => updateFilter('type', e.target.value)}
+          className={typeFilter !== 'ALL' ? 'bg-amber-50 text-amber-900 border-amber-300 ring-1 ring-amber-300/50' : ''}
+        >
+          <option value="ALL">All Types</option>
+          <option value="BAGGAGE">Baggage Locker</option>
+          <option value="MOBILE">Mobile Phone Locker</option>
+        </Select>
+
+        {/* More Filters Toggle */}
+        <button
+          type="button"
+          onClick={() => setShowAdvanced(!showAdvanced)}
+          className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-semibold transition-all shrink-0 ${
+            showAdvanced || secondaryFilterCount > 0
+              ? 'bg-neutral-800 text-white border-neutral-800 shadow-2xs'
+              : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border-neutral-200'
+          }`}
+        >
+          <SlidersHorizontal className="size-3.5" />
+          <span>More Filters</span>
+          {secondaryFilterCount > 0 && (
+            <span className="ml-0.5 size-4 rounded-full bg-primary text-neutral-900 text-xs font-bold flex items-center justify-center">
+              {secondaryFilterCount}
+            </span>
+          )}
+        </button>
+
+        {/* Count summary indicator */}
+        <div className="ml-auto text-xs text-neutral-500 font-medium hidden md:flex items-center gap-1.5">
+          <span>Results:</span>
+          <span className="font-bold text-neutral-900">{filteredCount}</span>
+          <span className="text-neutral-400">/</span>
+          <span>{totalCount} total</span>
         </div>
       </div>
 
