@@ -449,22 +449,22 @@ export const Dashboard: React.FC = () => {
           </Badge>
         </CardHeader>
 
-        <Table containerClassName="overflow-x-auto custom-scrollbar">
+        <Table className="min-w-[1120px] w-full" containerClassName="overflow-x-auto custom-scrollbar">
           <TableHeader>
             <TableRow className="bg-neutral-100/90 hover:bg-neutral-100/90 text-xs border-b border-neutral-200">
-              <TableHead className="w-8 text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 text-center">#</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Terminal</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Invoice</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Customer</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Check-In</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Status</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Payment</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">DOB</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Door</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Passcode</TableHead>
-              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Duration</TableHead>
-              <TableHead className="text-right text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2">Amount</TableHead>
-              <TableHead className="text-center text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5">Actions</TableHead>
+              <TableHead className="w-8 text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 text-center whitespace-nowrap">#</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2 whitespace-nowrap">Terminal</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2 whitespace-nowrap">Invoice</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2 whitespace-nowrap">Customer</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2 whitespace-nowrap">Check-In</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">Status</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">Payment</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">DOB</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">Door</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">Passcode</TableHead>
+              <TableHead className="text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">Duration</TableHead>
+              <TableHead className="text-right text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-2 whitespace-nowrap">Amount</TableHead>
+              <TableHead className="text-center text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 whitespace-nowrap">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
