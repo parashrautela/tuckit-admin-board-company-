@@ -192,7 +192,7 @@ export const DeviceStatus: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="col-span-2 sm:col-span-1">
           <CardContent className="p-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Sync State</span>

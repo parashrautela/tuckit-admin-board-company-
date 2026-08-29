@@ -261,7 +261,7 @@ export const PricingControl: React.FC = () => {
           <Select
             value={selectedState}
             onChange={e => setSelectedState(e.target.value)}
-            className="w-32 bg-white text-xs font-semibold"
+            className="w-full sm:w-32 bg-white text-xs font-semibold"
           >
             <option value="DELHI">DELHI</option>
             <option value="KARNATAKA">KARNATAKA</option>
@@ -272,7 +272,7 @@ export const PricingControl: React.FC = () => {
           <Select
             value={selectedCity}
             onChange={e => setSelectedCity(e.target.value)}
-            className="w-44 bg-white text-xs font-semibold"
+            className="w-full sm:w-44 bg-white text-xs font-semibold"
           >
             <option value="CHANDNI CHOWK">CHANDNI CHOWK</option>
             <option value="MG ROAD METRO">MG ROAD METRO</option>
@@ -283,7 +283,7 @@ export const PricingControl: React.FC = () => {
           <Select
             value={selectedTerminal}
             onChange={e => setSelectedTerminal(e.target.value)}
-            className="w-36 bg-white font-mono text-xs font-semibold"
+            className="w-full sm:w-36 bg-white font-mono text-xs font-semibold"
           >
             <option value="OMXFFDELB">OMXFFDELB</option>
             <option value="BLR-MTR-01">BLR-MTR-01</option>
@@ -294,7 +294,7 @@ export const PricingControl: React.FC = () => {
           <Button
             variant="outline"
             onClick={handleRefresh}
-            className="h-9 px-3 rounded-full bg-[#FFD6A1] hover:bg-[#FDC785] text-neutral-950 border border-[#FDBA74] font-bold text-xs flex items-center gap-2 shadow-2xs transition-all active:scale-[0.98]"
+            className="h-9 px-3.5 rounded-full bg-[#FFD6A1] hover:bg-[#FDC785] text-neutral-950 border border-[#FDBA74] font-bold text-xs flex items-center justify-center gap-2 shadow-2xs transition-all active:scale-[0.98] w-full sm:w-auto"
             title="Sync Telemetry"
           >
             <RotateCw className={`size-3.5 text-neutral-900 ${isRefreshing ? 'animate-spin text-primary-700' : ''}`} />

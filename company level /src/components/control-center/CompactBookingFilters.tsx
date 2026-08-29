@@ -93,11 +93,11 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
   return (
     <div className="bg-white rounded-xl border border-neutral-200 shadow-2xs p-3.5 flex flex-col gap-3">
       {/* ── Primary Row: Quick Search, Inline Selects & Core Actions ── */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 w-full">
         {/* Left Section: Search Input + High-Frequency Filters */}
-        <div className="flex flex-wrap items-center gap-2 flex-1 min-w-[280px]">
+        <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
           {/* Global Search Input */}
-          <div className="relative flex-1 min-w-[210px] max-w-xs">
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-full lg:max-w-xs">
             <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
             <input
               type="text"
@@ -159,7 +159,7 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-semibold transition-all ${
+            className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-semibold transition-all shrink-0 ${
               showAdvanced || secondaryFilterCount > 0
                 ? 'bg-neutral-800 text-white border-neutral-800 shadow-2xs'
                 : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border-neutral-200'
@@ -176,7 +176,7 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
         </div>
 
         {/* Right Section: Date Range, Presets & Saved Views */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap shrink-0">
           {/* Quick Presets Dropdown */}
           <div className="relative">
             <button
@@ -197,7 +197,7 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
             </button>
 
             {showPresetsDropdown && (
-              <div className="absolute right-0 top-full mt-1.5 w-44 bg-white border border-neutral-200 rounded-xl shadow-lg p-1.5 z-30 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 top-full mt-1.5 w-44 bg-white border border-neutral-200 rounded-xl shadow-lg p-1.5 z-40 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150">
                 <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider px-2.5 py-1">Time Presets</span>
                 {datePresets.map(preset => (
                   <button
@@ -235,7 +235,7 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
                 setShowViewsDropdown(!showViewsDropdown);
                 setShowPresetsDropdown(false);
               }}
-              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border border-neutral-200 text-xs font-semibold transition-colors shadow-2xs"
+              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border border-neutral-200 text-xs font-semibold transition-colors shadow-2xs shrink-0"
             >
               <Bookmark className="size-3.5 text-neutral-500" />
               <span>Views</span>
@@ -243,7 +243,7 @@ export const CompactBookingFilters: React.FC<CompactBookingFiltersProps> = ({
             </button>
 
             {showViewsDropdown && (
-              <div className="absolute right-0 top-full mt-1.5 w-64 bg-white border border-neutral-200 rounded-xl shadow-lg p-2 z-30 flex flex-col gap-1 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 top-full mt-1.5 w-64 bg-white border border-neutral-200 rounded-xl shadow-lg p-2 z-40 flex flex-col gap-1 animate-in fade-in zoom-in-95 duration-150">
                 <div className="flex items-center justify-between px-2 py-1 border-b border-neutral-100 pb-1.5">
                   <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Saved Views</span>
                   <button

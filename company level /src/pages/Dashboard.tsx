@@ -449,7 +449,7 @@ export const Dashboard: React.FC = () => {
           </Badge>
         </CardHeader>
 
-        <Table containerClassName="overflow-x-auto xl:overflow-hidden">
+        <Table containerClassName="overflow-x-auto custom-scrollbar">
           <TableHeader>
             <TableRow className="bg-neutral-100/90 hover:bg-neutral-100/90 text-xs border-b border-neutral-200">
               <TableHead className="w-8 text-xs font-bold text-neutral-800 uppercase tracking-wider py-2.5 px-1.5 text-center">#</TableHead>
@@ -579,8 +579,8 @@ export const Dashboard: React.FC = () => {
         </Table>
 
         {/* ── Table Pagination Bar ── */}
-        <div className="p-3.5 sm:px-6 border-t border-neutral-200 flex items-center justify-between bg-neutral-50/50">
-          <span className="text-xs text-neutral-600 font-medium">
+        <div className="p-3.5 sm:px-6 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-3 bg-neutral-50/50">
+          <span className="text-xs text-neutral-600 font-medium text-center sm:text-left">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
             {Math.min(currentPage * itemsPerPage, filteredBookings.length)} of{' '}
             {filteredBookings.length} entries

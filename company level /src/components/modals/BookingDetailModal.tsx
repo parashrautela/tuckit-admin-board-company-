@@ -325,7 +325,7 @@ export const BookingDetailModal: React.FC<BookingDetailModalProps> = ({
               </div>
 
               {/* Numeric Stats */}
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 pb-3 border-b border-neutral-200">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 sm:gap-3 pb-3 border-b border-neutral-200">
                 <div>
                   <span className="text-xs font-bold text-neutral-600 uppercase tracking-wider block">Base Fare</span>
                   <span className="text-sm font-bold font-mono text-neutral-900 mt-0.5 block">₹{baseAmount.toFixed(2)}</span>

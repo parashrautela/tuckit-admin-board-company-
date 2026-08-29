@@ -5,12 +5,14 @@ interface DateRangePickerProps {
   startDate: string;
   endDate: string;
   onChange: (startDate: string, endDate: string) => void;
+  align?: 'left' | 'right';
 }
 
 export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   startDate,
   endDate,
   onChange,
+  align = 'right',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activePreset, setActivePreset] = useState('Last 7 Days');
@@ -39,15 +41,15 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-9 items-center gap-2 px-3 bg-white border border-neutral-200 rounded-md text-sm font-medium text-neutral-800 hover:bg-neutral-50 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors"
+        className="flex h-9 items-center gap-2 px-3 bg-white border border-neutral-200 rounded-md text-sm font-medium text-neutral-800 hover:bg-neutral-50 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors shrink-0"
       >
-        <Calendar className="h-4 w-4 text-primary-500" />
-        <span className="text-xs font-medium">{startDate} – {endDate}</span>
-        <ChevronDown className={`h-4 w-4 text-neutral-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <Calendar className="h-4 w-4 text-primary-500 shrink-0" />
+        <span className="text-xs font-medium whitespace-nowrap">{startDate} – {endDate}</span>
+        <ChevronDown className={`h-4 w-4 text-neutral-400 transition-transform shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 mt-1.5 w-64 bg-white rounded-md shadow-md border border-neutral-200 p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className={`absolute ${align === 'right' ? 'right-0' : 'left-0'} mt-1.5 w-64 max-w-[calc(100vw-2rem)] bg-white rounded-md shadow-md border border-neutral-200 p-2 z-50 animate-in fade-in zoom-in-95 duration-150`}>
           <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider px-2 py-1 mb-1">
             Quick Date Presets
           </div>
